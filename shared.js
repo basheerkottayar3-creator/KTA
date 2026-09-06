@@ -1524,9 +1524,13 @@ window.submitFlushReservation = function() {
         '          <input type="text" id="chefModalName" placeholder="Executive Chef Name *" required style="padding:9px 12px;border:1px solid #d5ddd0;border-radius:6px;font-size:12.5px;outline:none;background:#fdfdfd;font-family:inherit;width:100%;box-sizing:border-box;">',
         '          <input type="text" id="chefModalHotel" placeholder="Hotel / Establishment *" required style="padding:9px 12px;border:1px solid #d5ddd0;border-radius:6px;font-size:12.5px;outline:none;background:#fdfdfd;font-family:inherit;width:100%;box-sizing:border-box;">',
         '        </div>',
-        '        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">',
+        '        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">',
+        '          <input type="text" id="chefModalCity" placeholder="City & State (Place Name) *" required style="padding:9px 12px;border:1px solid #d5ddd0;border-radius:6px;font-size:12.5px;outline:none;background:#fdfdfd;font-family:inherit;width:100%;box-sizing:border-box;">',
         '          <input type="tel" id="chefModalPhone" placeholder="WhatsApp / Phone Number *" required style="padding:9px 12px;border:1px solid #d5ddd0;border-radius:6px;font-size:12.5px;outline:none;background:#fdfdfd;font-family:inherit;width:100%;box-sizing:border-box;">',
-        '          <input type="email" id="chefModalEmail" placeholder="Official Email (Optional)" style="padding:9px 12px;border:1px solid #d5ddd0;border-radius:6px;font-size:12.5px;outline:none;background:#fdfdfd;font-family:inherit;width:100%;box-sizing:border-box;">',
+        '        </div>',
+        '        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">',
+        '          <input type="email" id="chefModalEmail" placeholder="Official Business Email" style="padding:9px 12px;border:1px solid #d5ddd0;border-radius:6px;font-size:12.5px;outline:none;background:#fdfdfd;font-family:inherit;width:100%;box-sizing:border-box;">',
+        '          <input type="text" id="chefModalProducts" placeholder="Varieties (e.g. Pepper, Cardamom, Cloves)" style="padding:9px 12px;border:1px solid #d5ddd0;border-radius:6px;font-size:12.5px;outline:none;background:#fdfdfd;font-family:inherit;width:100%;box-sizing:border-box;">',
         '        </div>',
         '        <div class="chef-popup-actions" style="margin-top:0">',
         '          <button type="submit" class="chef-popup-btn-primary" id="claimBoxSubmitBtn" style="border:none;cursor:pointer;flex:1;text-align:center;">Request Discovery Kit</button>',
@@ -1632,19 +1636,28 @@ window.submitFlushReservation = function() {
       e.preventDefault();
       var name = document.getElementById('chefModalName') ? document.getElementById('chefModalName').value.trim() : '';
       var hotel = document.getElementById('chefModalHotel') ? document.getElementById('chefModalHotel').value.trim() : '';
+      var city = document.getElementById('chefModalCity') ? document.getElementById('chefModalCity').value.trim() : '';
       var phone = document.getElementById('chefModalPhone') ? document.getElementById('chefModalPhone').value.trim() : '';
       var email = document.getElementById('chefModalEmail') ? document.getElementById('chefModalEmail').value.trim() : '';
+      var products = document.getElementById('chefModalProducts') ? document.getElementById('chefModalProducts').value.trim() : '';
 
-      if (!name || !hotel || !phone) {
-        alert('Please fill in your Name, Hotel Name, and Contact Phone Number.');
+      if (!name || !hotel || !phone || !city) {
+        alert('Please fill in your Name, Hotel / Establishment, City & State, and Contact Phone Number.');
         return;
       }
 
       var formData = {
+        name: name,
         managerName: name,
+        clientName: name,
         hotelName: hotel,
+        property: hotel,
+        city: city,
+        location: city,
         contactPhone: phone,
+        phone: phone,
         email: email || 'Not Provided',
+        products: products || 'Chef Discovery Sample Kit (Tellicherry Pepper, Cardamom 8mm+, Kashmiri Chilly, Turmeric, Cloves)',
         volume: 'Chef Discovery Sample Kit',
         message: 'Chef Discovery Sample Kit Request from Universal Modal Popup',
         sourcePage: window.location.pathname || 'Universal Chef Modal'
@@ -1653,7 +1666,7 @@ window.submitFlushReservation = function() {
       if (window.submitKTAForm) {
         window.submitKTAForm(formData, {
           formName: 'Chef Discovery Samples',
-          successMsg: 'Thank you, Chef ' + name + '! Your Chef Discovery Sample Kit request for ' + hotel + ' has been registered. Our culinary trade desk will arrange dispatch to your location.'
+          successMsg: 'Thank you, Chef ' + name + ' (' + hotel + ', ' + city + ')! Your Chef Discovery Sample Kit request has been registered. Our culinary trade desk will arrange dispatch.'
         });
       }
 

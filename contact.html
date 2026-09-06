@@ -273,24 +273,72 @@
         <!-- Right: Fast Message Form -->
         <div data-reveal data-delay="1">
           <div class="form-card">
-            <h3 style="font-family:var(--font-display);font-size:24px;font-weight:700">Send an Inquiry</h3>
-            <div class="form-group">
-              <label for="cName">Your Name</label>
-              <input class="form-control" type="text" id="cName" placeholder="Executive Chef / Purchase Director" required>
+            <h3 style="font-family:var(--font-display);font-size:24px;font-weight:700;margin-bottom:6px">Send an Inquiry</h3>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:18px">Complete trade desk dispatch registration. Direct response within 2 hours.</p>
+            
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="form-group" style="margin-bottom:12px">
+                <label for="cName">Your Name *</label>
+                <input class="form-control" type="text" id="cName" placeholder="Executive Chef / Purchase Lead" required>
+              </div>
+              <div class="form-group" style="margin-bottom:12px">
+                <label for="cRole">Designation / Role</label>
+                <select class="form-control" id="cRole" style="padding:10px 14px;height:46px">
+                  <option value="Executive Chef">Executive Chef</option>
+                  <option value="Procurement Director">Procurement Director</option>
+                  <option value="Purchase Manager">Purchase Manager</option>
+                  <option value="Food & Beverage Director">Food &amp; Beverage Director</option>
+                  <option value="General Manager">General Manager</option>
+                  <option value="Owner / Managing Partner">Owner / Managing Partner</option>
+                  <option value="Culinary Lead">Culinary Lead</option>
+                </select>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="cProperty">Property / Business Name</label>
-              <input class="form-control" type="text" id="cProperty" placeholder="e.g. ITC Grand Chola" required>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="form-group" style="margin-bottom:12px">
+                <label for="cProperty">Establishment / Hotel Name *</label>
+                <input class="form-control" type="text" id="cProperty" placeholder="e.g. ITC Grand Chola / Taj Coromandel" required>
+              </div>
+              <div class="form-group" style="margin-bottom:12px">
+                <label for="cCity">City &amp; State (Place Name) *</label>
+                <input class="form-control" type="text" id="cCity" placeholder="e.g. Chennai, Tamil Nadu" required>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="cPhone">Contact Number</label>
-              <input class="form-control" type="tel" id="cPhone" placeholder="+91 98765 43210" required>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="form-group" style="margin-bottom:12px">
+                <label for="cPhone">Contact Number / WhatsApp *</label>
+                <input class="form-control" type="tel" id="cPhone" placeholder="+91 98765 43210" required>
+              </div>
+              <div class="form-group" style="margin-bottom:12px">
+                <label for="cEmail">Official Business Email</label>
+                <input class="form-control" type="email" id="cEmail" placeholder="chef@hotel.com">
+              </div>
             </div>
-            <div class="form-group">
-              <label for="cMsg">Procurement Requirements</label>
-              <textarea class="form-control" id="cMsg" placeholder="Tell us what you are looking for (Wholesale 500kg+, Chef Discovery Samples, Hotel Smart 24/7 replenishment)…" rows="4" required></textarea>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="form-group" style="margin-bottom:12px">
+                <label for="cProduct">Inquired Spices / SKU</label>
+                <input class="form-control" type="text" id="cProduct" placeholder="e.g. Tellicherry TGSEB Pepper, Cardamom 8mm+">
+              </div>
+              <div class="form-group" style="margin-bottom:12px">
+                <label for="cVolume">Estimated Volume / Lot Size</label>
+                <select class="form-control" id="cVolume" style="padding:10px 14px;height:46px">
+                  <option value="500 kg (40kg Master Bags)">500 kg (40kg Master Bags)</option>
+                  <option value="1 Ton – 5 Tons Consignment">1 Ton – 5 Tons Consignment</option>
+                  <option value="5 Tons+ Commercial Lots">5 Tons+ Commercial Lots</option>
+                  <option value="Chef Discovery Sample Kit">Chef Discovery Sample Kit</option>
+                  <option value="Hotel Smart 24/7 Replenishment">Hotel Smart 24/7 Replenishment</option>
+                </select>
+              </div>
             </div>
-            <button class="btn btn-primary" style="width:100%;justify-content:center;padding:15px;border-radius:999px;background:#435128" onclick="submitContact(event)">Send Message</button>
+
+            <div class="form-group" style="margin-bottom:16px">
+              <label for="cMsg">Procurement Requirements / Notes *</label>
+              <textarea class="form-control" id="cMsg" placeholder="Tell us what you are looking for (Wholesale 500kg+, Chef Discovery Samples, Hotel Smart 24/7 replenishment, specific spice grades)…" rows="3" required></textarea>
+            </div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;padding:15px;border-radius:999px;background:#435128" onclick="submitContact(event)">Send Message to Trade Desk</button>
           </div>
         </div>
 
@@ -413,19 +461,33 @@
   function submitContact(e){
     e.preventDefault();
     var n = document.getElementById('cName') ? document.getElementById('cName').value.trim() : '';
+    var role = document.getElementById('cRole') ? document.getElementById('cRole').value : 'Executive Chef';
     var prop = document.getElementById('cProperty') ? document.getElementById('cProperty').value.trim() : '';
+    var city = document.getElementById('cCity') ? document.getElementById('cCity').value.trim() : '';
     var p = document.getElementById('cPhone') ? document.getElementById('cPhone').value.trim() : '';
+    var em = document.getElementById('cEmail') ? document.getElementById('cEmail').value.trim() : '';
+    var prod = document.getElementById('cProduct') ? document.getElementById('cProduct').value.trim() : '';
+    var vol = document.getElementById('cVolume') ? document.getElementById('cVolume').value : '500 kg (40kg Master Bags)';
     var m = document.getElementById('cMsg') ? document.getElementById('cMsg').value.trim() : '';
 
-    if(!n || !p || !m){
-      alert('Please fill all required fields (Name, Contact Number, Procurement Requirements).');
+    if(!n || !p || !prop || !city || !m){
+      alert('Please fill all required fields (Name, Establishment, City / Place Name, Contact Number, Requirements).');
       return;
     }
 
     var formData = {
       name: n,
       property: prop,
+      hotelName: prop,
+      designation: role,
+      role: role,
       phone: p,
+      contactPhone: p,
+      email: em || 'Not Provided',
+      city: city,
+      location: city,
+      products: prod || 'Tellicherry TGSEB Black Pepper / Single-Origin Spices',
+      volume: vol,
       message: m,
       sourcePage: 'contact.html'
     };
@@ -433,7 +495,7 @@
     if (window.submitKTAForm) {
       window.submitKTAForm(formData, {
         formName: 'General Trade Desk Inquiry',
-        successMsg: 'Thank you, ' + n + '! Your message has been sent to our trade desk. We will reach out within 2 hours.'
+        successMsg: 'Thank you, ' + n + ' (' + prop + ', ' + city + ')! Your inquiry has been sent to our trade desk. We will reach out within 2 hours.'
       });
     } else {
       alert('Thank you, ' + n + '! Your message has been sent to our trade desk. We will reach out within 2 hours.');
@@ -441,7 +503,10 @@
 
     if (document.getElementById('cName')) document.getElementById('cName').value = '';
     if (document.getElementById('cProperty')) document.getElementById('cProperty').value = '';
+    if (document.getElementById('cCity')) document.getElementById('cCity').value = '';
     if (document.getElementById('cPhone')) document.getElementById('cPhone').value = '';
+    if (document.getElementById('cEmail')) document.getElementById('cEmail').value = '';
+    if (document.getElementById('cProduct')) document.getElementById('cProduct').value = '';
     if (document.getElementById('cMsg')) document.getElementById('cMsg').value = '';
   }
   </script>

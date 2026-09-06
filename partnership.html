@@ -178,8 +178,24 @@
               </div>
 
               <div class="partner-field">
+                <label for="pRole">Designation / Role</label>
+                <select id="pRole" class="partner-select">
+                  <option value="Director of Culinary / Executive Chef">Director of Culinary / Executive Chef</option>
+                  <option value="VP / Director of Procurement">VP / Director of Procurement</option>
+                  <option value="General Manager">General Manager</option>
+                  <option value="Managing Director / Owner">Managing Director / Owner</option>
+                  <option value="Head of Supply Chain">Head of Supply Chain</option>
+                </select>
+              </div>
+
+              <div class="partner-field">
                 <label for="pHotelName">Establishment / Hotel Name *</label>
                 <input type="text" id="pHotelName" class="partner-input" placeholder="Luxury Hotel / Fine Dining / Cloud Kitchen" required>
+              </div>
+
+              <div class="partner-field">
+                <label for="pCity">City &amp; State (Place Name) *</label>
+                <input type="text" id="pCity" class="partner-input" placeholder="e.g. Chennai, Bangalore, Mumbai, Hyderabad" required>
               </div>
 
               <div class="partner-field">
@@ -188,15 +204,20 @@
               </div>
 
               <div class="partner-field">
-                <label for="pEmail">Official Email (Optional)</label>
-                <input type="email" id="pEmail" class="partner-input" placeholder="chef@hotel.com">
+                <label for="pEmail">Official Business Email</label>
+                <input type="email" id="pEmail" class="partner-input" placeholder="procurement@hotel.com">
+              </div>
+
+              <div class="partner-field">
+                <label for="pProducts">Key Spice Varieties Required</label>
+                <input type="text" id="pProducts" class="partner-input" placeholder="e.g. Tellicherry Pepper, Cardamom 8mm+, Kashmiri Chilly, Turmeric">
               </div>
 
               <div class="partner-field">
                 <label for="pVolume">Expected Volume (Monthly)</label>
                 <select id="pVolume" class="partner-select">
                   <option value="500kg – 1 Ton (40kg Master Bags)">500kg – 1 Ton (40kg Master Bags)</option>
-                  <option value="1 Ton – 5 Tons Commercial Consignment">1 Ton – 5 Tons</option>
+                  <option value="1 Ton – 5 Tons Commercial Consignment">1 Ton – 5 Tons Commercial Consignment</option>
                   <option value="5 Tons+ Commercial Lots">5 Tons+ Commercial Lots</option>
                   <option value="Chef Discovery Sample Kit">Chef Discovery Sample Kit</option>
                 </select>
@@ -204,7 +225,7 @@
 
               <div class="partner-field">
                 <label for="pMessage">Requirements / Message (Optional)</label>
-                <textarea id="pMessage" class="partner-textarea" rows="2" placeholder="Specific spices, varieties, or sample requests..."></textarea>
+                <textarea id="pMessage" class="partner-textarea" rows="2" placeholder="Specific culinary grades, pack sizes, or delivery schedule requests..."></textarea>
               </div>
 
               <button type="submit" class="partner-submit-btn">SUBMIT APPLICATION</button>
@@ -331,31 +352,43 @@
   function handlePartnerSubmit(e){
     e.preventDefault();
     var name = document.getElementById('pMgrName') ? document.getElementById('pMgrName').value.trim() : '';
+    var role = document.getElementById('pRole') ? document.getElementById('pRole').value : 'Corporate Culinary Director';
     var hotel = document.getElementById('pHotelName') ? document.getElementById('pHotelName').value.trim() : '';
+    var city = document.getElementById('pCity') ? document.getElementById('pCity').value.trim() : '';
     var phone = document.getElementById('pPhone') ? document.getElementById('pPhone').value.trim() : '';
     var email = document.getElementById('pEmail') ? document.getElementById('pEmail').value.trim() : '';
-    var volume = document.getElementById('pVolume') ? document.getElementById('pVolume').value : '';
+    var products = document.getElementById('pProducts') ? document.getElementById('pProducts').value.trim() : '';
+    var volume = document.getElementById('pVolume') ? document.getElementById('pVolume').value : '500kg – 1 Ton (40kg Master Bags)';
     var message = document.getElementById('pMessage') ? document.getElementById('pMessage').value.trim() : '';
 
-    if(!name || !hotel || !phone){
-      alert('Please fill all required fields (Name, Hotel Name, Phone Number).');
+    if(!name || !hotel || !phone || !city){
+      alert('Please fill all required fields (Name, Establishment / Hotel Name, City & State, Phone Number).');
       return;
     }
 
     var formData = {
+      name: name,
       managerName: name,
+      clientName: name,
       hotelName: hotel,
+      property: hotel,
+      designation: role,
+      role: role,
+      city: city,
+      location: city,
+      phone: phone,
       contactPhone: phone,
-      email: email,
+      email: email || 'Not Provided',
+      products: products || 'Highland Whole Spices (Tellicherry Pepper, Cardamom 8mm+, Cloves, Turmeric)',
       volume: volume,
-      message: message,
+      message: message || 'Corporate Partnership registration submitted.',
       sourcePage: 'partnership.html'
     };
 
     if (window.submitKTAForm) {
       window.submitKTAForm(formData, {
         formName: 'Corporate Partnership Registration',
-        successMsg: 'Thank you, ' + name + '! Your partnership registration for ' + hotel + ' has been received. Our trade desk will review your details and contact you within one business day.'
+        successMsg: 'Thank you, ' + name + ' (' + hotel + ', ' + city + ')! Your partnership registration has been received. Our corporate trade desk will review your details and contact you within one business day.'
       });
     } else {
       alert('Thank you, ' + name + '! Your partnership registration for ' + hotel + ' has been received.');
