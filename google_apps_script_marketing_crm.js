@@ -4,59 +4,25 @@
  * ============================================================================
  * 
  * Synchronizes website RFQs, AI Chatbot inquiries, Chef Discovery Box requests,
- * and WhatsApp Desk leads directly into the "Inbound Leads" sheet of
- * KTA_Executive_Marketing_CRM_Tracker.xlsx (Google Sheets).
+ * Corporate Partnership registrations, and WhatsApp Desk leads directly into
+ * the "Inbound Leads" sheet of KTA_Executive_Marketing_CRM_Tracker.xlsx.
  * 
- * DEPLOYMENT INSTRUCTIONS (PREVENTS 403 FORBIDDEN ERROR):
- * ────────────────────────────────────────────────────────────────────────────
- * 1. Open your Google Sheet ("KTA_Executive_Marketing_CRM_Tracker").
- * 2. Click Extensions > Apps Script.
- * 3. Delete any code in the editor and paste this ENTIRE file.
- * 4. Click the blue "Deploy" button (top right) > "New deployment".
- * 5. Click the Gear icon ⚙ next to "Select type" > choose "Web app".
- * 6. Set the following EXACT settings:
- *    - Description: KTA Inbound CRM Webhook v2
- *    - Execute as: Me (your Google account)
- *    - Who has access: Anyone  <─── [CRITICAL: MUST BE "Anyone" to allow website leads!]
- * 7. Click "Deploy".
- * 8. Click "Authorize access" > select your account > Advanced > "Go to Untitled project (unsafe)" > "Allow".
- * 9. Copy the "Web app URL" (ends in /exec) and paste it back in chat.
- * ────────────────────────────────────────────────────────────────────────────
- * 
- * COLUMN MAPPING (20 Standard Columns matching Sheet 1: "Inbound Leads"):
- *  Section 1: Inbound Client Details (System Auto-Filled, Cols A to L)
- *    Col A (1) : Lead ID (e.g. KTA-2026-002)
- *    Col B (2) : Date (YYYY-MM-DD)
- *    Col C (3) : Time (HH:MM IST)
- *    Col D (4) : Lead Source
- *    Col E (5) : Client Name
- *    Col F (6) : Hotel / Company
- *    Col G (7) : Designation
- *    Col H (8) : Phone / WhatsApp
- *    Col I (9) : Email Address
- *    Col J (10): City & State
- *    Col K (11): Inquired Product / SKU
- *    Col L (12): Volume Requested
- * 
- *  Section 2: Sales & Closing Workflow (Employee Action, Cols M to T)
- *    Col M (13): Assigned Rep
- *    Col N (14): Priority
- *    Col O (15): Deal Status
- *    Col P (16): Quoted Rate (₹/kg)
- *    Col Q (17): Deal Value (₹)
- *    Col R (18): Payment Terms
- *    Col S (19): Next Follow-Up
- *    Col T (20): Remarks & Notes
+ * FEATURES & FIXES:
+ * 1. Dynamic Dropdown Inheritance: Inherits and preserves user-added dropdown
+ *    options from Row 7 so custom choices are never overwritten.
+ * 2. Full Source Channel Support: Includes "Corporate Partnership Registration",
+ *    "General Trade Desk Inquiry", "Chef Dispatches Newsletter", and all standard sources.
+ * 3. Strict Typography Enforcement: Retains clean "Segoe UI", 9.5pt, #1A1A1A.
+ * 4. Real-time Dashboard Sync: Updates all "Marketing Dashboard" KPIs dynamically.
+ * 5. One-Click Fix Menu: "KTA Commercial CRM" > "Fix / Update All Dropdowns" in Google Sheets.
  * ────────────────────────────────────────────────────────────────────────────
  */
 
 function doGet(e) {
-  // If parameters are sent via GET (e.g. testing or form fallback), process them
   if (e && e.parameter && (e.parameter.source || e.parameter.name || e.parameter.phone || e.parameter.email)) {
     return handleLeadSubmission(e.parameter);
   }
   
-  // Health Check response when visited in browser
   return ContentService.createTextOutput(JSON.stringify({
     status: "active",
     service: "KTA Spices Executive CRM Webhook",
@@ -68,7 +34,6 @@ function doGet(e) {
 function doPost(e) {
   var data = {};
   
-  // Parse incoming JSON payload or form parameter
   if (e && e.postData && e.postData.contents) {
     try {
       data = JSON.parse(e.postData.contents);
@@ -137,44 +102,67 @@ function handleLeadSubmission(data) {
     var leadSeqStr = ("000" + leadSeqNum).slice(-3);
     var leadId = data.leadId || ("KTA-2026-" + leadSeqStr);
 
-    // 4. Normalize Inbound Fields (Section 1: Columns A to L)
-    var source      = data.source || data.formName || data.channel || "Website RFQ";
+    // 4. Intelligent Source Channel Normalization (Matches Clean Dropdown Options)
+    var rawSrc = (data.source || data.formName || data.channel || "Website RFQ").toString().trim();
+    var srcLow = rawSrc.toLowerCase();
+    var source = "Website RFQ";
+
+    if (srcLow.indexOf("partnership") !== -1 || srcLow.indexOf("partner") !== -1) {
+      source = "Corporate Partnership Registration";
+    } else if (srcLow.indexOf("trade desk") !== -1 || srcLow.indexOf("contact") !== -1) {
+      source = "General Trade Desk Inquiry";
+    } else if (srcLow.indexOf("newsletter") !== -1 || (srcLow.indexOf("dispatch") !== -1 && srcLow.indexOf("sample") === -1)) {
+      source = "Chef Dispatches Newsletter";
+    } else if (srcLow.indexOf("chef") !== -1 || srcLow.indexOf("sample") !== -1) {
+      source = "Chef Sample Box";
+    } else if (srcLow.indexOf("wholesale") !== -1) {
+      source = "Wholesale Portal";
+    } else if (srcLow.indexOf("chatbot") !== -1 || srcLow.indexOf("concierge") !== -1 || srcLow.indexOf("ai") !== -1) {
+      source = "AI Chatbot";
+    } else if (srcLow.indexOf("whatsapp") !== -1) {
+      source = "WhatsApp Desk";
+    } else if (srcLow.indexOf("call") !== -1) {
+      source = "Inbound Call";
+    } else {
+      source = rawSrc.length > 0 ? rawSrc : "Website RFQ";
+    }
+
+    // 5. Normalize Inbound Fields (Section 1: Columns A to L)
     var clientName  = data.managerName || data.name || data.clientName || data.chefName || "Prospective Buyer";
     var company     = data.hotelName || data.property || data.company || "Commercial Account";
-    var role        = data.designation || data.role || (source.toLowerCase().indexOf("chef") !== -1 ? "Executive Chef" : "Procurement Lead");
+    var role        = data.designation || data.role || (source.indexOf("Chef") !== -1 ? "Executive Chef" : source.indexOf("Partnership") !== -1 ? "Corporate Director" : "Procurement Lead");
     var phone       = (data.contactPhone || data.phone || data.mobile || "Not Provided").toString().trim();
     var email       = data.email || "Not Provided";
     var location    = data.location || data.city || data.destination || "South India";
     var products    = data.products || data.product || data.spices || data.varieties || "Tellicherry Black Pepper / Single-Origin Spices";
     var volume      = data.volume || data.quantity || data.lotSize || "Standard Commercial Lot";
-    var rawNotes    = data.message || data.notes || data.details || "Inquiry logged via website portal.";
+    var rawNotes    = data.message || data.notes || data.details || ("Inquiry logged via " + rawSrc + ".");
 
     var cleanPhone  = phone.replace(/[^0-9]/g, '');
 
-    // 5. Intelligent Sales Rep Routing & Priority Defaults (Section 2: Columns M to T)
+    // 6. Intelligent Sales Rep Routing & Priority Defaults (Section 2: Columns M to T)
     var assignedRep = "Anand R. (Trade Desk)";
     var priority    = "Medium Priority";
     var dealStatus  = "New Lead";
     var estValue    = "";
 
-    var srcLow  = source.toLowerCase();
     var compLow = company.toLowerCase();
 
-    if (srcLow.indexOf("chef") !== -1 || role.toLowerCase().indexOf("chef") !== -1) {
+    if (source.indexOf("Chef Sample Box") !== -1 || role.toLowerCase().indexOf("chef") !== -1) {
       assignedRep = "Kavitha S. (Hospitality)";
       priority    = "High Priority";
       dealStatus  = "Sample Dispatched";
-    } else if (srcLow.indexOf("wholesale") !== -1 || volume.toLowerCase().indexOf("mt") !== -1 || volume.indexOf("500") !== -1) {
-      assignedRep = "Suresh M. (Wholesale)";
+    } else if (source.indexOf("Partnership") !== -1 || compLow.indexOf("taj") !== -1 || compLow.indexOf("itc") !== -1 || compLow.indexOf("leela") !== -1 || compLow.indexOf("marriott") !== -1 || compLow.indexOf("hyatt") !== -1) {
+      assignedRep = "Praveen K. (Key Accounts)";
       priority    = "High Priority";
       dealStatus  = "New Lead";
-    } else if (compLow.indexOf("taj") !== -1 || compLow.indexOf("itc") !== -1 || compLow.indexOf("leela") !== -1 || compLow.indexOf("marriott") !== -1 || compLow.indexOf("hyatt") !== -1) {
-      assignedRep = "Praveen K. (Key Accounts)";
+    } else if (source.indexOf("Wholesale") !== -1 || volume.toLowerCase().indexOf("mt") !== -1 || volume.indexOf("500") !== -1) {
+      assignedRep = "Suresh M. (Wholesale)";
       priority    = "High Priority";
       dealStatus  = "New Lead";
     }
 
-    // 6. Build 20-Column Row Array (Cols A to T)
+    // 7. Build 20-Column Row Array (Cols A to T)
     var rowValues = [
       leadId,          // Col A (1) : Lead ID
       dateLogged,      // Col B (2) : Date
@@ -198,11 +186,11 @@ function handleLeadSubmission(data) {
       rawNotes         // Col T (20): Remarks & Notes
     ];
 
-    // 7. Write Data into Sheet
+    // 8. Write Data into Sheet
     var range = sheet.getRange(nextRow, 1, 1, 20);
     range.setValues([rowValues]);
 
-    // 8. Strict Typography & Formatting Enforcement (Fixes font mismatch issue)
+    // 9. Strict Typography & Formatting Enforcement
     range.setFontFamily("Segoe UI")
          .setFontSize(9.5)
          .setFontColor("#1A1A1A")
@@ -222,10 +210,10 @@ function handleLeadSubmission(data) {
     range.setBorder(true, true, true, true, true, true, "#D8E2D6", SpreadsheetApp.BorderStyle.SOLID);
     sheet.getRange(nextRow, 12).setBorder(null, null, null, true, null, null, "#1E2814", SpreadsheetApp.BorderStyle.MEDIUM);
 
-    // 9. Apply Dropdown Validations to Row
+    // 10. Apply Dynamic Dropdown Validations (Inherits user-added items!)
     applyRowDropdowns(sheet, nextRow);
 
-    // 10. Send Corporate Email Alert via Zoho Mail
+    // 11. Send Corporate Email Alert via Zoho Mail
     sendOwnerEmailAlert({
       leadId: leadId,
       dateLogged: dateLogged,
@@ -250,6 +238,7 @@ function handleLeadSubmission(data) {
       status: "success",
       leadId: leadId,
       row: nextRow,
+      source: source,
       message: "Lead successfully recorded in KTA Inbound Leads CRM."
     })).setMimeType(ContentService.MimeType.JSON);
 
@@ -263,45 +252,36 @@ function handleLeadSubmission(data) {
 }
 
 /**
- * Applies dropdown validations to the newly inserted row
+ * Applies dropdown validations dynamically by copying from Row 7 (preserving user modifications)
+ * or applying the comprehensive master list.
  */
 function applyRowDropdowns(sheet, rowNum) {
   try {
-    // Col D (4): Lead Source
-    var ruleSource = SpreadsheetApp.newDataValidation()
-      .requireValueInList(["Website RFQ", "AI Chatbot", "Chef Sample Box", "WhatsApp Desk", "Inbound Call", "Wholesale Portal"], true)
-      .setAllowInvalid(true)
-      .build();
-    sheet.getRange(rowNum, 4).setDataValidation(ruleSource);
+    var cols = [
+      { col: 4,  defaultList: ["Website RFQ", "AI Chatbot", "Chef Sample Box", "Corporate Partnership Registration", "General Trade Desk Inquiry", "Chef Dispatches Newsletter", "WhatsApp Desk", "Wholesale Portal", "Inbound Call"] },
+      { col: 13, defaultList: ["Anand R. (Trade Desk)", "Kavitha S. (Hospitality)", "Suresh M. (Wholesale)", "Praveen K. (Key Accounts)"] },
+      { col: 14, defaultList: ["High Priority", "Medium Priority", "Standard Priority"] },
+      { col: 15, defaultList: ["New Lead", "Contacted", "Sample Dispatched", "Quote Sent", "Closed Won", "Closed Lost"] },
+      { col: 18, defaultList: ["Advance", "15-Day Credit", "30-Day Credit", "LC", "Sample Free"] }
+    ];
 
-    // Col M (13): Assigned Rep
-    var ruleRep = SpreadsheetApp.newDataValidation()
-      .requireValueInList(["Anand R. (Trade Desk)", "Kavitha S. (Hospitality)", "Suresh M. (Wholesale)", "Praveen K. (Key Accounts)"], true)
-      .setAllowInvalid(true)
-      .build();
-    sheet.getRange(rowNum, 13).setDataValidation(ruleRep);
-
-    // Col N (14): Priority
-    var rulePriority = SpreadsheetApp.newDataValidation()
-      .requireValueInList(["High Priority", "Medium Priority", "Standard Priority"], true)
-      .setAllowInvalid(true)
-      .build();
-    sheet.getRange(rowNum, 14).setDataValidation(rulePriority);
-
-    // Col O (15): Deal Status
-    var ruleStatus = SpreadsheetApp.newDataValidation()
-      .requireValueInList(["New Lead", "Contacted", "Sample Dispatched", "Quote Sent", "Closed Won", "Closed Lost"], true)
-      .setAllowInvalid(true)
-      .build();
-    sheet.getRange(rowNum, 15).setDataValidation(ruleStatus);
-
-    // Col R (18): Payment Terms
-    var ruleTerms = SpreadsheetApp.newDataValidation()
-      .requireValueInList(["Advance", "15-Day Credit", "30-Day Credit", "LC", "Sample Free"], true)
-      .setAllowInvalid(true)
-      .build();
-    sheet.getRange(rowNum, 18).setDataValidation(ruleTerms);
-
+    for (var i = 0; i < cols.length; i++) {
+      var item = cols[i];
+      var targetCell = sheet.getRange(rowNum, item.col);
+      
+      // If row 7 has a template rule, inherit it to preserve any new options the user added!
+      var templateRule = (rowNum !== 7) ? sheet.getRange(7, item.col).getDataValidation() : null;
+      
+      if (templateRule) {
+        targetCell.setDataValidation(templateRule);
+      } else {
+        var rule = SpreadsheetApp.newDataValidation()
+          .requireValueInList(item.defaultList, true)
+          .setAllowInvalid(true)
+          .build();
+        targetCell.setDataValidation(rule);
+      }
+    }
   } catch (e) {
     Logger.log("Validation error: " + e.toString());
   }
@@ -363,7 +343,7 @@ function onOpen() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu("KTA Commercial CRM")
     .addItem("Refresh Dashboard Calculations", "refreshMetrics")
-    .addItem("Apply Dropdowns to Entire Sheet", "applyDropdownsToEntireSheet")
+    .addItem("Fix / Update All Dropdowns Across Sheet", "updateAllDropdownsInSheet")
     .addToUi();
 }
 
@@ -371,11 +351,27 @@ function refreshMetrics() {
   SpreadsheetApp.getActiveSpreadsheet().toast("Calculations and pipeline values updated.", "KTA CRM", 3);
 }
 
-function applyDropdownsToEntireSheet() {
+function updateAllDropdownsInSheet() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Inbound Leads") || SpreadsheetApp.getActiveSheet();
-  var lastRow = sheet.getLastRow();
-  for (var r = 7; r <= lastRow; r++) {
-    applyRowDropdowns(sheet, r);
-  }
-  SpreadsheetApp.getActiveSpreadsheet().toast("Dropdowns applied to rows 7 through " + lastRow, "KTA CRM", 4);
+  var lastRow = Math.max(7, sheet.getLastRow());
+  
+  var sourceList = ["Website RFQ", "AI Chatbot", "Chef Sample Box", "Corporate Partnership Registration", "General Trade Desk Inquiry", "Chef Dispatches Newsletter", "WhatsApp Desk", "Wholesale Portal", "Inbound Call"];
+  var repList = ["Anand R. (Trade Desk)", "Kavitha S. (Hospitality)", "Suresh M. (Wholesale)", "Praveen K. (Key Accounts)"];
+  var priorityList = ["High Priority", "Medium Priority", "Standard Priority"];
+  var statusList = ["New Lead", "Contacted", "Sample Dispatched", "Quote Sent", "Closed Won", "Closed Lost"];
+  var termsList = ["Advance", "15-Day Credit", "30-Day Credit", "LC", "Sample Free"];
+
+  var ruleSource = SpreadsheetApp.newDataValidation().requireValueInList(sourceList, true).setAllowInvalid(true).build();
+  var ruleRep = SpreadsheetApp.newDataValidation().requireValueInList(repList, true).setAllowInvalid(true).build();
+  var rulePriority = SpreadsheetApp.newDataValidation().requireValueInList(priorityList, true).setAllowInvalid(true).build();
+  var ruleStatus = SpreadsheetApp.newDataValidation().requireValueInList(statusList, true).setAllowInvalid(true).build();
+  var ruleTerms = SpreadsheetApp.newDataValidation().requireValueInList(termsList, true).setAllowInvalid(true).build();
+
+  sheet.getRange(7, 4, lastRow - 6, 1).setDataValidation(ruleSource);
+  sheet.getRange(7, 13, lastRow - 6, 1).setDataValidation(ruleRep);
+  sheet.getRange(7, 14, lastRow - 6, 1).setDataValidation(rulePriority);
+  sheet.getRange(7, 15, lastRow - 6, 1).setDataValidation(ruleStatus);
+  sheet.getRange(7, 18, lastRow - 6, 1).setDataValidation(ruleTerms);
+
+  SpreadsheetApp.getActiveSpreadsheet().toast("All dropdowns updated and red validation warnings cleared!", "KTA CRM", 4);
 }
