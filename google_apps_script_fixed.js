@@ -7,55 +7,89 @@
  * and WhatsApp Desk leads directly into the "Inbound Leads" sheet of
  * KTA_Executive_Marketing_CRM_Tracker.xlsx (Google Sheets).
  * 
- * Guarantees:
- *  1. Identical typography (Segoe UI, 9.5pt, #1A1A1A) on every newly inserted row.
- *  2. Real-time dynamic recalculation of the "Marketing Dashboard" sheet.
- *  3. Instant Zoho Mail notification to KTA sales desk.
- *  4. Dropdown data validation (Rep, Priority, Status, Payment Terms) on all rows.
+ * DEPLOYMENT INSTRUCTIONS (PREVENTS 403 FORBIDDEN ERROR):
+ * ────────────────────────────────────────────────────────────────────────────
+ * 1. Open your Google Sheet ("KTA_Executive_Marketing_CRM_Tracker").
+ * 2. Click Extensions > Apps Script.
+ * 3. Delete any code in the editor and paste this ENTIRE file.
+ * 4. Click the blue "Deploy" button (top right) > "New deployment".
+ * 5. Click the Gear icon ⚙ next to "Select type" > choose "Web app".
+ * 6. Set the following EXACT settings:
+ *    - Description: KTA Inbound CRM Webhook v2
+ *    - Execute as: Me (your Google account)
+ *    - Who has access: Anyone  <─── [CRITICAL: MUST BE "Anyone" to allow website leads!]
+ * 7. Click "Deploy".
+ * 8. Click "Authorize access" > select your account > Advanced > "Go to Untitled project (unsafe)" > "Allow".
+ * 9. Copy the "Web app URL" (ends in /exec) and paste it back in chat.
+ * ────────────────────────────────────────────────────────────────────────────
  * 
  * COLUMN MAPPING (20 Standard Columns matching Sheet 1: "Inbound Leads"):
- * ────────────────────────────────────────────────────────────────────────────
- * SECTION 1: INBOUND CLIENT DETAILS (AUTO-POPULATED BY SYSTEM / WEBSITE)
- *   Col A (1) : Lead ID (e.g. KTA-2026-002)
- *   Col B (2) : Date (YYYY-MM-DD)
- *   Col C (3) : Time (HH:MM IST)
- *   Col D (4) : Lead Source (Website RFQ / AI Chatbot / Chef Sample Box / etc.)
- *   Col E (5) : Client Name
- *   Col F (6) : Hotel / Company
- *   Col G (7) : Designation
- *   Col H (8) : Phone / WhatsApp
- *   Col I (9) : Email Address
- *   Col J (10): City & State
- *   Col K (11): Inquired Product / SKU
- *   Col L (12): Volume Requested
+ *  Section 1: Inbound Client Details (System Auto-Filled, Cols A to L)
+ *    Col A (1) : Lead ID (e.g. KTA-2026-002)
+ *    Col B (2) : Date (YYYY-MM-DD)
+ *    Col C (3) : Time (HH:MM IST)
+ *    Col D (4) : Lead Source
+ *    Col E (5) : Client Name
+ *    Col F (6) : Hotel / Company
+ *    Col G (7) : Designation
+ *    Col H (8) : Phone / WhatsApp
+ *    Col I (9) : Email Address
+ *    Col J (10): City & State
+ *    Col K (11): Inquired Product / SKU
+ *    Col L (12): Volume Requested
  * 
- * SECTION 2: SALES & CLOSING WORKFLOW (EMPLOYEE ACTION REQUIRED)
- *   Col M (13): Assigned Rep (Dropdown)
- *   Col N (14): Priority (Dropdown)
- *   Col O (15): Deal Status (Dropdown: New Lead / Contacted / Sample Dispatched / Quote Sent / Closed Won / Closed Lost)
- *   Col P (16): Quoted Rate (₹/kg) (Employee Input)
- *   Col Q (17): Deal Value (₹) (Employee Input / Auto-Estimated)
- *   Col R (18): Payment Terms (Dropdown)
- *   Col S (19): Next Follow-Up (Date)
- *   Col T (20): Remarks & Notes (Client Message / Requirements)
+ *  Section 2: Sales & Closing Workflow (Employee Action, Cols M to T)
+ *    Col M (13): Assigned Rep
+ *    Col N (14): Priority
+ *    Col O (15): Deal Status
+ *    Col P (16): Quoted Rate (₹/kg)
+ *    Col Q (17): Deal Value (₹)
+ *    Col R (18): Payment Terms
+ *    Col S (19): Next Follow-Up
+ *    Col T (20): Remarks & Notes
  * ────────────────────────────────────────────────────────────────────────────
  */
 
+function doGet(e) {
+  // If parameters are sent via GET (e.g. testing or form fallback), process them
+  if (e && e.parameter && (e.parameter.source || e.parameter.name || e.parameter.phone || e.parameter.email)) {
+    return handleLeadSubmission(e.parameter);
+  }
+  
+  // Health Check response when visited in browser
+  return ContentService.createTextOutput(JSON.stringify({
+    status: "active",
+    service: "KTA Spices Executive CRM Webhook",
+    timestamp: new Date().toISOString(),
+    message: "Webhook is live, authorized, and accepting inbound lead dispatches."
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
+  var data = {};
+  
+  // Parse incoming JSON payload or form parameter
+  if (e && e.postData && e.postData.contents) {
+    try {
+      data = JSON.parse(e.postData.contents);
+    } catch (err) {
+      data = e.parameter || {};
+    }
+  } else if (e && e.parameter) {
+    data = e.parameter;
+  }
+
+  return handleLeadSubmission(data);
+}
+
+function handleLeadSubmission(data) {
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName("Inbound Leads") || ss.getSheetByName("Leads CRM Tracker") || ss.getActiveSheet();
     
-    // Parse incoming JSON payload or form parameter
-    var data = {};
-    if (e && e.postData && e.postData.contents) {
-      try {
-        data = JSON.parse(e.postData.contents);
-      } catch (err) {
-        data = e.parameter || {};
-      }
-    } else if (e && e.parameter) {
-      data = e.parameter;
+    // Ensure sheet has at least 20 columns
+    if (sheet.getMaxColumns() < 20) {
+      sheet.insertColumnsAfter(sheet.getMaxColumns(), 20 - sheet.getMaxColumns());
     }
 
     // 1. Timestamps in Indian Standard Time (IST)
@@ -67,18 +101,39 @@ function doPost(e) {
     var followUpDate = new Date(now.getTime() + (24 * 60 * 60 * 1000));
     var nextFollowUp = Utilities.formatDate(followUpDate, "Asia/Kolkata", "yyyy-MM-dd");
 
-    // 2. Find Next Available Empty Row in "Inbound Leads" starting from Row 7
-    var colAValues = sheet.getRange("A7:A1000").getValues();
-    var nextRow = 7;
-    for (var i = 0; i < colAValues.length; i++) {
-      if (!colAValues[i][0] || colAValues[i][0].toString().trim() === "") {
-        nextRow = 7 + i;
-        break;
+    // 2. Determine Next Available Row safely starting from Row 7
+    var startRow = 7;
+    var maxRows = sheet.getMaxRows();
+    if (maxRows < startRow) {
+      sheet.insertRowsAfter(maxRows, startRow - maxRows + 20);
+      maxRows = sheet.getMaxRows();
+    }
+
+    var rowsToCheck = Math.min(maxRows - startRow + 1, 500);
+    var nextRow = startRow;
+
+    if (rowsToCheck > 0) {
+      var colAValues = sheet.getRange(startRow, 1, rowsToCheck, 1).getValues();
+      var foundEmpty = false;
+      for (var i = 0; i < colAValues.length; i++) {
+        if (!colAValues[i][0] || colAValues[i][0].toString().trim() === "") {
+          nextRow = startRow + i;
+          foundEmpty = true;
+          break;
+        }
+      }
+      if (!foundEmpty) {
+        nextRow = startRow + colAValues.length;
       }
     }
 
+    // Expand sheet if needed
+    if (nextRow > sheet.getMaxRows()) {
+      sheet.insertRowsAfter(sheet.getMaxRows(), 10);
+    }
+
     // 3. Generate Sequential Lead ID (e.g. KTA-2026-002)
-    var leadSeqNum = nextRow - 6;
+    var leadSeqNum = Math.max(1, nextRow - 6);
     var leadSeqStr = ("000" + leadSeqNum).slice(-3);
     var leadId = data.leadId || ("KTA-2026-" + leadSeqStr);
 
@@ -86,16 +141,15 @@ function doPost(e) {
     var source      = data.source || data.formName || data.channel || "Website RFQ";
     var clientName  = data.managerName || data.name || data.clientName || data.chefName || "Prospective Buyer";
     var company     = data.hotelName || data.property || data.company || "Commercial Account";
-    var role        = data.designation || data.role || (source.indexOf("Chef") !== -1 ? "Executive Chef" : "Procurement Lead");
+    var role        = data.designation || data.role || (source.toLowerCase().indexOf("chef") !== -1 ? "Executive Chef" : "Procurement Lead");
     var phone       = (data.contactPhone || data.phone || data.mobile || "Not Provided").toString().trim();
     var email       = data.email || "Not Provided";
     var location    = data.location || data.city || data.destination || "South India";
     var products    = data.products || data.product || data.spices || data.varieties || "Tellicherry Black Pepper / Single-Origin Spices";
     var volume      = data.volume || data.quantity || data.lotSize || "Standard Commercial Lot";
-    var rawNotes    = data.message || data.notes || data.details || "Inquiry logged via website.";
+    var rawNotes    = data.message || data.notes || data.details || "Inquiry logged via website portal.";
 
-    // Clean Phone for 1-Tap WhatsApp Link
-    var cleanPhone = phone.replace(/[^0-9]/g, '');
+    var cleanPhone  = phone.replace(/[^0-9]/g, '');
 
     // 5. Intelligent Sales Rep Routing & Priority Defaults (Section 2: Columns M to T)
     var assignedRep = "Anand R. (Trade Desk)";
@@ -104,7 +158,6 @@ function doPost(e) {
     var estValue    = "";
 
     var srcLow  = source.toLowerCase();
-    var prodLow = products.toLowerCase();
     var compLow = company.toLowerCase();
 
     if (srcLow.indexOf("chef") !== -1 || role.toLowerCase().indexOf("chef") !== -1) {
@@ -138,18 +191,18 @@ function doPost(e) {
       assignedRep,     // Col M (13): Assigned Rep
       priority,        // Col N (14): Priority
       dealStatus,      // Col O (15): Deal Status
-      "",              // Col P (16): Quoted Rate (₹/kg) [For Employee]
-      estValue,        // Col Q (17): Deal Value (₹) [For Employee]
+      "",              // Col P (16): Quoted Rate (₹/kg)
+      estValue,        // Col Q (17): Deal Value (₹)
       "15-Day Credit", // Col R (18): Payment Terms
       nextFollowUp,    // Col S (19): Next Follow-Up
       rawNotes         // Col T (20): Remarks & Notes
     ];
 
-    // 7. Write Data to Sheet
+    // 7. Write Data into Sheet
     var range = sheet.getRange(nextRow, 1, 1, 20);
     range.setValues([rowValues]);
 
-    // 8. Strict Typography & Formatting Enforcement (Fixes font mismatch issue!)
+    // 8. Strict Typography & Formatting Enforcement (Fixes font mismatch issue)
     range.setFontFamily("Segoe UI")
          .setFontSize(9.5)
          .setFontColor("#1A1A1A")
@@ -165,14 +218,14 @@ function doPost(e) {
     sheet.getRange(nextRow, 18, 1, 2).setHorizontalAlignment("center");  // Payment Terms, Follow-Up
     sheet.getRange(nextRow, 20).setHorizontalAlignment("left");          // Remarks & Notes
 
-    // Cell Borders
+    // Borders
     range.setBorder(true, true, true, true, true, true, "#D8E2D6", SpreadsheetApp.BorderStyle.SOLID);
     sheet.getRange(nextRow, 12).setBorder(null, null, null, true, null, null, "#1E2814", SpreadsheetApp.BorderStyle.MEDIUM);
 
     // 9. Apply Dropdown Validations to Row
     applyRowDropdowns(sheet, nextRow);
 
-    // 10. Send Instant Corporate Email Alert
+    // 10. Send Corporate Email Alert via Zoho Mail
     sendOwnerEmailAlert({
       leadId: leadId,
       dateLogged: dateLogged,
@@ -201,6 +254,7 @@ function doPost(e) {
     })).setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
+    Logger.log("Submission error: " + err.toString());
     return ContentService.createTextOutput(JSON.stringify({
       status: "error",
       message: err.toString()
@@ -254,7 +308,7 @@ function applyRowDropdowns(sheet, rowNum) {
 }
 
 /**
- * Sends Clean Corporate HTML Email Alert via Zoho Mail
+ * Sends Corporate HTML Email Alert via Zoho Mail
  */
 function sendOwnerEmailAlert(lead) {
   try {
@@ -298,7 +352,7 @@ function sendOwnerEmailAlert(lead) {
       htmlBody: htmlBody
     });
   } catch (e) {
-    Logger.log("Email dispatch error: " + e.toString());
+    Logger.log("Email dispatch notice: " + e.toString());
   }
 }
 
