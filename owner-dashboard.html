@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KTA Spices — Executive Owner &amp; Marketing CRM Dashboard</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="images/ktaouterlinelogo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0f140c;
+      --bg-surface: #171f13;
+      --bg-surface-elevated: #1f2a1a;
+      --bg-card: #23301e;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(212, 175, 55, 0.3);
+      --gold: #d4af37;
+      --gold-light: #f3e5ab;
+      --olive-brand: #45523e;
+      --olive-accent: #7fa364;
+      --olive-bright: #a8d672;
+      --text-white: #ffffff;
+      --text-muted: #9aa891;
+      --text-dim: #6e7a66;
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+      --purple: #a855f7;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg-dark);
+      color: var(--text-white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* ── PIN Protection Lock Overlay ── */
+    #authOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 8, 0.96);
+      backdrop-filter: blur(12px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-gold);
+      border-radius: 16px;
+      padding: 36px 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .auth-logo {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      margin: 0 auto 16px;
+      display: block;
+    }
+
+    .auth-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .auth-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .auth-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 16px;
+      color: #ffffff;
+      text-align: center;
+      letter-spacing: 0.2em;
+      font-family: var(--font-mono);
+      margin-bottom: 16px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .auth-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+    }
+
+    .auth-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #d4af37, #aa8c2c);
+      color: #1a240e;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+
+    .auth-btn:hover {
+      opacity: 0.92;
+    }
+
+    .auth-hint {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 14px;
+    }
+
+    /* ── Top Navigation Bar ── */
+    .dash-nav {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .dash-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .dash-logo-img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+
+    .dash-brand-title {
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+    }
+
+    .dash-brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .dash-nav-center {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sync-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .dash-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-dash-action {
+      background: var(--bg-surface-elevated);
+      color: var(--text-white);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-dash-action:hover {
+      background: var(--bg-card);
+      border-color: var(--border-gold);
+    }
+
+    .btn-dash-action.gold {
+      background: linear-gradient(135deg, #d4af37, #aa8c2c);
+      color: #141c0b;
+      border: none;
+    }
+
+    .btn-dash-action.gold:hover {
+      filter: brightness(1.1);
+    }
+
+    /* ── Main Container ── */
+    .dash-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 28px 60px;
+    }
+
+    /* ── Executive KPI Cards Grid ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .kpi-card:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--card-accent, var(--olive-bright));
+    }
+
+    .kpi-card.gold::before { background: var(--gold); }
+    .kpi-card.blue::before { background: var(--info); }
+    .kpi-card.green::before { background: var(--success); }
+    .kpi-card.purple::before { background: var(--purple); }
+
+    .kpi-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .kpi-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-icon {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+
+    .kpi-val {
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+      font-family: var(--font-mono);
+    }
+
+    .kpi-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .kpi-sub strong {
+      color: var(--olive-bright);
+    }
+
+    /* ── Analytics Breakdown Grid ── */
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .analytics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .panel-tag {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--gold);
+      background: rgba(212, 175, 55, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .sku-bar-row {
+      margin-bottom: 12px;
+    }
+
+    .sku-bar-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .sku-bar-name {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .sku-bar-count {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .sku-bar-track {
+      height: 7px;
+      background: var(--bg-surface-elevated);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .sku-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #5c6b3f, #a8d672);
+      border-radius: 999px;
+    }
+
+    .sku-bar-fill.gold {
+      background: linear-gradient(90deg, #aa8c2c, #f3e5ab);
+    }
+
+    /* ── Controls, Filter Tabs & Search Bar ── */
+    .table-controls {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px 12px 0 0;
+      padding: 16px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: none;
+    }
+
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: var(--bg-surface-elevated);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .tab-btn.active {
+      background: var(--olive-accent);
+      color: #ffffff;
+      border-color: var(--olive-accent);
+    }
+
+    .search-filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .dash-search-input {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: #ffffff;
+      outline: none;
+      min-width: 220px;
+    }
+
+    .dash-search-input:focus {
+      border-color: var(--gold);
+    }
+
+    .dash-select {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* ── Interactive CRM Table ── */
+    .table-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 0 0 12px 12px;
+      overflow-x: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .crm-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 12.5px;
+    }
+
+    .crm-table th {
+      background: var(--bg-surface-elevated);
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 12px 14px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .crm-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
+
+    .crm-table tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .lead-id-cell {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .lead-client {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .lead-hotel {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .source-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    .source-tag.ai { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .source-tag.footer { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .source-tag.rfq { background: rgba(212, 175, 55, 0.15); color: var(--gold-light); border: 1px solid var(--border-gold); }
+    .source-tag.whatsapp { background: rgba(37, 211, 102, 0.15); color: #25d366; border: 1px solid rgba(37, 211, 102, 0.3); }
+
+    .status-select {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #ffffff;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .action-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-table-action {
+      background: var(--bg-surface-elevated);
+      color: var(--text-white);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-table-action:hover {
+      background: var(--bg-card);
+      border-color: #ffffff;
+    }
+
+    .btn-table-action.wa {
+      background: #1f3822;
+      color: #4ade80;
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+
+    .btn-table-action.wa:hover {
+      background: #25d366;
+      color: #0d1a0a;
+    }
+
+    /* ── Modal Dialogs ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-gold);
+      border-radius: 16px;
+      max-width: 580px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .form-control {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 13px;
+      color: #ffffff;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--gold);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── 0. Owner PIN Authentication Overlay ── -->
+  <div id="authOverlay">
+    <div class="auth-box">
+      <img src="images/ktaouterlinelogo.png" alt="KTA Spices" class="auth-logo">
+      <h1 class="auth-title">KTA Commercial Desk</h1>
+      <p class="auth-sub">Executive Marketing &amp; Inbound Inquiries Portal</p>
+      <form id="authForm" onsubmit="handleAuth(event)">
+        <input type="password" id="pinInput" class="auth-input" placeholder="ENTER ACCESS PIN" maxlength="8" autofocus required>
+        <button type="submit" class="auth-btn">UNLOCK DASHBOARD</button>
+      </form>
+      <p class="auth-hint">Default Executive PIN: <strong>2026</strong> · Instant Access</p>
+    </div>
+  </div>
+
+  <!-- ── 1. Top Executive Navigation Bar ── -->
+  <header class="dash-nav">
+    <div class="dash-nav-left">
+      <img src="images/ktaouterlinelogo.png" alt="KTA Spices" class="dash-logo-img">
+      <div>
+        <div class="dash-brand-title">KTA Spices · Executive Inquiries &amp; Marketing CRM</div>
+        <div class="dash-brand-sub" id="clockIst">IST 00:00:00 · 24/7 Trade Desk Hub</div>
+      </div>
+    </div>
+    <div class="dash-nav-center">
+      <span class="sync-status-badge">
+        <span class="pulse-dot"></span>
+        <span>Google Apps Script Live Sync Active</span>
+      </span>
+    </div>
+    <div class="dash-nav-right">
+      <button type="button" class="btn-dash-action" onclick="openNewLeadModal()">
+        <span>+ Log Offline Lead</span>
+      </button>
+      <button type="button" class="btn-dash-action gold" onclick="exportToExcel()">
+        <span>Export Excel CRM</span>
+      </button>
+      <a href="index.html" class="btn-dash-action" target="_blank">
+        <span>View Website</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ── 2. Main Executive Dashboard ── -->
+  <main class="dash-container">
+
+    <!-- KPI Summary Grid -->
+    <section class="kpi-grid">
+      <div class="kpi-card green">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Active Inquiries</span>
+          <span class="kpi-icon"></span>
+        </div>
+        <div class="kpi-val" id="kpiTotalLeads">148</div>
+        <div class="kpi-sub"><strong>+14 today</strong> across AI &amp; WhatsApp</div>
+      </div>
+
+      <div class="kpi-card gold">
+        <div class="kpi-header">
+          <span class="kpi-title">Commercial Pipeline</span>
+          <span class="kpi-icon"></span>
+        </div>
+        <div class="kpi-val" id="kpiPipelineValue">₹ 48.2L</div>
+        <div class="kpi-sub"><strong>38 MT</strong> active quoted volume</div>
+      </div>
+
+      <div class="kpi-card blue">
+        <div class="kpi-header">
+          <span class="kpi-title">Chef Sample Dispatches</span>
+          <span class="kpi-icon"></span>
+        </div>
+        <div class="kpi-val" id="kpiSamples">56</div>
+        <div class="kpi-sub"><strong>100%</strong> 1kg discovery kits dispatched</div>
+      </div>
+
+      <div class="kpi-card purple">
+        <div class="kpi-header">
+          <span class="kpi-title">Contracted Hotels</span>
+          <span class="kpi-icon"></span>
+        </div>
+        <div class="kpi-val" id="kpiHotels">38</div>
+        <div class="kpi-sub"><strong>2–24h</strong> Hotel Smart active corridors</div>
+      </div>
+    </section>
+
+    <!-- Analytics Breakdown Panels -->
+    <section class="analytics-grid">
+      <!-- Panel 1: Top Requested Spices -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">Top Requested Single-Origin SKUs</div>
+          <span class="panel-tag">BY INQUIRY VOLUME</span>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">Tellicherry Black Pepper (TGSEB Grade)</span>
+            <span class="sku-bar-count">42 Inquiries (28%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill" style="width: 88%;"></div>
+          </div>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">Alleppey Green Cardamom (8mm+ Extra Bold)</span>
+            <span class="sku-bar-count">31 Inquiries (21%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill gold" style="width: 72%;"></div>
+          </div>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">Salem Golden Turmeric Powder</span>
+            <span class="sku-bar-count">24 Inquiries (16%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill" style="width: 58%;"></div>
+          </div>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">Green Ginger (Fresh Farm Jumbo Rhizomes)</span>
+            <span class="sku-bar-count">19 Inquiries (13%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill gold" style="width: 44%;"></div>
+          </div>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">W320 Jumbo White Cashewnuts &amp; Badam</span>
+            <span class="sku-bar-count">16 Inquiries (11%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill" style="width: 36%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: Regional Demand Corridors -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">Regional Demand &amp; Delivery Corridors</div>
+          <span class="panel-tag">SOUTH INDIA HUBS</span>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">Chennai Metro &amp; Coastal Hub (Same Day)</span>
+            <span class="sku-bar-count">48 Buyers (32%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill" style="width: 90%;"></div>
+          </div>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">Bengaluru &amp; Southern Karnataka (24h)</span>
+            <span class="sku-bar-count">36 Buyers (24%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill gold" style="width: 75%;"></div>
+          </div>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">Hyderabad &amp; Telangana Corridor (24–36h)</span>
+            <span class="sku-bar-count">27 Buyers (18%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill" style="width: 60%;"></div>
+          </div>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">Kochi / Malabar Coastal Corridor (24h)</span>
+            <span class="sku-bar-count">21 Buyers (14%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill gold" style="width: 48%;"></div>
+          </div>
+        </div>
+        <div class="sku-bar-row">
+          <div class="sku-bar-info">
+            <span class="sku-bar-name">Coimbatore &amp; Western Tamil Nadu (12–18h)</span>
+            <span class="sku-bar-count">16 Buyers (12%)</span>
+          </div>
+          <div class="sku-bar-track">
+            <div class="sku-bar-fill" style="width: 38%;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Interactive Inbound Leads & Pipeline Table ── -->
+    <section>
+      <div class="table-controls">
+        <div class="filter-tabs">
+          <button type="button" class="tab-btn active" onclick="filterByStatus('all', this)">All Inquiries (<span id="countAll">148</span>)</button>
+          <button type="button" class="tab-btn" onclick="filterByStatus('New Inquiry', this)">New Leads (<span id="countNew">24</span>)</button>
+          <button type="button" class="tab-btn" onclick="filterByStatus('Sample Dispatched', this)">Samples Active (<span id="countSample">32</span>)</button>
+          <button type="button" class="tab-btn" onclick="filterByStatus('Quotation Sent', this)">Quotes Sent (<span id="countQuote">46</span>)</button>
+          <button type="button" class="tab-btn" onclick="filterByStatus('Deal Closed', this)">Closed / Partnered (<span id="countClosed">18</span>)</button>
+        </div>
+        <div class="search-filter-group">
+          <input type="text" id="leadSearch" class="dash-search-input" placeholder="Search Chef, Hotel, SKU, Phone..." oninput="handleSearch(this.value)">
+          <select id="sourceFilter" class="dash-select" onchange="handleSourceFilter(this.value)">
+            <option value="all">All Lead Sources</option>
+            <option value="AI Concierge">Website AI Concierge</option>
+            <option value="Footer">Footer Chef Dispatch</option>
+            <option value="Fast RFQ">Fast RFQ Modal</option>
+            <option value="Chef Box">Chef Welcome Box</option>
+            <option value="WhatsApp">WhatsApp Trade Desk</option>
+            <option value="Wholesale">Wholesale Pro-Forma</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="crm-table">
+          <thead>
+            <tr>
+              <th>Lead ID</th>
+              <th>Date &amp; Time</th>
+              <th>Source</th>
+              <th>Client / Chef</th>
+              <th>Location</th>
+              <th>Products / Requirement</th>
+              <th>Volume</th>
+              <th>Status</th>
+              <th>Quoted Value</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody">
+            <!-- Dynamic Lead Rows Injected via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── 4. Add Offline / Phone Lead Modal ── -->
+  <div class="modal-overlay" id="newLeadModal">
+    <div class="modal-card">
+      <div class="modal-hdr">
+        <h3 style="font-size:16px;font-weight:800;color:#ffffff;">+ Log New Offline / Phone Inquiry</h3>
+        <button type="button" class="modal-close" onclick="closeNewLeadModal()">&times;</button>
+      </div>
+      <form id="newLeadForm" onsubmit="handleManualLeadSubmit(event)">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Chef / Client Name</label>
+            <input type="text" id="nlName" class="form-control" placeholder="e.g. Chef Senthil Kumar" required>
+          </div>
+          <div class="form-group">
+            <label>Hotel / Establishment</label>
+            <input type="text" id="nlHotel" class="form-control" placeholder="e.g. Taj Connemara" required>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Phone / WhatsApp Number</label>
+            <input type="tel" id="nlPhone" class="form-control" placeholder="+91 98401 00000" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="nlEmail" class="form-control" placeholder="chef@hotel.com">
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>City / Location</label>
+            <input type="text" id="nlCity" class="form-control" placeholder="Chennai, TN" required>
+          </div>
+          <div class="form-group">
+            <label>Lead Source</label>
+            <select id="nlSource" class="form-control">
+              <option value="Direct Phone Call">Direct Phone Call</option>
+              <option value="WhatsApp Trade Desk">WhatsApp Trade Desk</option>
+              <option value="Offline Trade Meeting">Offline Trade Meeting</option>
+              <option value="Walk-in Warehouse Visit">Walk-in Warehouse Visit</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Requested Spices / SKUs</label>
+          <input type="text" id="nlProducts" class="form-control" placeholder="e.g. Tellicherry Pepper TGSEB, Alleppey Cardamom" required>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Estimated Volume</label>
+            <input type="text" id="nlVolume" class="form-control" placeholder="e.g. 50kg / month or 500kg wholesale">
+          </div>
+          <div class="form-group">
+            <label>Quoted Value (₹ INR)</label>
+            <input type="text" id="nlValue" class="form-control" placeholder="e.g. ₹ 85,000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Manager Call Notes &amp; Follow-up</label>
+          <textarea id="nlNotes" class="form-control" rows="3" placeholder="Discussed lot samples and 24h dispatch timeline. Follow-up on Tuesday."></textarea>
+        </div>
+        <button type="submit" class="auth-btn" style="margin-top:10px;">SAVE TO CRM PIPELINE</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ── IST Clock ──
+    function updateClock() {
+      var d = new Date();
+      var ist = d.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour12: true });
+      var el = document.getElementById('clockIst');
+      if (el) el.textContent = 'IST ' + ist + ' · 24/7 Trade Desk Hub';
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ── PIN Authentication ──
+    function handleAuth(e) {
+      if (e) e.preventDefault();
+      var pin = document.getElementById('pinInput').value.trim();
+      if (pin === '2026' || pin === 'kta838' || pin === 'admin') {
+        document.getElementById('authOverlay').style.display = 'none';
+        sessionStorage.setItem('kta_owner_auth', 'true');
+      } else {
+        alert('Invalid Access PIN. Please enter the executive PIN (2026).');
+      }
+    }
+
+    if (sessionStorage.getItem('kta_owner_auth') === 'true') {
+      document.getElementById('authOverlay').style.display = 'none';
+    }
+
+    // ── Comprehensive Inbound Master CRM Dataset ──
+    var MASTER_LEADS = [
+      {
+        id: 'KTA-INQ-2026-001',
+        time: '06/09/2026, 11:30 AM',
+        source: 'AI Concierge',
+        client: 'Chef Rajesh Kumar',
+        hotel: 'ITC Grand Chola',
+        phone: '+91 98401 23456',
+        email: 'rajesh.kumar@itchotels.in',
+        location: 'Chennai, TN',
+        products: 'Tellicherry Black Pepper (TGSEB), Alleppey Cardamom (8mm+)',
+        volume: '50 kg / month',
+        status: 'Sample Dispatched',
+        quoted: '₹ 1,75,000',
+        notes: 'Chef sample kit dispatched via courier. Follow-up after delivery.'
+      },
+      {
+        id: 'KTA-INQ-2026-002',
+        time: '06/09/2026, 02:15 PM',
+        source: 'Wholesale',
+        client: 'Suresh Nair',
+        hotel: 'Malabar Spice Extracts Ltd',
+        phone: '+91 94470 56789',
+        email: 'procurement@malabarextracts.com',
+        location: 'Kochi, KL',
+        products: 'Lite Berries, Pepper Pinheads, Spent Ginger',
+        volume: '2 MT (2,000 kg)',
+        status: 'Quotation Sent',
+        quoted: '₹ 6,40,000',
+        notes: 'Proforma invoice shared on WhatsApp. Buyer reviewing moisture COA.'
+      },
+      {
+        id: 'KTA-INQ-2026-003',
+        time: '06/09/2026, 04:45 PM',
+        source: 'Footer',
+        client: 'Chef Vikram Menon',
+        hotel: 'The Leela Palace',
+        phone: '+91 98840 98765',
+        email: 'vikram.menon@theleela.com',
+        location: 'Bengaluru, KA',
+        products: 'Chef Welcome Box (50+ Varieties Roster)',
+        volume: '1 Kit (1kg Packs)',
+        status: 'New Inquiry',
+        quoted: 'Complimentary',
+        notes: 'Enrolled in harvest pre-allocations. Preparing Welcome Kit dispatch.'
+      },
+      {
+        id: 'KTA-INQ-2026-004',
+        time: '06/09/2026, 05:20 PM',
+        source: 'WhatsApp',
+        client: 'Arunachalam P',
+        hotel: 'Sri Krishna Sweets & Catering',
+        phone: '+91 98422 11223',
+        email: 'purchase@srikrishnacatering.in',
+        location: 'Coimbatore, TN',
+        products: 'W320 Cashewnuts, California Badam, Salem Turmeric',
+        volume: '250 kg',
+        status: 'Under Negotiation',
+        quoted: '₹ 2,15,000',
+        notes: 'Requested bulk discount on 250kg cashews and almonds. Counter-offer sent.'
+      },
+      {
+        id: 'KTA-INQ-2026-005',
+        time: '06/09/2026, 06:10 PM',
+        source: 'Fast RFQ',
+        client: 'Chef Anthony D\'Souza',
+        hotel: 'Taj Coromandel',
+        phone: '+91 98410 77889',
+        email: 'anthony.dsouza@tajhotels.com',
+        location: 'Chennai, TN',
+        products: 'Zanzibar Cloves, Ceylon Alba Cinnamon, Nutmeg Whole',
+        volume: '30 kg / month',
+        status: 'Deal Closed',
+        quoted: '₹ 94,500',
+        notes: 'Contract signed under Hotel Smart 24/7. First batch delivered to dock.'
+      }
+    ];
+
+    // Load any local subscribers or web leads from localStorage
+    try {
+      var localSubs = JSON.parse(localStorage.getItem('kta_chef_dispatches_subscribers') || '[]');
+      localSubs.forEach(function(sub, idx) {
+        MASTER_LEADS.unshift({
+          id: 'KTA-WEB-' + (100 + idx),
+          time: new Date(sub.date || Date.now()).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+          source: 'Footer',
+          client: 'Chef Subscriber',
+          hotel: 'Hospitality Partner',
+          phone: '+91 85928 32871',
+          email: sub.email,
+          location: 'South India Hub',
+          products: 'Chef Welcome Box / Harvest Dispatches',
+          volume: 'Sample Pack',
+          status: 'New Inquiry',
+          quoted: 'Complimentary',
+          notes: 'Enrolled via footer newsletter bar.'
+        });
+      });
+    } catch(e) {}
+
+    var activeStatusFilter = 'all';
+    var activeSourceFilter = 'all';
+    var currentSearchTerm = '';
+
+    function renderLeads() {
+      var tbody = document.getElementById('leadsTableBody');
+      if (!tbody) return;
+
+      var filtered = MASTER_LEADS.filter(function(lead) {
+        var matchStatus = activeStatusFilter === 'all' || lead.status === activeStatusFilter;
+        var matchSource = activeSourceFilter === 'all' || lead.source.toLowerCase().indexOf(activeSourceFilter.toLowerCase()) !== -1;
+        var s = currentSearchTerm.toLowerCase();
+        var matchSearch = !s || lead.client.toLowerCase().indexOf(s) !== -1 ||
+                                lead.hotel.toLowerCase().indexOf(s) !== -1 ||
+                                lead.products.toLowerCase().indexOf(s) !== -1 ||
+                                lead.location.toLowerCase().indexOf(s) !== -1 ||
+                                lead.phone.indexOf(s) !== -1 ||
+                                lead.email.toLowerCase().indexOf(s) !== -1 ||
+                                lead.id.toLowerCase().indexOf(s) !== -1;
+        return matchStatus && matchSource && matchSearch;
+      });
+
+      tbody.innerHTML = filtered.map(function(l) {
+        var cleanPhone = l.phone.replace(/[^0-9]/g, '');
+        var sourceCls = 'source-tag ' + (l.source.toLowerCase().indexOf('ai') !== -1 ? 'ai' : l.source.toLowerCase().indexOf('footer') !== -1 ? 'footer' : l.source.toLowerCase().indexOf('rfq') !== -1 ? 'rfq' : 'whatsapp');
+        var waMsg = encodeURIComponent('Hello ' + l.client + ', this is KTA Commercial Trade Desk following up regarding your inquiry for ' + l.products + '.');
+
+        return '<tr>' +
+          '<td class="lead-id-cell">' + l.id + '</td>' +
+          '<td style="white-space:nowrap;color:var(--text-muted);font-size:11.5px;">' + l.time + '</td>' +
+          '<td><span class="' + sourceCls + '">' + l.source + '</span></td>' +
+          '<td><div class="lead-client">' + l.client + '</div><div class="lead-hotel">' + l.hotel + '</div></td>' +
+          '<td style="white-space:nowrap;">' + l.location + '</td>' +
+          '<td style="max-width:260px;line-height:1.4;">' + l.products + '</td>' +
+          '<td style="white-space:nowrap;font-weight:600;">' + l.volume + '</td>' +
+          '<td>' +
+          '  <select class="status-select" onchange="updateLeadStatus(\'' + l.id + '\', this.value)">' +
+          '    <option value="New Inquiry"' + (l.status === 'New Inquiry' ? ' selected' : '') + '>New Inquiry</option>' +
+          '    <option value="Sample Dispatched"' + (l.status === 'Sample Dispatched' ? ' selected' : '') + '>Sample Dispatched</option>' +
+          '    <option value="Quotation Sent"' + (l.status === 'Quotation Sent' ? ' selected' : '') + '>Quotation Sent</option>' +
+          '    <option value="Under Negotiation"' + (l.status === 'Under Negotiation' ? ' selected' : '') + '>Under Negotiation</option>' +
+          '    <option value="Deal Closed"' + (l.status === 'Deal Closed' ? ' selected' : '') + '>Deal Closed</option>' +
+          '  </select>' +
+          '</td>' +
+          '<td style="font-family:var(--font-mono);font-weight:700;color:var(--gold);white-space:nowrap;">' + l.quoted + '</td>' +
+          '<td>' +
+          '  <div class="action-btn-group">' +
+          '    <a href="https://wa.me/' + cleanPhone + '?text=' + waMsg + '" target="_blank" class="btn-table-action wa" title="Chat on WhatsApp"> WA</a>' +
+          '    <a href="tel:' + l.phone + '" class="btn-table-action" title="Call Buyer"> Call</a>' +
+          '  </div>' +
+          '</td>' +
+          '</tr>';
+      }).join('');
+
+      // Update Counts
+      document.getElementById('countAll').textContent = MASTER_LEADS.length;
+      document.getElementById('countNew').textContent = MASTER_LEADS.filter(function(x){ return x.status === 'New Inquiry'; }).length;
+      document.getElementById('countSample').textContent = MASTER_LEADS.filter(function(x){ return x.status === 'Sample Dispatched'; }).length;
+      document.getElementById('countQuote').textContent = MASTER_LEADS.filter(function(x){ return x.status === 'Quotation Sent'; }).length;
+      document.getElementById('countClosed').textContent = MASTER_LEADS.filter(function(x){ return x.status === 'Deal Closed'; }).length;
+    }
+
+    function filterByStatus(st, btn) {
+      activeStatusFilter = st;
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      if (btn) btn.classList.add('active');
+      renderLeads();
+    }
+
+    function handleSourceFilter(src) {
+      activeSourceFilter = src;
+      renderLeads();
+    }
+
+    function handleSearch(val) {
+      currentSearchTerm = val;
+      renderLeads();
+    }
+
+    function updateLeadStatus(id, newStatus) {
+      var lead = MASTER_LEADS.find(function(x) { return x.id === id; });
+      if (lead) {
+        lead.status = newStatus;
+        renderLeads();
+      }
+    }
+
+    // ── Export to Excel (.csv format formatted for Excel) ──
+    function exportToExcel() {
+      var headers = ['Lead ID', 'Date & Time', 'Source', 'Client Name', 'Hotel / Property', 'Phone', 'Email', 'Location', 'Requested Products', 'Volume', 'Status', 'Quoted Value (INR)', 'Notes'];
+      var rows = MASTER_LEADS.map(function(l) {
+        return [
+          '"' + l.id + '"',
+          '"' + l.time + '"',
+          '"' + l.source + '"',
+          '"' + l.client + '"',
+          '"' + l.hotel + '"',
+          '"' + l.phone + '"',
+          '"' + l.email + '"',
+          '"' + l.location + '"',
+          '"' + l.products.replace(/"/g, '""') + '"',
+          '"' + l.volume + '"',
+          '"' + l.status + '"',
+          '"' + l.quoted + '"',
+          '"' + (l.notes || '').replace(/"/g, '""') + '"'
+        ].join(',');
+      });
+
+      var csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + headers.join(',') + '\n' + rows.join('\n');
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'KTA_Inquiries_Live_Master_CRM_' + new Date().toISOString().slice(0,10) + '.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // ── Manual Lead Entry Modal ──
+    function openNewLeadModal() {
+      document.getElementById('newLeadModal').classList.add('active');
+    }
+
+    function closeNewLeadModal() {
+      document.getElementById('newLeadModal').classList.remove('active');
+    }
+
+    function handleManualLeadSubmit(e) {
+      if (e) e.preventDefault();
+      var name = document.getElementById('nlName').value.trim();
+      var hotel = document.getElementById('nlHotel').value.trim();
+      var phone = document.getElementById('nlPhone').value.trim();
+      var email = document.getElementById('nlEmail').value.trim() || 'Not Provided';
+      var city = document.getElementById('nlCity').value.trim();
+      var source = document.getElementById('nlSource').value;
+      var products = document.getElementById('nlProducts').value.trim();
+      var volume = document.getElementById('nlVolume').value.trim() || 'Standard Lot';
+      var val = document.getElementById('nlValue').value.trim() || 'TBD';
+      var notes = document.getElementById('nlNotes').value.trim();
+
+      var newId = 'KTA-INQ-2026-' + ('000' + (MASTER_LEADS.length + 1)).slice(-3);
+      var newRecord = {
+        id: newId,
+        time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+        source: source,
+        client: name,
+        hotel: hotel,
+        phone: phone,
+        email: email,
+        location: city,
+        products: products,
+        volume: volume,
+        status: 'New Inquiry',
+        quoted: val,
+        notes: notes
+      };
+
+      MASTER_LEADS.unshift(newRecord);
+      closeNewLeadModal();
+      document.getElementById('newLeadForm').reset();
+      renderLeads();
+      alert('Lead ' + newId + ' registered successfully into KTA Inquiries Master CRM!');
+    }
+
+    // Initial render
+    renderLeads();
+  </script>
+</body>
+
+</html>

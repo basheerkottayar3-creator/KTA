@@ -946,16 +946,16 @@
 
     .stack-card {
       position: absolute;
-      width: min(280px, 80vw);
+      width: min(296px, 84vw);
       height: 350px;
       left: 50%;
       top: 0;
-      margin-left: calc(min(280px, 80vw) / -2);
+      margin-left: calc(min(296px, 84vw) / -2);
       border-radius: 24px;
       background: #fff;
       border: 1px solid var(--border);
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
-      padding: 24px 20px;
+      padding: 22px 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -1046,9 +1046,13 @@
     }
 
     .stack-card-sub {
-      font-size: 11.5px;
+      font-size: 10.8px;
       color: var(--muted);
       margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: -0.01em;
     }
 
     .stack-deck-indicators {
@@ -2459,16 +2463,14 @@
   </section>
 
   <!-- ══════════════════════════════════
-       SECTION 2: Curated Spice Transit (Stacked Deck UI with Mobile Scroll)
+       SECTION 2: Chef Favourites & Curated Spice Transit
        ══════════════════════════════════ -->
   <section class="premium-section" id="catalogueDeckSection">
     <div class="container">
       <div class="text-center" data-reveal style="text-align:center;margin:0 auto">
-        <span class="eyebrow" style="display:block;margin:0 auto 12px">Interactive Catalogue Deck</span>
-        <h2 class="display-lg mx-auto" style="max-width:540px;text-align:center;margin:0 auto 16px">Curated Spice
-          Transit.</h2>
-        <p class="lead text-center mx-auto" style="max-width:500px;text-align:center;margin:0 auto">50+ SKUs
-          batch-certified per lot.</p>
+        <span class="eyebrow" style="display:block;margin:0 auto 12px">Chef Favourites &amp; Essential Harvests</span>
+        <h2 class="display-lg mx-auto" style="max-width:540px;text-align:center;margin:0 auto 16px">Curated Chef Favourites.</h2>
+        <p class="lead text-center mx-auto" style="max-width:540px;text-align:center;margin:0 auto">High-potency, single-origin spice harvests, carefully sourced and graded for exceptional purity, aroma, and flavour.</p>
       </div>
     </div>
 
@@ -2485,47 +2487,47 @@
             </div>
             <div>
               <div class="stack-card-title">BLACK PEPPER</div>
-              <div class="stack-card-sub">HSN: 09041140 · Tellicherry Grade</div>
+              <div class="stack-card-sub">HSN: 09041140 · Sourced &amp; Graded by KTA</div>
             </div>
           </div>
           <div class="stack-card" data-pos="1" onclick="nextStackCard()">
+            <span class="stack-card-badge">Single Origin</span>
+            <div class="stack-card-thumb">
+              <img src="images/images/pepperpowder.webp" alt="KTA Black Pepper Powder Pouch" decoding="async">
+            </div>
+            <div>
+              <div class="stack-card-title">BLACK PEPPER POWDER</div>
+              <div class="stack-card-sub">HSN: 09041200 · Sourced &amp; Graded by KTA</div>
+            </div>
+          </div>
+          <div class="stack-card" data-pos="2" onclick="nextStackCard()">
+            <span class="stack-card-badge">Single Origin</span>
+            <div class="stack-card-thumb">
+              <img src="images/images/corianderpowder.webp" alt="KTA Dhania Powder Pouch" decoding="async">
+            </div>
+            <div>
+              <div class="stack-card-title">DHANIA POWDER</div>
+              <div class="stack-card-sub">HSN: 09092200 · Sourced &amp; Graded by KTA</div>
+            </div>
+          </div>
+          <div class="stack-card" data-pos="3" onclick="nextStackCard()">
+            <span class="stack-card-badge">Single Origin</span>
+            <div class="stack-card-thumb">
+              <img src="images/images/JeeraPowder.webp" alt="KTA Jeera Powder Pouch" decoding="async">
+            </div>
+            <div>
+              <div class="stack-card-title">JEERA POWDER</div>
+              <div class="stack-card-sub">HSN: 09093200 · Sourced &amp; Graded by KTA</div>
+            </div>
+          </div>
+          <div class="stack-card" data-pos="4" onclick="nextStackCard()">
             <span class="stack-card-badge">Single Origin</span>
             <div class="stack-card-thumb">
               <img src="images/images/KashmiriChilly.webp" alt="KTA Kashmiri Chilli Pouch" decoding="async">
             </div>
             <div>
               <div class="stack-card-title">KASHMIRI CHILLY</div>
-              <div class="stack-card-sub">HSN: 09042219 · ASTA 120+ Grade</div>
-            </div>
-          </div>
-          <div class="stack-card" data-pos="2" onclick="nextStackCard()">
-            <span class="stack-card-badge">Single Origin</span>
-            <div class="stack-card-thumb">
-              <img src="images/images/turmericpowder.webp" alt="KTA Turmeric Powder Pouch" decoding="async">
-            </div>
-            <div>
-              <div class="stack-card-title">TURMERIC POWDER</div>
-              <div class="stack-card-sub">HSN: 09103030 · 5%+ Curcumin</div>
-            </div>
-          </div>
-          <div class="stack-card" data-pos="3" onclick="nextStackCard()">
-            <span class="stack-card-badge">Single Origin</span>
-            <div class="stack-card-thumb">
-              <img src="images/images/whitecardamom.webp" alt="KTA Cardamom Pouch" decoding="async">
-            </div>
-            <div>
-              <div class="stack-card-title">WHITE CARDAMOM</div>
-              <div class="stack-card-sub">HSN: 09083140 · Selected Grade</div>
-            </div>
-          </div>
-          <div class="stack-card" data-pos="4" onclick="nextStackCard()">
-            <span class="stack-card-badge">Single Origin</span>
-            <div class="stack-card-thumb">
-              <img src="images/images/JeeraWhole.webp" alt="KTA Jeera Whole Pouch" decoding="async">
-            </div>
-            <div>
-              <div class="stack-card-title">JEERA WHOLE</div>
-              <div class="stack-card-sub">HSN: 09093119 · Whole Cumin</div>
+              <div class="stack-card-sub">HSN: 09042219 · Sourced &amp; Graded by KTA</div>
             </div>
           </div>
         </div>
@@ -2536,11 +2538,10 @@
       <div class="stack-info-panel" id="stackInfoPanel">
         <span class="stack-info-eyebrow" id="stkEyebrow">Active Product — 01 / 05</span>
         <div class="stack-info-name" id="stkName">BLACK PEPPER</div>
-        <div class="stack-info-desc" id="stkDesc">Bold export-grade Tellicherry whole peppercorns. High piperine
-          content, intense penetrating aroma and clean lingering heat. Single Origin certified.</div>
+        <div class="stack-info-desc" id="stkDesc">Bold export-grade Tellicherry whole peppercorns. Sourced and graded by KTA alone with intense penetrating aroma and clean heat.</div>
         <div class="stack-info-chips" id="stkChips">
           <span class="stack-info-chip">Single Origin</span>
-          <span class="stack-info-chip">FSSAI Certified</span>
+          <span class="stack-info-chip">Sourced &amp; Graded by KTA</span>
           <span class="stack-info-chip">HSN: 09041140</span>
           <span class="stack-info-chip">Wholesale Supply</span>
         </div>
@@ -2564,7 +2565,34 @@
           <img src="images/images/BlackPepper.webp" alt="KTA Black Pepper Pouch" loading="lazy" decoding="async">
         </div>
         <div class="sms-name">BLACK PEPPER</div>
-        <div class="sms-origin">Tellicherry Grade</div>
+        <div class="sms-origin">Sourced &amp; Graded by KTA</div>
+        <a href="catalogue.html" class="sms-btn">View</a>
+      </div>
+      <div class="sms-card">
+        <div class="sms-hsn">HSN: 09041200</div>
+        <div class="sms-thumb">
+          <img src="images/images/pepperpowder.webp" alt="KTA Black Pepper Powder Pouch" loading="lazy" decoding="async">
+        </div>
+        <div class="sms-name">BLACK PEPPER POWDER</div>
+        <div class="sms-origin">Sourced &amp; Graded by KTA</div>
+        <a href="catalogue.html" class="sms-btn">View</a>
+      </div>
+      <div class="sms-card">
+        <div class="sms-hsn">HSN: 09092200</div>
+        <div class="sms-thumb">
+          <img src="images/images/corianderpowder.webp" alt="KTA Dhania Powder Pouch" loading="lazy" decoding="async">
+        </div>
+        <div class="sms-name">DHANIA POWDER</div>
+        <div class="sms-origin">Sourced &amp; Graded by KTA</div>
+        <a href="catalogue.html" class="sms-btn">View</a>
+      </div>
+      <div class="sms-card">
+        <div class="sms-hsn">HSN: 09093200</div>
+        <div class="sms-thumb">
+          <img src="images/images/JeeraPowder.webp" alt="KTA Jeera Powder Pouch" loading="lazy" decoding="async">
+        </div>
+        <div class="sms-name">JEERA POWDER</div>
+        <div class="sms-origin">Sourced &amp; Graded by KTA</div>
         <a href="catalogue.html" class="sms-btn">View</a>
       </div>
       <div class="sms-card">
@@ -2573,34 +2601,7 @@
           <img src="images/images/KashmiriChilly.webp" alt="KTA Kashmiri Chilli Pouch" loading="lazy" decoding="async">
         </div>
         <div class="sms-name">KASHMIRI CHILLY</div>
-        <div class="sms-origin">ASTA 120+ Grade</div>
-        <a href="catalogue.html" class="sms-btn">View</a>
-      </div>
-      <div class="sms-card">
-        <div class="sms-hsn">HSN: 09103030</div>
-        <div class="sms-thumb">
-          <img src="images/images/turmericpowder.webp" alt="KTA Turmeric Powder Pouch" loading="lazy" decoding="async">
-        </div>
-        <div class="sms-name">TURMERIC POWDER</div>
-        <div class="sms-origin">5%+ Curcumin Batch</div>
-        <a href="catalogue.html" class="sms-btn">View</a>
-      </div>
-      <div class="sms-card">
-        <div class="sms-hsn">HSN: 09083140</div>
-        <div class="sms-thumb">
-          <img src="images/images/whitecardamom.webp" alt="KTA Cardamom Pouch" loading="lazy" decoding="async">
-        </div>
-        <div class="sms-name">WHITE CARDAMOM</div>
-        <div class="sms-origin">Selected Grade</div>
-        <a href="catalogue.html" class="sms-btn">View</a>
-      </div>
-      <div class="sms-card">
-        <div class="sms-hsn">HSN: 09093119</div>
-        <div class="sms-thumb">
-          <img src="images/images/JeeraWhole.webp" alt="KTA Jeera Whole Pouch" loading="lazy" decoding="async">
-        </div>
-        <div class="sms-name">JEERA WHOLE</div>
-        <div class="sms-origin">Whole Cumin</div>
+        <div class="sms-origin">Sourced &amp; Graded by KTA</div>
         <a href="catalogue.html" class="sms-btn">View</a>
       </div>
       <div class="sms-card sms-view-all">
@@ -2611,7 +2612,7 @@
     <!-- Mobile-Only Easy Navigation Button -->
     <div class="sms-mobile-full-cta" data-reveal>
       <a href="catalogue.html" class="sms-mobile-full-btn" aria-label="See Full Catalogue">
-        <span>See Full Catalogue (46+ Varieties)</span>
+        <span>See Full Catalogue (50+ Varieties)</span>
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
@@ -2736,34 +2737,7 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════
-       SECTION: Trusted by Culinary Institutions (Flamingo Estate Style - Refined)
-       ══════════════════════════════════ -->
-  <section class="trusted-culture-sec" data-reveal>
-    <div class="container">
-      <span class="tc-eyebrow">OUR STANDING IN CULINARY INSTITUTIONS</span>
-      <h2 class="tc-quote">
-        “The benchmark for unadulterated spices, single-origin consistency, and rapid 24-hour replenishment across our kitchens.”
-      </h2>
-      <div class="tc-logos-strip">
-        <div class="tc-logo-item" title="Copper Kitchen Multi-Outlet Restaurants">
-          <span class="tc-brand-copper">COPPER KITCHEN</span>
-        </div>
-        <div class="tc-logo-item" title="Palmshore Fine Dining &amp; Arab-Malabar Cuisine">
-          <span class="tc-brand-palmshore">PALMSHORE</span>
-        </div>
-        <div class="tc-logo-item" title="Dindigul Thalappakatti Biryani Legacy">
-          <span class="tc-brand-thalappakatti">THALAPPAKATTI</span>
-        </div>
-        <div class="tc-logo-item" title="Buhari Legendary Restaurant Group Est. 1951">
-          <span class="tc-brand-buhari">BUHARI</span>
-        </div>
-        <div class="tc-logo-item" title="Anjappar Chettinad Global Kitchens">
-          <span class="tc-brand-anjappar">ANJAPPAR</span>
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <section class="heritage-merchant">
     <div class="heritage-merchant-text">
@@ -2887,9 +2861,8 @@
   <section class="reviews-section">
     <div class="container">
       <div class="text-center" style="margin-bottom:28px" data-reveal>
-        <span class="eyebrow" style="display:block;margin:0 auto 10px">Chef's Testimony</span>
-        <h2 class="display-lg mx-auto" style="max-width:520px;text-align:center;margin:0 auto 14px">Loved by
-          Chefs.<br>Preferred by Businesses.</h2>
+        <span class="eyebrow" style="display:block;margin:0 auto 10px">Chef Endorsements</span>
+        <h2 class="display-lg mx-auto" style="max-width:520px;text-align:center;margin:0 auto 14px">Trusted by Leading Chefs.</h2>
         <p class="lead text-center mx-auto" style="max-width:460px;text-align:center;margin:0 auto">The kitchens that
           set the standard in Indian hospitality have quietly depended on KTA for years.</p>
       </div>
@@ -2905,183 +2878,117 @@
     <!-- Smooth Train Movement UI Strip -->
     <div class="chef-train-wrap" data-reveal data-delay="2">
       <div class="chef-train-track" id="reviewsTrack">
-        <!-- 1. Chef Arvind Kumar -->
+        <!-- 1. Executive Chef -->
         <div class="rcard">
           <div class="rcard-head">
-            <div class="rcard-avatar" style="background:#435128">AK</div>
+            <div class="rcard-avatar" style="background:#435128">EC</div>
             <div>
-              <div class="rcard-name">Chef Arvind Kumar</div>
-              <div class="rcard-role">Executive Chef · The Leela Palace</div>
+              <div class="rcard-name">Executive Chef</div>
             </div>
           </div>
-          <div class="rcard-text">"KTA Spices have transformed the consistency of our signature dishes. The aroma,
-            essential oil concentration, and protective packaging are absolute top class."</div>
+          <div class="rcard-text">"KTA Spices have transformed the consistency of our signature dishes. The single-origin aroma,
+            rich natural density, and protective packaging are absolute top class."</div>
           <div class="rcard-stars">
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
         </div>
 
-        <!-- 2. Chef Sreeram Nair -->
+        <!-- 2. Culinary Director -->
         <div class="rcard">
           <div class="rcard-head">
-            <div class="rcard-avatar" style="background:#5c6b3f">SN</div>
+            <div class="rcard-avatar" style="background:#5c6b3f">CD</div>
             <div>
-              <div class="rcard-name">Chef Sreeram Nair</div>
-              <div class="rcard-role">Executive Chef · Luxury Resort &amp; Fine Dining</div>
+              <div class="rcard-name">Culinary Director</div>
             </div>
           </div>
           <div class="rcard-text">"In high-pressure 5-star kitchen service, zero supply downtime is essential. Hotel
             Smart 24/7 has been our lifeline for priority stock replenishment."</div>
           <div class="rcard-stars">
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
         </div>
 
-        <!-- 3. Chef Venkatesh Bhat -->
+        <!-- 3. Corporate Chef -->
         <div class="rcard">
           <div class="rcard-head">
-            <div class="rcard-avatar" style="background:#3d4e22">VB</div>
+            <div class="rcard-avatar" style="background:#3d4e22">CC</div>
             <div>
-              <div class="rcard-name">Chef Venkatesh Bhat</div>
-              <div class="rcard-role">Award-Winning Culinary Director</div>
+              <div class="rcard-name">Corporate Chef</div>
             </div>
           </div>
-          <div class="rcard-text">"The ASTA color rating and lot traceability in KTA spice batches meet international
+          <div class="rcard-text">"The pristine origin purity and direct lot traceability in KTA spice batches meet international
             luxury culinary standards. Highly recommended."</div>
           <div class="rcard-stars">
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
         </div>
 
-        <!-- 4. Chef Ranveer Brar -->
+        <!-- 4. Master Chef -->
         <div class="rcard">
           <div class="rcard-head">
-            <div class="rcard-avatar" style="background:#6b7f50">RB</div>
+            <div class="rcard-avatar" style="background:#6b7f50">MC</div>
             <div>
-              <div class="rcard-name">Chef Ranveer Brar</div>
-              <div class="rcard-role">Masterchef India Judge &amp; Author</div>
+              <div class="rcard-name">Master Chef</div>
             </div>
           </div>
           <div class="rcard-text">"From single-origin Tellicherry peppercorns to hand-picked Alleppey cardamom, KTA
-            provides pristine raw notes that define heritage regional cuisine."</div>
+            provides pristine raw notes that define authentic regional cuisine."</div>
           <div class="rcard-stars">
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
         </div>
 
-        <!-- 5. Chef Vikas Khanna -->
+        <!-- 5. Culinary Director -->
         <div class="rcard">
           <div class="rcard-head">
-            <div class="rcard-avatar" style="background:#435128">VK</div>
+            <div class="rcard-avatar" style="background:#435128">CD</div>
             <div>
-              <div class="rcard-name">Chef Vikas Khanna</div>
-              <div class="rcard-role">Michelin-Starred Chef &amp; Author</div>
+              <div class="rcard-name">Culinary Director</div>
             </div>
           </div>
           <div class="rcard-text">"Finding unadulterated highland spices at commercial volumes was always a challenge
             until we partnered with KTA. Their batch purity is unmatched."</div>
           <div class="rcard-stars">
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
         </div>
 
-        <!-- 6. Chef Manjit Gill -->
+        <!-- 6. Corporate Executive Chef -->
         <div class="rcard">
           <div class="rcard-head">
-            <div class="rcard-avatar" style="background:#2d3a1a">MG</div>
+            <div class="rcard-avatar" style="background:#2d3a1a">CC</div>
             <div>
-              <div class="rcard-name">Chef Manjit Gill</div>
-              <div class="rcard-role">President, IFCA</div>
+              <div class="rcard-name">Corporate Executive Chef</div>
             </div>
           </div>
-          <div class="rcard-text">"KTA's clinical grading protocols and sustainable origin sourcing integrity set the
+          <div class="rcard-text">"KTA's estate sourcing and grading protocols set the
             benchmark for modern luxury hospitality procurement."</div>
           <div class="rcard-stars">
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="rcard-star" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="rcard-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
         </div>
       </div>
@@ -3089,36 +2996,36 @@
   </section>
 
   <!-- ══════════════════════════════════
-       SECTION 6: Chef Welcome Box / Discovery Kit
+       SECTION 6: Culinary Discovery Samples
        ══════════════════════════════════ -->
   <section class="welcome-box-showcase" id="welcomeBox">
     <div class="container">
       <div class="wb-showcase-grid">
         <div class="wb-content-side" data-reveal>
-          <span class="wb-badge-pill">Complimentary Chef Discovery Kit</span>
+          <span class="wb-badge-pill">Culinary Discovery Samples</span>
           <h2 class="wb-heading">We Provide Chef Welcome Boxes.</h2>
-          <p class="wb-lead">Experience the unadulterated single-origin aroma before placing your quarterly
-            institutional orders. We hand-deliver a complimentary discovery kit of our verified spice harvests straight
-            to Executive Chefs and Hotel Procurement Directors.</p>
+          <p class="wb-lead">Experience the unadulterated single-origin aroma before placing your institutional
+            orders. Discovery sample dispatches are coordinated based on your kitchen location across South India
+            for Executive Chefs and Hotel Procurement Directors.</p>
 
           <div class="wb-points-list">
-            <div class="wb-point"><span class="wb-point-dot"></span> 100% Complimentary Delivery</div>
-            <div class="wb-point"><span class="wb-point-dot"></span> Certified Single-Origin Harvests</div>
-            <div class="wb-point"><span class="wb-point-dot"></span> Clinical Batch QC Certificates</div>
-            <div class="wb-point"><span class="wb-point-dot"></span> Hand-Delivered to Executive Chefs</div>
+            <div class="wb-point"><span class="wb-point-dot"></span> Sourced &amp; Graded by KTA Alone</div>
+            <div class="wb-point"><span class="wb-point-dot"></span> Pristine Single-Origin Harvests</div>
+            <div class="wb-point"><span class="wb-point-dot"></span> 100% Unadulterated Estate Purity</div>
+            <div class="wb-point"><span class="wb-point-dot"></span> Location-Based Kitchen Dispatch</div>
           </div>
 
           <div style="display:flex;gap:14px;flex-wrap:wrap">
             <a href="partnership.html#registerKitchen" class="btn btn-primary"
-              style="background:#435128;border-radius:999px;padding:14px 30px">Claim Welcome Box</a>
-            <a href="https://wa.me/918592832871?text=Hello%20KTA%20Trade%20Desk%2C%20I%20am%20an%20Executive%20Chef%20requesting%20the%20complimentary%20Chef%20Welcome%20Discovery%20Kit."
+              style="background:#435128;border-radius:999px;padding:14px 30px">Request Kitchen Samples</a>
+            <a href="https://wa.me/918592832871?text=Hello%20KTA%20Trade%20Desk%2C%20I%20am%20an%20Executive%20Chef%20requesting%20Spice%20Discovery%20Samples."
               target="_blank" rel="noopener" class="btn btn-outline"
               style="border-radius:999px;padding:14px 28px">WhatsApp Desk</a>
           </div>
         </div>
 
         <div class="wb-frame" data-reveal data-delay="1">
-          <img src="images/ktachefboxnew.webp" alt="KTA Chef Discovery Welcome Sample Box for Executive Hotel Chefs"
+          <img src="images/ktachefboxnew.webp" alt="KTA Chef Discovery Sample Box for Executive Hotel Chefs"
             loading="lazy" decoding="async">
         </div>
       </div>
@@ -3149,8 +3056,7 @@
               and consignments</strong> (tailored across single or mixed spice varieties for hotels, cloud kitchens, and
             institutional buyers, up to multi-ton lots). Products are sealed in heavy-duty food-grade master packaging.
             Minimum wholesale procurement is <strong>500kg+</strong>. For verified Executive Chefs and Hotel Purchase
-            Directors testing new menu lots, our <strong>Welcome Sample Discovery Kits</strong> are provided with zero
-            minimums.
+            Directors testing new menu lots, our <strong>Spice Discovery Samples</strong> are coordinated directly with our culinary desk.
           </div>
         </div>
 
@@ -3161,9 +3067,8 @@
             <div class="faq-btn-icon">+</div>
           </div>
           <div class="faq-body">
-            Under our <strong>Hotel Smart 24/7</strong> logistics network, orders placed by commercial kitchen accounts
-            are dispatched within <strong>2 to 24 hours</strong> (with flexible delivery schedules tailored to your
-            culinary volume and location) with cold-chain and moisture-locked protection straight to your receiving bay.
+            Under our <strong>Hotel Smart 24/7</strong> logistics network, replenishment orders placed by partnered commercial kitchen accounts
+            are dispatched within <strong>2 to 24 hours</strong> with moisture-locked protection straight to your receiving bay. Discovery sample consignments are dispatched based on geographic kitchen location.
           </div>
         </div>
 
@@ -3174,21 +3079,20 @@
             <div class="faq-btn-icon">+</div>
           </div>
           <div class="faq-body">
-            Yes. Every consignment carries an origin lot number, moisture threshold analysis, ASTA color value, and
-            FSSAI certificate. We never blend harvests or add artificial polishing agents.
+            Yes. Every consignment carries an origin lot number, moisture threshold analysis, and FSSAI certificate. Sourced and graded by KTA alone, we never blend harvests or add artificial polishing agents.
           </div>
         </div>
 
         <!-- FAQ 4 -->
         <div class="faq-card">
           <div class="faq-header" onclick="toggleFaq(this)">
-            <span class="faq-title">How do Executive Chefs receive the Welcome Discovery Kit?</span>
+            <span class="faq-title">How do Executive Chefs receive Spice Discovery Samples?</span>
             <div class="faq-btn-icon">+</div>
           </div>
           <div class="faq-body">
             Simply visit the <a href="partnership.html#registerKitchen"
               style="color:var(--olive);font-weight:700">Partnership page</a>, enter your property name and contact
-            number, and our trade concierge will coordinate delivery of your complimentary box within 2 to 24 hours.
+            number, and our culinary trade desk will coordinate sample dispatch according to your kitchen location. For enrolled Hotel Smart partners, replenishment dispatches are guaranteed within 2 to 24 hours.
           </div>
         </div>
 
@@ -3320,7 +3224,7 @@
         <div class="ef-bottom-links">
           <a href="privacy.html">Privacy</a>
           <span class="ef-sep">|</span>
-          <a href="privacy.html#terms">Terms of Service</a>
+          <a href="terms.html">Terms of Service</a>
           <span class="ef-sep">|</span>
           <a href="contact.html">Accessibility Statement</a>
         </div>
@@ -3344,30 +3248,30 @@
 
       <div class="chef-popup-content">
         <div>
-          <span class="chef-popup-eyebrow">Executive Chef Program</span>
-          <h2 class="chef-popup-title" id="chefPopupTitle">Claim Your <span class="chef-popup-highlight">Free Chef Welcome Box</span>.</h2>
-          <p class="chef-popup-desc">Partner with KTA. Test our single-origin Highland spice harvests directly in your kitchen pass before placing bulk orders.</p>
+          <span class="chef-popup-eyebrow">Culinary Partnership Program</span>
+          <h2 class="chef-popup-title" id="chefPopupTitle">Culinary Discovery <span class="chef-popup-highlight">&amp; Origin Samples</span>.</h2>
+          <p class="chef-popup-desc">Partner with KTA. Sourced and graded by KTA alone. Test our single-origin Highland spice harvests directly in your kitchen pass before placing commercial contracts.</p>
           
           <div class="chef-popup-specs">
             <div class="chef-spec-card">
               <span class="chef-spec-num"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
-              <div class="chef-spec-text"><strong>100% Free Sample Kit:</strong> Zero trial fees or commitment.</div>
+              <div class="chef-spec-text"><strong>Sourced &amp; Graded by KTA Alone:</strong> 100% single-origin estate harvests.</div>
             </div>
             <div class="chef-spec-card">
               <span class="chef-spec-num"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
-              <div class="chef-spec-text"><strong>Clinical QC Reports:</strong> Lot moisture &amp; volatile oil assay included.</div>
+              <div class="chef-spec-text"><strong>Pristine Estate Purity:</strong> Zero fillers, zero blending, zero synthetic dyes.</div>
             </div>
             <div class="chef-spec-card">
               <span class="chef-spec-num"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
-              <div class="chef-spec-text"><strong>Direct Delivery:</strong> Hand-delivered to Executive Chefs &amp; F&amp;B Directors.</div>
+              <div class="chef-spec-text"><strong>Location-Based Dispatch:</strong> Coordinated directly to your kitchen pass.</div>
             </div>
           </div>
         </div>
 
         <div class="chef-popup-actions">
-          <a href="partnership.html#registerKitchen" class="chef-popup-btn-primary" id="claimBoxBtn">Claim Free Box</a>
-          <a href="https://wa.me/918592832871?text=Hello%20KTA%20Trade%20Desk%2C%20I%20am%20an%20Executive%20Chef%20requesting%20the%20Free%20Chef%20Welcome%20Box%20to%20test." target="_blank" rel="noopener" class="chef-popup-btn-secondary">
-            WhatsApp
+          <a href="partnership.html#registerKitchen" class="chef-popup-btn-primary" id="claimBoxBtn">Inquire Kitchen Samples</a>
+          <a href="https://wa.me/918592832871?text=Hello%20KTA%20Trade%20Desk%2C%20I%20am%20an%20Executive%20Chef%20inquiring%20about%20Spice%20Discovery%20Samples." target="_blank" rel="noopener" class="chef-popup-btn-secondary">
+            WhatsApp Desk
           </a>
         </div>
       </div>
@@ -3412,7 +3316,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-  <script src="shared.js"></script>
+  <script src="shared.js?v=33"></script>
   <script>
     /* ═════════════════════════════════════════════════════
        KTA SPICES — Enhanced v2
@@ -3638,11 +3542,11 @@
 
     /* 15. Stacked Cards Deck Logic (Smooth Rhythmic Pacing) */
     var stackProducts = [
-      { name: "BLACK PEPPER", origin: "HSN: 09041140 · Single Origin", desc: "Bold export-grade Tellicherry whole peppercorns. High piperine content, intense penetrating aroma and clean lingering heat. Single Origin certified.", chips: ["Single Origin", "FSSAI Certified", "HSN: 09041140", "Wholesale Lot"] },
-      { name: "KASHMIRI CHILLY", origin: "HSN: 09042219 · Single Origin", desc: "Hand-selected scarlet chillies graded ASTA 120+ for intense natural color retention. Preferred by executive biryani and slow-cooked gravy specialists.", chips: ["Single Origin", "FSSAI Certified", "HSN: 09042219", "Wholesale Lot"] },
-      { name: "TURMERIC POWDER", origin: "HSN: 09103030 · Single Origin", desc: "Pure golden turmeric powder. Laboratory tested 5%+ active curcumin per lot. Zero lead chromate or starch adulteration. Warm earthy aroma.", chips: ["Single Origin", "5%+ Curcumin", "HSN: 09103030", "Wholesale Lot"] },
-      { name: "WHITE CARDAMOM", origin: "HSN: 09083140 · Single Origin", desc: "Carefully selected high-grade white cardamom pods with intact essential oil seeds. Delicate floral-sweet fragrance, prized for luxury confectionery, biryanis, and master gravies.", chips: ["Single Origin", "FSSAI Certified", "HSN: 09083140", "Wholesale Lot"] },
-      { name: "JEERA WHOLE", origin: "HSN: 09093119 · Single Origin", desc: "Sun-dried whole cumin seeds. Machine cleaned to 99.5% purity. High essential thymol oil, earthy fragrance, and zero stones or foreign matter.", chips: ["Single Origin", "FSSAI Certified", "HSN: 09093119", "Wholesale Lot"] }
+      { name: "BLACK PEPPER", origin: "HSN: 09041140 · Single Origin", desc: "Bold export-grade Tellicherry whole peppercorns. Sourced and graded by KTA alone with intense penetrating aroma and clean heat.", chips: ["Single Origin", "Sourced & Graded by KTA", "HSN: 09041140", "Wholesale Lot"] },
+      { name: "BLACK PEPPER POWDER", origin: "HSN: 09041200 · Single Origin", desc: "Coarse & fine chef-grade ground black pepper sourced and graded by KTA alone. Zero pinhead waste or fillers.", chips: ["Single Origin", "Sourced & Graded by KTA", "HSN: 09041200", "Wholesale Lot"] },
+      { name: "DHANIA POWDER", origin: "HSN: 09092200 · Single Origin", desc: "Cold-milled fragrant coriander powder sourced and graded by KTA alone. Single-origin unadulterated ground aroma.", chips: ["Single Origin", "Sourced & Graded by KTA", "HSN: 09092200", "Wholesale Lot"] },
+      { name: "JEERA POWDER", origin: "HSN: 09093200 · Single Origin", desc: "Aromatic ground cumin powder stone-milled from pure seed lots. Sourced and graded by KTA alone for rich essential aroma.", chips: ["Single Origin", "Sourced & Graded by KTA", "HSN: 09093200", "Wholesale Lot"] },
+      { name: "KASHMIRI CHILLY", origin: "HSN: 09042219 · Single Origin", desc: "Hand-selected scarlet chillies sourced and graded by KTA alone for vibrant natural color retention. Preferred by executive biryani and master chefs.", chips: ["Single Origin", "Sourced & Graded by KTA", "HSN: 09042219", "Wholesale Lot"] }
     ];
 
     var currentStackIdx = 0;
@@ -3818,7 +3722,6 @@
       initHeroVideoSafeguard();
     }
   </script>
-  <script src="shared.js?v=33"></script>
 </body>
 
 </html>

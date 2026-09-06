@@ -1302,8 +1302,8 @@ button {
 }
 
 .ef-address-wrap {
-  margin-top: clamp(36px, 4vw, 44px);
-  padding-top: clamp(20px, 2.5vw, 26px);
+  margin-top: clamp(56px, 6.5vw, 84px);
+  padding-top: clamp(28px, 3.5vw, 40px);
   border-top: 1px solid rgba(230, 227, 218, 0.16);
 }
 
@@ -1528,8 +1528,8 @@ button {
     gap: 16px;
   }
   .ef-address-wrap {
-    margin-top: 28px;
-    padding-top: 18px;
+    margin-top: 48px;
+    padding-top: 28px;
   }
   .estate-footer-bottom {
     flex-direction: column;
@@ -6318,7 +6318,7 @@ textarea.form-control {
 
 /* ═══════════════════════════════════════════════════════════
    KTA COMMERCIAL AI CONCIERGE WIDGET (.kta-ai-widget)
-   Executive-Grade Luxury Assistant (Bottom-Left Float, Zero Emojis)
+   Executive-Grade Luxury Assistant (Pure Offline Knowledge Base AI Engine)
    ═══════════════════════════════════════════════════════════ */
 .kta-ai-widget {
   position: fixed;
@@ -6329,30 +6329,30 @@ textarea.form-control {
 }
 
 .kta-ai-trigger {
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  border: 1.5px solid rgba(67, 81, 40, 0.22);
+  box-shadow: 0 4px 18px rgba(18, 30, 19, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   position: relative;
 }
 
 .kta-ai-trigger:hover {
   transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.24);
-  border-color: rgba(31, 56, 34, 0.3);
+  box-shadow: 0 8px 24px rgba(18, 30, 19, 0.24);
+  border-color: rgba(67, 81, 40, 0.45);
 }
 
 .kta-ai-trigger-icon {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: #233925;
   display: flex;
@@ -6360,7 +6360,7 @@ textarea.form-control {
   justify-content: center;
   color: #ffffff;
   position: relative;
-  transition: transform 0.25s ease;
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
 .kta-ai-trigger:hover .kta-ai-trigger-icon {
@@ -6369,24 +6369,25 @@ textarea.form-control {
 
 .kta-ai-trigger-dots {
   display: flex;
-  gap: 3px;
+  gap: 2.5px;
   align-items: center;
   justify-content: center;
 }
 
 .kta-ai-trigger-dot {
-  width: 4px;
-  height: 4px;
+  width: 3.5px;
+  height: 3.5px;
   border-radius: 50%;
   background: #ffffff;
+  display: block;
 }
 
 .kta-ai-trigger-pulse {
   position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 11px;
-  height: 11px;
+  top: -1px;
+  right: -1px;
+  width: 10px;
+  height: 10px;
   background: #52c41a;
   border: 2px solid #ffffff;
   border-radius: 50%;
@@ -6395,15 +6396,9 @@ textarea.form-control {
 }
 
 @keyframes ktaPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(82, 196, 26, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 6px rgba(82, 196, 26, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(82, 196, 26, 0);
-  }
+  0% { box-shadow: 0 0 0 0 rgba(82, 196, 26, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(82, 196, 26, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(82, 196, 26, 0); }
 }
 
 /* Chatbox Window */
@@ -6411,14 +6406,14 @@ textarea.form-control {
   position: absolute;
   bottom: calc(100% + 12px);
   left: 0;
-  width: 380px;
+  width: 410px;
   max-width: calc(100vw - 32px);
-  height: 540px;
-  max-height: calc(100vh - 120px);
+  height: 580px;
+  max-height: calc(100vh - 110px);
   background: #ffffff;
-  border-radius: 18px;
-  border: 1px solid rgba(0, 0, 0, 0.10);
-  box-shadow: 0 20px 56px rgba(18, 30, 19, 0.28), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
+  border: 1px solid rgba(67, 81, 40, 0.2);
+  box-shadow: 0 24px 64px rgba(18, 30, 19, 0.28), 0 0 0 1px rgba(0, 0, 0, 0.04);
   display: none;
   flex-direction: column;
   overflow: hidden;
@@ -6431,21 +6426,15 @@ textarea.form-control {
 }
 
 @keyframes ktaAiPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.94) translateY(8px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  0% { opacity: 0; transform: scale(0.94) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* Header */
 .kta-ai-header {
-  background: #1f3822;
+  background: linear-gradient(135deg, #1f3822 0%, #152718 100%);
   color: #f7f4ed;
-  padding: 16px 18px;
+  padding: 14px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -6456,15 +6445,15 @@ textarea.form-control {
 .kta-ai-header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .kta-ai-avatar {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: rgba(196, 159, 69, 0.2);
-  border: 1px solid rgba(196, 159, 69, 0.4);
+  background: rgba(196, 159, 69, 0.22);
+  border: 1px solid rgba(196, 159, 69, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6479,14 +6468,14 @@ textarea.form-control {
 
 .kta-ai-header-title {
   font-family: var(--font-caslon), Georgia, serif;
-  font-size: 15.5px;
+  font-size: 15px;
   font-weight: 700;
   color: #ffffff;
   line-height: 1.2;
 }
 
 .kta-ai-header-subtitle {
-  font-size: 11px;
+  font-size: 10.5px;
   color: #b3c2a6;
   margin-top: 2px;
   display: flex;
@@ -6503,7 +6492,13 @@ textarea.form-control {
   background: #52c41a;
 }
 
-.kta-ai-close-btn {
+.kta-ai-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.kta-ai-hdr-btn {
   background: transparent;
   border: none;
   color: #b3c2a6;
@@ -6517,18 +6512,23 @@ textarea.form-control {
   transition: all 0.2s ease;
 }
 
-.kta-ai-close-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
+.kta-ai-hdr-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
   color: #ffffff;
+}
+
+.kta-ai-hdr-btn.active {
+  color: #52c41a;
+  background: rgba(82, 196, 26, 0.15);
 }
 
 /* Quick Chips Bar */
 .kta-ai-chips {
-  padding: 10px 14px;
+  padding: 8px 12px;
   background: #fbf9f5;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   display: flex;
-  gap: 6px;
+  gap: 5px;
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: none;
@@ -6540,10 +6540,10 @@ textarea.form-control {
 }
 
 .kta-ai-chip {
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 999px;
   background: #ffffff;
-  border: 1px solid rgba(31, 56, 34, 0.2);
+  border: 1px solid rgba(31, 56, 34, 0.22);
   font-size: 11px;
   font-weight: 600;
   color: #1f3822;
@@ -6560,21 +6560,45 @@ textarea.form-control {
 
 /* Messages Area */
 .kta-ai-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   background: #fcfbfa;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(67, 81, 40, 0.4) #f0ede6;
+}
+
+.kta-ai-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.kta-ai-messages::-webkit-scrollbar-track {
+  background: #f0ede6;
+  border-radius: 999px;
+}
+
+.kta-ai-messages::-webkit-scrollbar-thumb {
+  background: rgba(67, 81, 40, 0.4);
+  border-radius: 999px;
+}
+
+.kta-ai-messages::-webkit-scrollbar-thumb:hover {
+  background: var(--olive);
 }
 
 .kta-msg {
   display: flex;
   flex-direction: column;
-  max-width: 86%;
-  font-size: 13px;
-  line-height: 1.5;
+  max-width: 90%;
+  font-size: 12.5px;
+  line-height: 1.52;
   word-wrap: break-word;
   animation: ktaMsgIn 0.2s ease forwards;
 }
@@ -6608,18 +6632,97 @@ textarea.form-control {
   padding: 10px 14px;
 }
 
+/* Executive Specification Card inside Bot Bubbles */
+.kta-ai-card {
+  background: #ffffff;
+  border: 1px solid rgba(43, 57, 23, 0.16);
+  border-left: 4px solid #2b3917;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 10px 0 6px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+  text-align: left;
+}
+
+.kta-ai-card-title {
+  font-weight: 800;
+  font-size: 14px;
+  color: #1f3822;
+  margin-bottom: 3px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.kta-ai-card-origin {
+  font-size: 11px;
+  color: #5c6b50;
+  font-weight: 600;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(43, 57, 23, 0.1);
+  display: block;
+  line-height: 1.4;
+}
+
+.kta-ai-card-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 8px 0;
+  font-size: 11.5px;
+}
+
+.kta-ai-card-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+.kta-ai-card-key {
+  color: #6b7762;
+  font-weight: 700;
+  font-size: 11px;
+  min-width: 110px;
+  flex-shrink: 0;
+  text-transform: capitalize;
+}
+
+.kta-ai-card-val {
+  color: #1a240e;
+  font-weight: 600;
+  flex: 1;
+  word-break: break-word;
+}
+
+.kta-ai-card-desc {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: #fbfaf6;
+  border: 1px dashed rgba(43, 57, 23, 0.14);
+  border-radius: 6px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #3b4733;
+}
+
+.kta-ai-card-desc strong {
+  color: #1f3822;
+  font-weight: 700;
+}
+
 .kta-msg-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
   margin-top: 8px;
 }
 
 .kta-msg-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
+  gap: 5px;
+  padding: 5px 11px;
   border-radius: 6px;
   font-size: 11px;
   font-weight: 700;
@@ -6644,6 +6747,15 @@ textarea.form-control {
 
 .kta-msg-btn.primary:hover {
   background: #2b4d2f;
+}
+
+.kta-msg-btn.whatsapp {
+  background: #25d366;
+  color: #ffffff;
+  border-color: #25d366;
+}
+.kta-msg-btn.whatsapp:hover {
+  background: #1eb956;
 }
 
 /* Typing Indicator */
@@ -6678,14 +6790,14 @@ textarea.form-control {
   40% { transform: scale(1); }
 }
 
-/* Input Bar */
+/* Input Bar & Controls */
 .kta-ai-input-wrap {
-  padding: 12px 14px;
+  padding: 10px 12px;
   background: #ffffff;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-shrink: 0;
 }
 
@@ -6693,8 +6805,8 @@ textarea.form-control {
   flex: 1;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 24px;
-  padding: 9px 14px;
-  font-size: 13px;
+  padding: 8px 12px;
+  font-size: 12.5px;
   font-family: inherit;
   outline: none;
   background: #faf8f5;
@@ -6707,9 +6819,33 @@ textarea.form-control {
   background: #ffffff;
 }
 
+.kta-ai-mic-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f0ede6;
+  color: #3b4d2a;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.kta-ai-mic-btn:hover {
+  background: #e2ded3;
+  color: #1f3822;
+}
+.kta-ai-mic-btn.listening {
+  background: #ff4d4f;
+  color: #ffffff;
+  animation: ktaPulse 1.2s infinite;
+}
+
 .kta-ai-send-btn {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: #1f3822;
   color: #ffffff;
@@ -6727,9 +6863,9 @@ textarea.form-control {
   transform: scale(1.05);
 }
 
-.kta-ai-send-btn svg {
-  width: 15px;
-  height: 15px;
+.kta-ai-send-btn svg, .kta-ai-mic-btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 @media (max-width: 600px) {
@@ -6739,9 +6875,10 @@ textarea.form-control {
   }
   .kta-ai-box {
     width: calc(100vw - 32px);
-    height: 480px;
+    height: 500px;
     max-height: calc(100vh - 90px);
     bottom: calc(100% + 10px);
   }
 }
+
 
