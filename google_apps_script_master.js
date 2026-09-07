@@ -7,12 +7,15 @@
  * Box requests, Newsletter subscriptions, AI Chatbot inquiries, and WhatsApp Desk leads.
  * 
  * LATEST UPDATES & FIXES:
- * 1. Default Deal Status: ALL new submissions (Partnership, Newsletter, RFQs, etc.)
- *    now cleanly default to "New Lead".
- * 2. Payment Terms: "10-Day Credit" added and set as standard default.
- * 3. Assigned Reps: Standardized to "Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6".
- * 4. Master Product Rate Card: Full 55 Products & Wholesale Lines supported.
- * 5. One-Click Menu: "KTA Commercial CRM" menu in Google Sheets to update all dropdowns & populate Product Sheet.
+ * 1. Newsletter / Dispatch Handling: Automatically sets intelligent product label:
+ *    "Chef Dispatches / Seasonal Harvest Bulletins (All Spices & Updates)" instead
+ *    of assuming any single spice!
+ * 2. Default Deal Status: ALL new submissions (Partnership, Newsletter, RFQs, etc.)
+ *    cleanly default to "New Lead".
+ * 3. Payment Terms: "10-Day Credit" added and set as standard default.
+ * 4. Assigned Reps: Standardized to "Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6".
+ * 5. Master Product Rate Card: Full 55 Products & Wholesale Lines supported.
+ * 6. One-Click Menu: "KTA Commercial CRM" menu in Google Sheets to update all dropdowns.
  * ────────────────────────────────────────────────────────────────────────────
  */
 
@@ -125,18 +128,64 @@ function handleLeadSubmission(data) {
       source = rawSrc.length > 0 ? rawSrc : "Website RFQ";
     }
 
-    // 5. Normalize Inbound Fields (Section 1: Columns A to L)
-    var clientName  = data.managerName || data.name || data.clientName || data.chefName || "Prospective Buyer";
-    var company     = data.hotelName || data.property || data.company || "Commercial Account";
-    var role        = data.designation || data.role || (source.indexOf("Chef") !== -1 ? "Executive Chef" : source.indexOf("Partnership") !== -1 ? "Corporate Director" : "Procurement Lead");
-    var phone       = (data.contactPhone || data.phone || data.mobile || "Not Provided").toString().trim();
-    var email       = data.email || "Not Provided";
-    var location    = data.location || data.city || data.destination || "South India";
-    var products    = data.products || data.product || data.spices || data.varieties || "Tellicherry Black Pepper / Single-Origin Spices";
-    var volume      = data.volume || data.quantity || data.lotSize || "Standard Commercial Lot";
-    var rawNotes    = data.message || data.notes || data.details || ("Inquiry logged via " + rawSrc + ".");
+    // 5. Intelligent Normalization of Inbound Fields (Section 1: Columns A to L)
+    var isNewsletter = (source === "Chef Dispatches Newsletter" || srcLow.indexOf("newsletter") !== -1);
+    var isPartnership = (source === "Corporate Partnership Registration" || srcLow.indexOf("partnership") !== -1);
+    var isSampleBox = (source === "Chef Sample Box" || srcLow.indexOf("sample") !== -1);
 
-    var cleanPhone  = phone.replace(/[^0-9]/g, '');
+    var clientName = data.managerName || data.name || data.clientName || data.chefName;
+    if (!clientName) {
+      if (isNewsletter) {
+        clientName = data.email ? ("Subscriber (" + data.email.split('@')[0] + ")") : "Newsletter Subscriber";
+      } else {
+        clientName = "Prospective Buyer";
+      }
+    }
+
+    var company = data.hotelName || data.property || data.company;
+    if (!company) {
+      if (isNewsletter) company = "Direct Email Subscriber";
+      else company = "Commercial Account";
+    }
+
+    var role = data.designation || data.role;
+    if (!role) {
+      if (isNewsletter) role = "Subscriber";
+      else if (isPartnership) role = "Corporate Director / Partner";
+      else if (isSampleBox) role = "Executive Chef";
+      else role = "Procurement Lead";
+    }
+
+    var phone = (data.contactPhone || data.phone || data.mobile || (isNewsletter ? "Email Only" : "Not Provided")).toString().trim();
+    var email = data.email || "Not Provided";
+    var location = data.location || data.city || data.destination || (isNewsletter ? "Online / Digital" : "South India");
+
+    var products = data.products || data.product || data.spices || data.varieties;
+    if (!products) {
+      if (isNewsletter) {
+        products = "Chef Dispatches / Seasonal Harvest Bulletins (All Spices & Updates)";
+      } else if (isPartnership) {
+        products = "Full Corporate Procurement Suite / All Spices & Dry Fruits";
+      } else if (isSampleBox) {
+        products = "Chef Discovery Welcome Box (51 Varieties)";
+      } else {
+        products = "Full Catalogue / Commercial Spice Inquiry";
+      }
+    }
+
+    var volume = data.volume || data.quantity || data.lotSize;
+    if (!volume) {
+      if (isNewsletter) volume = "Digital Email Dispatches";
+      else volume = "Standard Commercial Lot";
+    }
+
+    var rawNotes = data.message || data.notes || data.details;
+    if (!rawNotes) {
+      if (isNewsletter) rawNotes = "Subscribed to receive periodic seasonal harvest updates, price notices, and new lot releases.";
+      else rawNotes = "Inquiry logged via " + rawSrc + ".";
+    }
+
+    var cleanPhone = phone.replace(/[^0-9]/g, '');
 
     // 6. Assigned Rep & Priority Defaults (Section 2: Columns M to T)
     // Assigned Reps: Person 1, Person 2, Person 3, Person 4, Person 5, Person 6
@@ -145,16 +194,16 @@ function handleLeadSubmission(data) {
     var dealStatus  = "New Lead"; // Always "New Lead" for fresh registrations / dispatches!
     var estValue    = "";
 
-    if (source.indexOf("Chef Sample Box") !== -1) {
+    if (isSampleBox) {
       assignedRep = "Person 2";
       priority    = "High Priority";
-    } else if (source.indexOf("Partnership") !== -1) {
+    } else if (isPartnership) {
       assignedRep = "Person 4";
       priority    = "High Priority";
     } else if (source.indexOf("Wholesale") !== -1 || volume.toLowerCase().indexOf("mt") !== -1 || volume.indexOf("500") !== -1) {
       assignedRep = "Person 3";
       priority    = "High Priority";
-    } else if (source.indexOf("Newsletter") !== -1) {
+    } else if (isNewsletter) {
       assignedRep = "Person 1";
       priority    = "Standard Priority";
     }
@@ -173,7 +222,7 @@ function handleLeadSubmission(data) {
       location,        // Col J (10): City & State
       products,        // Col K (11): Inquired Product / SKU
       volume,          // Col L (12): Volume Requested
-      assignedRep,     // Col M (13): Assigned Rep (Person 1-6)
+      assignedRep,     // Col M (13): Assigned Rep (Person 1 to 6)
       priority,        // Col N (14): Priority
       dealStatus,      // Col O (15): Deal Status ("New Lead")
       "",              // Col P (16): Quoted Rate (₹/kg)

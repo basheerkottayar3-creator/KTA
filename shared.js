@@ -1761,16 +1761,21 @@ window.handleFooterSubscribe = function(event) {
   if (typeof window.submitKTAForm === 'function') {
     window.submitKTAForm({
       email: email,
+      clientName: 'Newsletter Subscriber',
+      company: 'Direct Email Subscriber',
+      role: 'Subscriber',
+      products: 'Chef Dispatches / Seasonal Harvest Bulletins (All Spices & Updates)',
+      volume: 'Digital Email Dispatches',
       inquiryType: 'Chef Dispatches Newsletter Subscription',
-      source: 'Footer Chef Dispatch Bar',
+      source: 'Chef Dispatches Newsletter',
       formName: 'Chef Dispatches Newsletter',
-      message: 'Enrolled in seasonal harvest dispatches and priority chef sample allocations.'
+      message: 'Subscribed to receive periodic seasonal harvest updates, price notices, and new lot releases.'
     }, {
       formName: 'Chef Dispatches Newsletter',
-      successMsg: 'Thank you, Chef! You are now enrolled in KTA Highland Dispatches & Seasonal Harvest Pre-Allocations.'
+      successMsg: 'Thank you! You are now enrolled in KTA Highland Dispatches & Seasonal Harvest Pre-Allocations.'
     });
   } else {
-    alert('Thank you, Chef! You are now enrolled in KTA Highland Dispatches & Seasonal Harvest Pre-Allocations.');
+    alert('Thank you! You are now enrolled in KTA Highland Dispatches & Seasonal Harvest Pre-Allocations.');
   }
 
   // 3. Animated UI feedback
