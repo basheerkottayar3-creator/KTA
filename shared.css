@@ -1302,8 +1302,8 @@ button {
 }
 
 .ef-address-wrap {
-  margin-top: clamp(56px, 6.5vw, 84px);
-  padding-top: clamp(28px, 3.5vw, 40px);
+  margin-top: clamp(80px, 9vw, 115px);
+  padding-top: clamp(32px, 3.8vw, 44px);
   border-top: 1px solid rgba(230, 227, 218, 0.16);
 }
 
@@ -1528,8 +1528,8 @@ button {
     gap: 16px;
   }
   .ef-address-wrap {
-    margin-top: 48px;
-    padding-top: 28px;
+    margin-top: 60px;
+    padding-top: 30px;
   }
   .estate-footer-bottom {
     flex-direction: column;
