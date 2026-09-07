@@ -779,7 +779,7 @@
       '      </span>',
       '      <div class="more-opt-content">',
       '        <div class="more-opt-title">Call Trade Desk: +91 85928 32871</div>',
-      '        <div class="more-opt-sub">Mon–Sat · 8am–8pm IST · Direct Hotline</div>',
+      '        <div class="more-opt-sub">Monday–Sunday · 24 Hours (24/7) · Direct Hotline</div>',
       '      </div>',
       '      <span class="more-opt-arrow">→</span>',
       '    </a>',
