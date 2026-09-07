@@ -2508,7 +2508,7 @@ window.handleFooterSubscribe = function(event) {
         desc: 'Sourced and graded by KTA alone. Jumbo washed plump fresh farm ginger rhizomes. High juice density and crisp texture for commercial kitchens, paste processors, and export packing.'
       },
       {
-        name: 'Lite Berries (Black Pepper Extraction Grade)',
+        name: 'Pepper Lite Berries (Black Pepper Extraction Grade)',
         hsn: '09041140',
         moq: '500kg (40kg Master Bags / Adaptive Packaging with Customers)',
         desc: 'Sourced and graded by KTA alone. Low-density green and light whole pepper berries separated during gravity grading. Highly sought after by oleoresin solvent extraction units for volatile oil yield at commercial rates.'
@@ -2562,7 +2562,7 @@ window.handleFooterSubscribe = function(event) {
       },
       outsideCatalogue: {
         title: 'Custom Sourcing & Products Outside Standard Catalogue',
-        details: 'Need specialty spice varieties, green ginger farm consignments, custom particle grinding (fine powder, coarse cracked, crushed, whole garbled), extraction byproducts (pinheads, lite berries, husk, spent biomass), or custom pack formats outside our catalogue? Our trade desk arranges custom commercial sourcing.'
+        details: 'Need specialty spice varieties, green ginger farm consignments, custom particle grinding (fine powder, coarse cracked, crushed, whole garbled), extraction byproducts (pinheads, pepper lite berries, husk, spent biomass), or custom pack formats outside our catalogue? Our trade desk arranges custom commercial sourcing.'
       }
     }
   };
@@ -2598,6 +2598,7 @@ window.handleFooterSubscribe = function(event) {
     'sample': ['welcome box', 'chef box', 'trial pack', 'discovery kit', 'discovery tray', 'sample', 'discovery sample', 'test batch'],
     'hotel smart': ['hotelsmart', '24/7', 'emergency delivery', 'emergency restock', 'zero downtime', 'standing order', 'replenishment'],
     'moq': ['minimum order', 'minimum quantity', 'minimum volume', 'order size', 'bulk quantity', '500kg', 'wholesale'],
+    'byproducts': ['pepper lite berries', 'lite berries', 'pinheads', 'pepper husk', 'husk', 'spent biomass', 'spent ginger', 'all spices spent'],
     'contact': ['broker', 'call', 'phone', 'whatsapp', 'address', 'warehouse', 'location', 'mannadi', 'chennai address', 'hotline', 'desk', 'trade desk']
   };
 
@@ -3204,7 +3205,7 @@ window.handleFooterSubscribe = function(event) {
               '• Green Golden Raisins (Kismiss), Black Kismiss &amp; Long Special Kismiss<br>' +
               '• Roasted &amp; Salted Pistachios (Pista) &amp; California Walnuts (Akhrot)<br><br>' +
               '<strong>3. Wholesale Extraction Byproducts (40kg Master Bags):</strong><br>' +
-              '• Green Ginger (Fresh Jumbo Rhizomes), Lite Berries, Pinheads, Pepper Husk, Spent Biomass.<br><br>' +
+              '• Green Ginger (Fresh Jumbo Rhizomes), Pepper Lite Berries, Pinheads, Pepper Husk, Spent Biomass.<br><br>' +
               '<em>Tap below to browse the interactive catalogue or build your sample tray:</em>',
         actions: [
           { label: 'Browse Full Catalogue (51 Varieties)', href: 'catalogue.html', primary: true },
@@ -3222,7 +3223,7 @@ window.handleFooterSubscribe = function(event) {
         html: '<strong>Wholesale Consignment Structure (500kg+ MOQ · 40kg Master Bags &amp; Adaptive Packaging):</strong><br><br>' +
               '• <strong>Wholesale Range:</strong><br>' +
               '  - <strong>Black Pepper:</strong> Whole Bold Export Grade (HSN 09041140)<br>' +
-              '  - <strong>Lite Berries &amp; Pinheads:</strong> High-resin extraction grades<br>' +
+              '  - <strong>Pepper Lite Berries &amp; Pinheads:</strong> High-resin extraction grades<br>' +
               '  - <strong>Pepper Husk &amp; Pepper Husk (S):</strong> Sieved mesh &amp; seasoning cuts<br>' +
               '  - <strong>Green Ginger (Fresh):</strong> Raw farm-direct jumbo rhizomes (HSN 09101110)<br>' +
               '  - <strong>Dry Ginger:</strong> Unspent sun-dried whole / slices (HSN 09101110)<br>' +
@@ -3453,6 +3454,7 @@ window.handleFooterSubscribe = function(event) {
       if ((matchPhrase(norm, 'husk') && weNameLow.indexOf('husk') !== -1) ||
           (matchPhrase(norm, 'pinhead') && weNameLow.indexOf('pinhead') !== -1) ||
           (matchPhrase(norm, 'pinheads') && weNameLow.indexOf('pinhead') !== -1) ||
+          (matchPhrase(norm, 'pepper lite berries') && weNameLow.indexOf('lite') !== -1) ||
           (matchPhrase(norm, 'lite berries') && weNameLow.indexOf('lite') !== -1) ||
           (matchPhrase(norm, 'spent') && weNameLow.indexOf('spent') !== -1) ||
           (matchPhrase(norm, 'byproduct') && weNameLow.indexOf('husk') !== -1)) {

@@ -272,7 +272,7 @@ function generateKTAWhatsAppReply(rawInput) {
     return "🏭 *WHOLESALE EXTRACTION BYPRODUCTS & BIOMASS*\n\n" +
            "KTA supplies high-density raw byproducts sourced & graded by KTA alone for oleoresin distillers and industrial processors:\n\n" +
            "• *Pepper Pinheads (HSN 09041110):* Micro-density bold berries for solvent extraction.\n" +
-           "• *Lite Berries / Black Pepper Husk:* High volatile aroma fraction for steam distillation & spice blending.\n" +
+           "• *Pepper Lite Berries / Black Pepper Husk:* High volatile aroma fraction for steam distillation & spice blending.\n" +
            "• *Spent Biomass:* Dry exhausted meal for natural cattle feed binders & bio-fertilizer.\n" +
            "• *Availability:* 5-ton to 20-ton monthly supply contracts.\n\n" +
            "Direct Wholesale Desk: *+91 63793 51632* or Trade Desk: *+91 85928 32871*.";
