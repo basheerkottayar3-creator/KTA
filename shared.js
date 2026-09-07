@@ -2659,15 +2659,15 @@ window.handleFooterSubscribe = function(event) {
       '    </div>',
       '  </div>',
       '  <div class="kta-ai-chips" id="ktaAiChips">',
-      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'What all products do you have in catalogue?\')">All Products (50+)</button>',
-      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'What is KTA Spices?\')">What is KTA?</button>',
-      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Why choose KTA Spices?\')">Why KTA?</button>',
+      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Custom Sourcing outside standard catalogue\')">Custom Sourcing</button>',
+      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'What all products do you have in catalogue?\')">All Products (51 Varieties)</button>',
       '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Wholesale 40kg Bags (500kg+ MOQ)\')">Wholesale (40kg Bags)</button>',
       '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Hotel Smart 24/7 Replenishment\')">Hotel Smart 24/7</button>',
       '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Green Ginger (Fresh Farm-Direct)\')">Green Ginger (Fresh)</button>',
-      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Custom Sourcing outside standard catalogue\')">Custom Sourcing</button>',
       '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Chef Welcome Box (Free)\')">Chef Welcome Box</button>',
-      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Contact Trade Desk & Hours\')">Contact Desk</button>',
+      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'What is KTA Spices?\')">What is KTA?</button>',
+      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Why choose KTA Spices?\')">Why KTA?</button>',
+      '    <button type="button" class="kta-ai-chip" onclick="handleKTAChip(\'Contact Trade Desk & Hours\')">Contact Desk (24/7)</button>',
       '  </div>',
       '  <div class="kta-ai-messages" id="ktaAiMessages" data-lenis-prevent>',
       '    <div class="kta-msg bot">',
@@ -2675,13 +2675,13 @@ window.handleFooterSubscribe = function(event) {
       '        <strong>Welcome to KTA Commercial Concierge.</strong><br>',
       '        <span style="font-size:11px;color:#7a8a72;display:block;margin-top:2px;margin-bottom:8px">Deterministic NLP Trade Engine · Direct Origin Knowledge Base</span>',
       '        How may I assist your kitchen or procurement desk?<br>',
-      '        • <strong>All Products</strong> (50+ single-origin spices, dry fruits & seeds)<br>',
-      '        • <strong>What is KTA?</strong> (25+ years estate heritage & origin purity)<br>',
+      '        • <strong>Custom Sourcing</strong> (Rare botanicals, custom mesh & unlisted items)<br>',
+      '        • <strong>All Products</strong> (51 single-origin spices, dry fruits & seeds)<br>',
       '        • <strong>Wholesale Supply</strong> (500kg+ MOQ in 40kg master bags)<br>',
       '        • <strong>Hotel Smart 24/7</strong> (2–24h replenishment across South India)<br>',
       '        • <strong>Green Ginger (Fresh)</strong> (Raw farm-direct jumbo rhizomes)<br>',
-      '        • <strong>Custom Sourcing</strong> (Rare botanicals & unlisted commodities)<br><br>',
-      '        <em>Tap any topic above or type your specific commercial query.</em>',
+      '        • <strong>What is KTA?</strong> (25+ years estate heritage & origin purity)<br><br>',
+      '        <em>Tap any suggested topic above or type your specific commercial requirement.</em>',
       '      </div>',
       '    </div>',
       '    <div class="kta-typing" id="ktaAiTyping">',
@@ -2964,6 +2964,14 @@ window.handleFooterSubscribe = function(event) {
     }
   }
 
+  // ── WORD BOUNDARY PHRASE MATCHER ──
+  function matchPhrase(text, phrase) {
+    if (!text || !phrase) return false;
+    var escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var regex = new RegExp('(?:^|\\s)' + escaped + '(?:\\s|$)', 'i');
+    return regex.test(text);
+  }
+
   // ── SESSION MEMORY CACHE ──
   var KTA_AI_SESSION_STATE = {
     lastProduct: null,
@@ -3034,7 +3042,7 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Generate Wholesale Pro-Forma', href: 'wholesale.html#proforma' },
           { label: 'Explore Catalogue', href: 'catalogue.html' }
         ],
-        followUps: ['Request 1kg Sample of this', 'Wholesale Rate (40kg Bags)', 'Quality & Lab Assay', 'All Products (50+)']
+        followUps: ['Request 1kg Sample of this', 'Wholesale Rate (40kg Bags)', 'Quality & Lab Assay', 'All Products (51 Varieties)']
       };
     }
 
@@ -3053,38 +3061,103 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Request Free Chef Welcome Box', href: 'partnership.html#registerKitchen' },
           { label: 'Add to Sample Tray', href: 'catalogue.html' }
         ],
-        followUps: ['Wholesale Rate (40kg Bags)', 'All Products (50+)', 'Hotel Smart 24/7', 'What is KTA?']
+        followUps: ['Wholesale Rate (40kg Bags)', 'All Products (51 Varieties)', 'Hotel Smart 24/7', 'What is KTA?']
       };
     }
 
-    // ── 1. WHAT IS KTA? ──
+    // ── 1. CUSTOM SOURCING & COMMODITIES OUTSIDE CATALOGUE (TOP PRIORITY) ──
+    var unlistedKeywords = [
+      'vanilla', 'vanilla pods', 'vanilla beans', 'ajwain', 'omam', 'asafoetida', 'hing', 'perungayam',
+      'tamarind', 'puli', 'garlic', 'onion powder', 'chilli flakes', 'chili flakes',
+      'paprika', 'white pepper whole', 'green pepper in brine', 'nutmeg oil',
+      'clove oil', 'cardamom oil', 'pepper oil', 'oleoresin', 'curry leaf', 'curry leaves', 'kariveppila',
+      'dry mango', 'amchur', 'kasuri methi bulk', 'star anise oil', 'cinnamon oil',
+      'turmeric fingers', 'mesh 60', 'mesh 80', 'mesh 100', 'custom mesh', 'custom grind', 'custom powder',
+      'organic spices', 'export packaging', 'drum pack', 'fibc', 'jumbo bag'
+    ];
+
+    var isCustomQuery = /(outside\s*catalogue|outside\s*catalog|out\s*(?:of|if)\s*catalogue|out\s*(?:of|if)\s*catalog|not\s*in\s*catalogue|not\s*in\s*catalog|not\s*listed|unlisted|other\s*than\s*catalogue|apart\s*from\s*catalogue|custom\s*sourcing|custom\s*requirement|custom\s*product|custom\s*spice|custom\s*grade|custom\s*lot|rare\s*spice|specialty\s*spice|custom\s*grind|custom\s*mesh|export\s*packing|commodity\s*outsourcing|something\s*(?:not\s*in|outside|out\s*(?:of|if))\s*(?:the\s*)?catalog|if\s*i\s*need\s*something\s*out)/i.test(norm);
+    
+    var detectedItem = '';
+    for (var u = 0; u < unlistedKeywords.length; u++) {
+      if (matchPhrase(norm, unlistedKeywords[u])) {
+        detectedItem = unlistedKeywords[u];
+        isCustomQuery = true;
+        break;
+      }
+    }
+
+    var needMatch = norm.match(/(?:i\s*need|looking\s*for|do\s*you\s*(?:have|sell|supply)|can\s*you\s*source|want\s*to\s*buy|require)\s+([a-z0-9\s]{2,30})/i);
+    if (needMatch && !isCustomQuery) {
+      var cand = needMatch[1].trim();
+      var foundInCat = false;
+      for (var k = 0; k < KTA_KB.products.length; k++) {
+        for (var al = 0; al < KTA_KB.products[k].aliases.length; al++) {
+          if (matchPhrase(cand, KTA_KB.products[k].aliases[al])) {
+            foundInCat = true;
+            break;
+          }
+        }
+        if (foundInCat) break;
+      }
+      if (!foundInCat && cand.length > 2 && !/(price|rate|sample|wholesale|delivery|catalogue|contact)/i.test(cand)) {
+        detectedItem = cand;
+        isCustomQuery = true;
+      }
+    }
+
+    if (isCustomQuery) {
+      KTA_AI_SESSION_STATE.lastIntent = 'CUSTOM_SOURCING';
+      var itemLabel = detectedItem ? detectedItem.charAt(0).toUpperCase() + detectedItem.slice(1) : 'Specialty Commodities';
+      var waCustomMsg = encodeURIComponent('Hello KTA Trade Desk, I would like to request custom sourcing for ' + (detectedItem ? '"' + itemLabel + '"' : 'commodities outside your standard catalogue') + ' for our commercial facility.');
+
+      return {
+        html: '<strong>Custom Sourcing Desk · Products &amp; Grades Outside Catalogue:</strong><br><br>' +
+              (detectedItem ? 'Looking to procure <strong>' + escapeHtml(itemLabel) + '</strong> or custom commodities not listed in our standard 51-variety roster?<br><br>' : 'Need specialty spices, rare botanicals, or customized grades outside our standard 51-variety catalogue?<br><br>') +
+              'KTA leverages <strong>25+ years of direct grower networks</strong> across South India to source, clean, grade, and supply any agricultural or botanical commodity on demand.<br><br>' +
+              '<strong>4-Step Commercial Custom Sourcing Protocol:</strong><br>' +
+              '• <strong>1. Specification Briefing:</strong> Share your required commodity (e.g., Vanilla beans, Ajwain, Hing, Tamarind, fresh rhizomes, oleoresins), desired particle mesh (whole garbled, crushed, 60–100 mesh cold-ground), and target volume (500kg+ MOQ or multi-ton contracts).<br>' +
+              '• <strong>2. Direct Origin Procurement:</strong> Sourced directly from verified growers and auction floors across Wayanad, Idukki, Salem, and Guntur — <em>sourced and graded by KTA alone</em>.<br>' +
+              '• <strong>3. Pre-Dispatch COA &amp; Sample Approval:</strong> We provide full chemical assay certificates (moisture, volatile oil, ASTA color, zero synthetic dyes) and dispatch physical evaluation samples to your kitchen pass.<br>' +
+              '• <strong>4. Palletized Logistics &amp; Fast Dispatch:</strong> Custom packaging (40kg triple-lined master bags, food-grade drums, or FIBC bulk sacks) with guaranteed turnaround.<br><br>' +
+              '<em>Tap below for direct 1-tap WhatsApp consultation with our Custom Sourcing Desk:</em>',
+        actions: [
+          { label: 'Request Custom Sourcing (WhatsApp)', href: 'https://wa.me/916379351632?text=' + waCustomMsg, primary: true, target: '_blank', whatsapp: true },
+          { label: 'Submit Custom Sourcing Brief', href: 'wholesale.html#orderForm' },
+          { label: 'Call Commercial Desk (+91 85928 32871)', href: 'tel:+918592832871' }
+        ],
+        followUps: ['All Products (51 Varieties)', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7', 'Green Ginger (Fresh)']
+      };
+    }
+
+    // ── 2. WHAT IS KTA? ──
     if (/(what\s*is\s*kta|who\s*is\s*kta|about\s*kta|tell\s*me\s*about\s*kta|overview|who\s*are\s*you|company\s*profile|background|heritage)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'ABOUT';
       return {
         html: '<strong>What is KTA Spices?</strong><br><br>' +
-              'KTA is a premier single-origin spice procurement and processing house with <strong>25+ years of heritage</strong>. ' +
+              'KTA is a premier single-origin spice procurement and processing house with <strong>25+ years of estate heritage</strong>. ' +
               'We supply over <strong>100+ elite kitchens</strong>, 5-star hotel chains, banquet operators, and commercial food enterprises across South India.<br><br>' +
               '• <strong>Direct Single-Origin Procurement:</strong> Procured directly from verified growers and auction floors across Highland Specific terroirs.<br>' +
               '• <strong>Institutional Reliability:</strong> Consistent culinary grading, rapid replenishment, and transparent commercial contracts.<br>' +
-              '• <strong>Zero Middlemen:</strong> Unadulterated purity directly from origin to commercial kitchen.<br><br>' +
+              '• <strong>Zero Middlemen:</strong> Unadulterated purity directly from origin to commercial kitchen pass.<br><br>' +
               '<em>Would you like to explore our full commercial catalogue or discuss wholesale supply?</em>',
         actions: [
-          { label: 'Explore Catalogue (50+)', href: 'catalogue.html#spices', primary: true },
+          { label: 'Explore Catalogue (51 Varieties)', href: 'catalogue.html#spices', primary: true },
           { label: 'Wholesale Portal', href: 'wholesale.html' },
           { label: 'WhatsApp Trade Desk', href: 'https://wa.me/918592832871', target: '_blank', whatsapp: true }
         ],
-        followUps: ['All Products (50+)', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
+        followUps: ['All Products (51 Varieties)', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
       };
     }
 
-    // ── 2. WHY KTA? (SOURCED & GRADED BY KTA ALONE) ──
-    if (/(why\s*kta|why\s*choose|advantage|differentiator|difference|usp|purity|grading|quality\s*assurance|why\s*buy\s*from\s*kta)/i.test(norm)) {
+    // ── 3. WHY KTA? (SOURCED & GRADED BY KTA ALONE) ──
+    if (/(why\s*kta|why.*(?:choose|prefer|partner|buy\s*from|work\s*with)\s*(?:kta|you)|advantage|differentiator|difference|usp|why\s*buy\s*from\s*kta)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'WHY_KTA';
       return {
         html: '<strong>Why Choose KTA Spices?</strong><br><br>' +
-              '• <strong>Sourced & Graded by KTA Alone:</strong> Every lot is procured directly from origin and graded by our specialists to guarantee 100% unadulterated single-origin purity.<br>' +
+              '• <strong>Sourced &amp; Graded by KTA Alone:</strong> Every lot is procured directly from origin and graded by our specialists to guarantee 100% unadulterated single-origin purity.<br>' +
               '• <strong>Zero Adulteration:</strong> Zero synthetic dyes, zero lead chromate, zero artificial polish, zero papaya seeds, and zero exhausted spent waste.<br>' +
-              '• <strong>Rapid Replenishment:</strong> Guaranteed 2–24 hour delivery for partnered kitchens under Hotel Smart.<br>' +
+              '• <strong>Rapid Replenishment:</strong> Guaranteed 2–24 hour emergency delivery for partnered kitchens under Hotel Smart.<br>' +
               '• <strong>Direct Origin Pricing:</strong> Direct estate rates without intermediary trader markups.<br><br>' +
               '<em>Would you like to explore our catalogue or request a complimentary discovery box?</em>',
         actions: [
@@ -3092,41 +3165,41 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Wholesale Portal', href: 'wholesale.html' },
           { label: 'WhatsApp Trade Desk', href: 'https://wa.me/918592832871', target: '_blank', whatsapp: true }
         ],
-        followUps: ['All Products (50+)', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7', 'Green Ginger (Fresh)']
+        followUps: ['All Products (51 Varieties)', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7', 'Green Ginger (Fresh)']
       };
     }
 
-    // ── 3. ALL PRODUCTS / FULL CATALOGUE LIST INTENT ──
+    // ── 4. ALL PRODUCTS / FULL CATALOGUE LIST INTENT ──
     if (/(what\s*all\s*products|list\s*all\s*products|all\s*products|show\s*all\s*products|what\s*products\s*(?:do\s*you\s*have|u\s*got|are\s*there|available)|full\s*catalogue|full\s*catalog|catalogue\s*items|product\s*list|what\s*do\s*you\s*have|what\s*do\s*you\s*sell|what\s*spices\s*do\s*you\s*have|show\s*catalogue|catalog\s*list)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'CATALOGUE';
       return {
         html: '<strong>KTA Full Commercial Catalogue (51 Varieties Roster: 42 Spices + 9 Dry Fruits):</strong><br><br>' +
-              '<strong>1. Single-Origin Spices (42 Varieties Whole & Powders):</strong><br>' +
-              '• Tellicherry Black Pepper (TGSEB Whole & Powder)<br>' +
-              '• White Pepper (Decorticated Whole & Powder)<br>' +
+              '<strong>1. Single-Origin Spices (42 Varieties Whole &amp; Powders):</strong><br>' +
+              '• Tellicherry Black Pepper (TGSEB Whole &amp; Powder)<br>' +
+              '• White Pepper (Decorticated Whole &amp; Powder)<br>' +
               '• Salem Golden Turmeric Powder<br>' +
-              '• Kashmiri Chilly Whole & Cold-Milled Kashmiri Chilli Powder<br>' +
+              '• Kashmiri Chilly Whole &amp; Cold-Milled Kashmiri Chilli Powder<br>' +
               '• Guntur S4 Stemless Hot Red Chilly<br>' +
-              '• Alleppey Green Cardamom (8mm+ Extra Bold), Black & White Cardamom<br>' +
-              '• Cochin Sun-Cured Dry Ginger (Whole & Powder)<br>' +
-              '• Coriander Seeds & Cold-Milled Coriander Powder<br>' +
-              '• Jeera Cumin Seeds & Jeera Powder<br>' +
-              '• Shahi Jeera (Valyajeerakam) & 8-Pointed Star Anise (Annachipoo)<br>' +
+              '• Alleppey Green Cardamom (8mm+ Extra Bold), Black &amp; White Cardamom<br>' +
+              '• Cochin Sun-Cured Dry Ginger (Whole &amp; Powder)<br>' +
+              '• Coriander Seeds &amp; Cold-Milled Coriander Powder<br>' +
+              '• Jeera Cumin Seeds &amp; Jeera Powder<br>' +
+              '• Shahi Jeera (Valyajeerakam) &amp; 8-Pointed Star Anise (Annachipoo)<br>' +
               '• Zanzibar Cloves, Ceylon Cinnamon (Pattai), Cassia Bark (Kesia)<br>' +
               '• Bold Green Fennel (Sombu), Whole Nutmeg (Jaifal), Mace Blades (Javantri)<br>' +
               '• Bay Leaf (Biryani Leaf), Stone Flower (Kalpasi), Kasuri Methi<br>' +
               '• Fenugreek Seeds (Methi), Black Mustard Seeds, Kalonji (Nigella)<br>' +
               '• White Sesame (White Ellu), Sweet Basil Seeds (Sabja), Chia Seeds<br>' +
               '• Raw Pumpkin Seeds, Sunflower Seeds, Watermelon Seeds (Magaz)<br>' +
-              '• Groundnut Seeds & Roasted Crunchy Peanuts<br>' +
-              '• Royal Garam Masala & Royal Biryani Masala (Dum Master Blends)<br>' +
+              '• Groundnut Seeds &amp; Roasted Crunchy Peanuts<br>' +
+              '• Royal Garam Masala &amp; Royal Biryani Masala (Dum Master Blends)<br>' +
               '• Black Dry Lemon (Loomi), Damascena Rose Petals, Super Mongra Saffron<br><br>' +
-              '<strong>2. Premium Dry Fruits & Nuts (9 Varieties):</strong><br>' +
+              '<strong>2. Premium Dry Fruits &amp; Nuts (9 Varieties):</strong><br>' +
               '• Badam (Almonds 18/20 Count)<br>' +
               '• W320 Jumbo White Cashewnuts (Kaju)<br>' +
-              '• Selected Whole Dates & Royal Dried Figs (Anjeer)<br>' +
-              '• Green Golden Raisins (Kismiss), Black Kismiss & Long Special Kismiss<br>' +
-              '• Roasted & Salted Pistachios (Pista) & California Walnuts (Akhrot)<br><br>' +
+              '• Selected Whole Dates &amp; Royal Dried Figs (Anjeer)<br>' +
+              '• Green Golden Raisins (Kismiss), Black Kismiss &amp; Long Special Kismiss<br>' +
+              '• Roasted &amp; Salted Pistachios (Pista) &amp; California Walnuts (Akhrot)<br><br>' +
               '<strong>3. Wholesale Extraction Byproducts (40kg Master Bags):</strong><br>' +
               '• Green Ginger (Fresh Jumbo Rhizomes), Lite Berries, Pinheads, Pepper Husk, Spent Biomass.<br><br>' +
               '<em>Tap below to browse the interactive catalogue or build your sample tray:</em>',
@@ -3139,18 +3212,18 @@ window.handleFooterSubscribe = function(event) {
       };
     }
 
-    // ── 4. WHAT IS WHOLESALE? (500kg+ MOQ, 40kg Master Bags, Full Commodity List) ──
+    // ── 5. WHAT IS WHOLESALE? (500kg+ MOQ, 40kg Master Bags) ──
     if (/(what\s*is\s*wholesale|wholesale|moq|minimum\s*order|bulk\s*order|commercial\s*order|bag\s*size|master\s*bag|packaging\s*unit|products\s*in\s*wholesale|wholesale\s*items|wholesale\s*range|wholesale\s*portfolio|tonnage|container)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'WHOLESALE';
       return {
         html: '<strong>Wholesale Consignment Structure (500kg+ MOQ in 40kg Master Bags):</strong><br><br>' +
               '• <strong>Wholesale Range:</strong><br>' +
               '  - <strong>Black Pepper:</strong> Whole Bold Export Grade (HSN 09041140)<br>' +
-              '  - <strong>Lite Berries & Pinheads:</strong> High-resin extraction grades<br>' +
-              '  - <strong>Pepper Husk & Pepper Husk (S):</strong> Sieved mesh & seasoning cuts<br>' +
+              '  - <strong>Lite Berries &amp; Pinheads:</strong> High-resin extraction grades<br>' +
+              '  - <strong>Pepper Husk &amp; Pepper Husk (S):</strong> Sieved mesh &amp; seasoning cuts<br>' +
               '  - <strong>Green Ginger (Fresh):</strong> Raw farm-direct jumbo rhizomes (HSN 09101110)<br>' +
               '  - <strong>Dry Ginger:</strong> Unspent sun-dried whole / slices (HSN 09101110)<br>' +
-              '  - <strong>Biomass Residues:</strong> Spent Dry Ginger & All Spices Spent<br>' +
+              '  - <strong>Biomass Residues:</strong> Spent Dry Ginger &amp; All Spices Spent<br>' +
               '• <strong>Packaging Standard:</strong> 40kg heavy-duty food-grade multi-layer master bags on shrink-wrapped pallets.<br>' +
               '• <strong>Palletized Logistics:</strong> Rapid dispatch across South India.<br>' +
               '• <strong>Dedicated Wholesale Desk:</strong> Contact our wholesale team directly at <strong>+91 63793 51632</strong> for bulk container and tonnage quotes.<br><br>' +
@@ -3160,38 +3233,38 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Generate Pro-Forma Invoice', href: 'wholesale.html#proforma' },
           { label: 'Custom Sourcing Desk', href: 'wholesale.html#orderForm' }
         ],
-        followUps: ['Green Ginger (Fresh)', 'All Products (50+)', 'Why choose KTA?', 'Custom Sourcing']
+        followUps: ['Green Ginger (Fresh)', 'All Products (51 Varieties)', 'Why choose KTA?', 'Custom Sourcing']
       };
     }
 
-    // ── 5. HOTEL SMART 24/7 ZERO-DOWNTIME REPLENISHMENT ──
+    // ── 6. HOTEL SMART 24/7 ZERO-DOWNTIME REPLENISHMENT ──
     if (/(hotel\s*smart|24\/7|replenishment|emergency|zero\s*downtime|restock|hospitality\s*delivery|standing\s*order|hotel\s*supply)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'HOTEL_SMART';
       return {
         html: '<strong>Hotel Smart 24/7 Rapid Replenishment:</strong><br><br>' +
               'Designed specifically for executive chefs, luxury hotel chains, and high-volume banquet operations:<br><br>' +
               '• <strong>2–24 Hour Guaranteed Dispatch:</strong> Priority emergency and scheduled replenishment directly to your hotel receiving dock.<br>' +
-              '• <strong>Zero Stock-out Assurance:</strong> Dedicated buffer stock reserved for contracted kitchens across South Indian metro corridors.<br>' +
-              '• <strong>Sourced & Graded by KTA Alone:</strong> Uncompromising aroma strength, zero filler, and consistent batch performance.<br><br>' +
+              '• <strong>Zero Stock-out Assurance:</strong> Dedicated buffer stock reserved for contracted kitchens across Chennai, Bangalore, Hyderabad, Kochi, Coimbatore, and Madurai.<br>' +
+              '• <strong>Sourced &amp; Graded by KTA Alone:</strong> Uncompromising aroma strength, zero filler, and consistent batch performance.<br><br>' +
               '<em>Would you like to register your kitchen for Hotel Smart priority replenishment?</em>',
         actions: [
           { label: 'Register Your Kitchen', href: 'partnership.html#registerKitchen', primary: true },
           { label: 'Emergency WhatsApp Desk', href: 'https://wa.me/918592832871?text=Hello%20KTA%20Trade%20Desk%2C%20I%20am%20inquiring%20about%20Hotel%20Smart%2024%2F7%20replenishment.', target: '_blank', whatsapp: true },
           { label: 'Wholesale Portal', href: 'wholesale.html' }
         ],
-        followUps: ['All Products (50+)', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Chef Welcome Box (Free)']
+        followUps: ['All Products (51 Varieties)', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Chef Welcome Box (Free)']
       };
     }
 
-    // ── 6. GREEN GINGER (RAW FRESH FARM-DIRECT) ──
+    // ── 7. GREEN GINGER (RAW FRESH FARM-DIRECT) ──
     if (/(green\s*ginger|fresh\s*ginger|raw\s*ginger|farm\s*ginger|ginger\s*rhizome|fresh\s*rhizome|pacha\s*inji|allam\s*fresh|pachai\s*inji)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'GREEN_GINGER';
       return {
         html: '<strong>Green Ginger (Raw Fresh Farm-Direct Jumbo Rhizomes):</strong><br><br>' +
               '• <strong>Botanical Specimen:</strong> <em>Zingiber officinale Roscoe</em> (HSN: 09101110).<br>' +
               '• <strong>Commercial Grade:</strong> Jumbo plump fresh rhizomes, thoroughly washed, soil-free, and air-dried.<br>' +
-              '• <strong>Terroir & Purity:</strong> Highland Specific, sourced and graded by KTA alone with high natural juice content and crisp fibrous texture.<br>' +
-              '• <strong>Packaging & MOQ:</strong> 40kg food-grade master bags & export crates (500kg+ MOQ to multi-ton consignments).<br>' +
+              '• <strong>Terroir &amp; Purity:</strong> Highland Specific, sourced and graded by KTA alone with high natural juice content and crisp fibrous texture.<br>' +
+              '• <strong>Packaging &amp; MOQ:</strong> 40kg food-grade master bags &amp; export crates (500kg+ MOQ to multi-ton consignments).<br>' +
               '• <strong>Palletized Logistics:</strong> Rapid dispatch across South India.<br><br>' +
               '<em>Available for immediate commercial dispatch and instant pro-forma quotation:</em>',
         actions: [
@@ -3203,13 +3276,13 @@ window.handleFooterSubscribe = function(event) {
       };
     }
 
-    // ── 7. CHEF WELCOME BOX / DISCOVERY SAMPLES (FREE) ──
+    // ── 8. CHEF WELCOME BOX / DISCOVERY SAMPLES (FREE) ──
     if (/(sample|samples|discovery|welcome\s*box|welcome\s*kit|trial|test\s*kit|chef\s*box|sample\s*kit|free\s*box|free\s*sample|try\s*sample)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'CHEF_BOX';
       return {
-        html: '<strong>Chef Welcome Box · FREE (Sourced & Graded by KTA Alone):</strong><br><br>' +
-              'We invite Executive Chefs, F&B Directors, and Hotel Purchase Heads to evaluate our single-origin harvests directly in their kitchen pass.<br><br>' +
-              '• <strong>Sourced & Graded by KTA Alone:</strong> Pure Tellicherry black pepper, Alleppey cardamom, Salem turmeric, and whole aromatics.<br>' +
+        html: '<strong>Chef Welcome Box · FREE (Sourced &amp; Graded by KTA Alone):</strong><br><br>' +
+              'We invite Executive Chefs, F&amp;B Directors, and Hotel Purchase Heads to evaluate our single-origin harvests directly in their kitchen pass.<br><br>' +
+              '• <strong>Sourced &amp; Graded by KTA Alone:</strong> Pure Tellicherry black pepper, Alleppey cardamom, Salem turmeric, and whole aromatics.<br>' +
               '• <strong>Location-Based Sample Dispatch:</strong> Discovery sample dispatches are fulfilled according to destination location.<br>' +
               '• <strong>Commercial Partnership:</strong> Once partnered under Hotel Smart, emergency replenishments are guaranteed within <strong>2–24 hours</strong>.<br><br>' +
               '<em>Would you like to request a complimentary discovery box for your kitchen?</em>',
@@ -3217,14 +3290,14 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Request Welcome Box (Free)', href: 'partnership.html#registerKitchen', primary: true },
           { label: 'WhatsApp Trade Desk', href: 'https://wa.me/918592832871?text=Hello%20KTA%20Trade%20Desk%2C%20I%20am%20an%20Executive%20Chef%20requesting%20the%20Free%20Chef%20Welcome%20Box.', target: '_blank', whatsapp: true }
         ],
-        followUps: ['All Products (50+)', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
+        followUps: ['All Products (51 Varieties)', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
       };
     }
 
-    // ── 8. PRIVATE LABELLING / WHITE LABELLING / BRAND PACKING ──
+    // ── 9. PRIVATE LABELLING / WHITE LABELLING / BRAND PACKING ──
     if (/(private\s*label|white\s*label|custom\s*brand|my\s*brand|oem|custom\s*pouch|jar\s*packing|brand\s*packaging)/i.test(norm)) {
       return {
-        html: '<strong>Private Labelling & Contract Packaging Services:</strong><br><br>' +
+        html: '<strong>Private Labelling &amp; Contract Packaging Services:</strong><br><br>' +
               'KTA provides complete end-to-end white labelling and commercial packaging for culinary brands, supermarket chains, and restaurant groups:<br><br>' +
               '• <strong>Flexible Packaging Formats:</strong> Nitrogen-flushed barrier pouches, PET jars, metal tins, and 1kg/5kg chef foodservice packs.<br>' +
               '• <strong>Custom Granulation:</strong> Whole sieved, cracked cut, coarse kibbled, or ultra-fine 60–100 mesh powders.<br>' +
@@ -3235,14 +3308,14 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Custom Sourcing Desk', href: 'wholesale.html#orderForm' },
           { label: 'Wholesale Portal', href: 'wholesale.html' }
         ],
-        followUps: ['All Products (50+)', 'Wholesale (40kg Bags)', 'What is KTA?', 'Quality & Lab Assay']
+        followUps: ['All Products (51 Varieties)', 'Wholesale (40kg Bags)', 'What is KTA?', 'Quality & Lab Assay']
       };
     }
 
-    // ── 9. WAREHOUSE VISIT & PHYSICAL INSPECTION ──
+    // ── 10. WAREHOUSE VISIT & PHYSICAL INSPECTION ──
     if (/(visit|warehouse\s*visit|see\s*stock|physical\s*visit|location\s*visit|come\s*to\s*office|inspect\s*stock|george\s*town|mannadi)/i.test(norm)) {
       return {
-        html: '<strong>Registered Warehouse Visit & Commercial Inspection:</strong><br><br>' +
+        html: '<strong>Registered Warehouse Visit &amp; Commercial Inspection:</strong><br><br>' +
               'Commercial buyers, chefs, and purchase directors are welcome to visit our central facility to inspect physical lots, grain sizes, and aroma strength:<br><br>' +
               '• <strong>Registered Facility:</strong> No. 13/28, Mylai Periyathambi Street, George Town, Mannadi, Chennai, Tamil Nadu – 600001<br>' +
               '• <strong>Operational Hours:</strong> <strong>24 Hours (Monday – Sunday)</strong><br>' +
@@ -3253,16 +3326,16 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Call Warehouse Manager', href: 'tel:+918592832871' },
           { label: 'Contact Page & Map', href: 'contact.html' }
         ],
-        followUps: ['All Products (50+)', 'Wholesale (40kg Bags)', 'What is KTA?', 'Hotel Smart 24/7']
+        followUps: ['All Products (51 Varieties)', 'Wholesale (40kg Bags)', 'What is KTA?', 'Hotel Smart 24/7']
       };
     }
 
-    // ── 10. RETAIL VS WHOLESALE MOQ (100g vs 1kg / 40kg) ──
+    // ── 11. RETAIL VS WHOLESALE MOQ (100g vs 1kg / 40kg) ──
     if (/(100g|250g|small\s*pack|retail|retail\s*pack|consumer\s*pack|single\s*packet|personal\s*use)/i.test(norm)) {
       return {
-        html: '<strong>KTA Packaging & Minimum Supply Tiers:</strong><br><br>' +
+        html: '<strong>KTA Packaging &amp; Minimum Supply Tiers:</strong><br><br>' +
               'KTA is a dedicated B2B commercial procurement house supplying elite kitchens, hotel chains, and wholesale processors:<br><br>' +
-              '• <strong>Chef & Kitchen Standard:</strong> <strong>1kg barrier pouches</strong> and 5kg foodservice tins (ideal for culinary pass and menu prep).<br>' +
+              '• <strong>Chef &amp; Kitchen Standard:</strong> <strong>1kg barrier pouches</strong> and 5kg foodservice tins (ideal for culinary pass and menu prep).<br>' +
               '• <strong>Wholesale Standard:</strong> <strong>40kg heavy-duty master bags</strong> (500kg+ MOQ for commercial lots).<br>' +
               '• <em>We do not supply consumer 50g/100g pouches directly</em>, but chefs can request our <strong>Free Chef Discovery Box</strong> to evaluate 1kg sample varieties.<br><br>' +
               '<em>Would you like to order 1kg chef packs or request a complimentary sample box?</em>',
@@ -3271,31 +3344,31 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Browse 1kg Catalogue', href: 'catalogue.html' },
           { label: 'Wholesale Portal', href: 'wholesale.html' }
         ],
-        followUps: ['Chef Welcome Box (Free)', 'All Products (50+)', 'Wholesale (40kg Bags)', 'Why choose KTA?']
+        followUps: ['Chef Welcome Box (Free)', 'All Products (51 Varieties)', 'Wholesale (40kg Bags)', 'Why choose KTA?']
       };
     }
 
-    // ── 11. COMMERCIAL PRICING & QUOTATION INTENT (NO GST MENTIONS) ──
+    // ── 12. COMMERCIAL PRICING & QUOTATION INTENT ──
     if (/(price|pricing|rate|rates|cost|quotation|quote|how\s*much|vilai|bhav|daam|kya\s*rate|estimate|per\s*kg)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'PRICING';
       return {
-        html: '<strong>KTA Commercial Pricing & Direct Wholesale Rates:</strong><br><br>' +
+        html: '<strong>KTA Commercial Pricing &amp; Direct Wholesale Rates:</strong><br><br>' +
               'KTA provides direct estate auction pricing pegged to daily origin arrivals with zero intermediary mandi markups.<br><br>' +
               '• <strong>Commercial Lot Pricing:</strong> Competitive volume rates for 1kg chef pouches, 5kg tins, 25kg bulk bags, and 40kg master bags.<br>' +
               '• <strong>Volume Discount Tiers:</strong> Tiered discounts applied for consignments of 1 MT, 3 MT, and 5 MT+.<br>' +
-              '• <strong>Billing & Terms:</strong> Clean commercial B2B invoices with complete batch COA and traceable origin documentation.<br><br>' +
+              '• <strong>Billing &amp; Terms:</strong> Clean commercial B2B invoices with complete batch COA and traceable origin documentation.<br><br>' +
               '<em>For today\'s live market rates and instant spot quotation, please connect with our trade desk:</em>',
         actions: [
           { label: 'Get Live Rates on WhatsApp', href: 'https://wa.me/918592832871?text=Hello%20KTA%20Trade%20Desk%2C%20please%20share%20today%27s%20commercial%20rate%20card%20and%20quotation.', primary: true, target: '_blank', whatsapp: true },
           { label: 'Wholesale Pro-Forma', href: 'wholesale.html#proforma' },
           { label: 'Explore Catalogue', href: 'catalogue.html' }
         ],
-        followUps: ['All Products (50+)', 'Wholesale (40kg Bags)', 'Chef Welcome Box (Free)', 'Hotel Smart 24/7']
+        followUps: ['All Products (51 Varieties)', 'Wholesale (40kg Bags)', 'Chef Welcome Box (Free)', 'Hotel Smart 24/7']
       };
     }
 
-    // ── 12. QUALITY, WHY IS THIS PEPPER GOOD & SPECIFICATIONS (DIRECT TO CONTACT US) ──
-    if (/(why.*(?:good|better|best|buy|choose|special|great|top|pepper|cardamom|turmeric|chilly|ginger|clove|cinnamon|spice)|what\s*makes.*(?:good|better|best|special)|is.*(?:good|better|best|pure)|how\s*is.*(?:good|quality)|why\s*good|why\s*this|quality|purity|lab|assay|coa|curcumin|piperine|fssai|chemical|testing)/i.test(norm)) {
+    // ── 13. QUALITY, ASSAY & SPECIFICATIONS ──
+    if (/(why.*(?:good|better|best|pure)|what\s*makes.*(?:good|better|best|special)|is.*(?:good|better|best|pure)|how\s*is.*(?:good|quality)|quality|purity|lab|assay|coa|curcumin|piperine|fssai|chemical|testing)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'CONTACT_US';
       return {
         html: '<strong>Single-Origin Unadulterated Purity:</strong><br><br>' +
@@ -3307,33 +3380,33 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Contact Us Page', href: 'contact.html' },
           { label: 'Call Trade Desk (+91 85928 32871)', href: 'tel:+918592832871' }
         ],
-        followUps: ['All Products (50+)', 'Wholesale (40kg Bags)', 'Chef Welcome Box (Free)', 'Hotel Smart 24/7']
+        followUps: ['All Products (51 Varieties)', 'Wholesale (40kg Bags)', 'Chef Welcome Box (Free)', 'Hotel Smart 24/7']
       };
     }
 
-    // ── 13. DELIVERY, LOGISTICS & TURNAROUND SLAS ──
+    // ── 14. DELIVERY, LOGISTICS & TURNAROUND SLAS ──
     if (/(delivery|shipping|dispatch|speed|lead\s*time|transit|how\s*long|turnaround|transport|freight|logistics)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'DELIVERY';
       return {
-        html: '<strong>Delivery Logistics & Dispatch Turnaround:</strong><br><br>' +
+        html: '<strong>Delivery Logistics &amp; Dispatch Turnaround:</strong><br><br>' +
               '• <strong>Hotel Smart Priority Corridors:</strong> <strong>2–24 Hour Guaranteed Dispatch</strong> for contracted kitchens across Chennai, Bangalore, Hyderabad, Kochi, Coimbatore, and Madurai.<br>' +
               '• <strong>Wholesale Consignments (500kg+):</strong> Palletized commercial dispatch within 24 hours ex-warehouse.<br>' +
-              '• <strong>Pan-India & Export Freight:</strong> Moisture-sealed multi-layer packaging dispatched via verified cargo lines with live dispatch tracking.<br><br>' +
+              '• <strong>Pan-India &amp; Export Freight:</strong> Moisture-sealed multi-layer packaging dispatched via verified cargo lines with live dispatch tracking.<br><br>' +
               '<em>Need emergency replenishment or have a scheduled delivery requirement?</em>',
         actions: [
           { label: 'Emergency Dispatch WhatsApp', href: 'https://wa.me/918592832871?text=Hello%20KTA%20Trade%20Desk%2C%20I%20have%20an%20urgent%20dispatch%20requirement.', primary: true, target: '_blank', whatsapp: true },
           { label: 'Hotel Smart Portal', href: 'hotel-smart.html' },
           { label: 'Wholesale Logistics', href: 'wholesale.html' }
         ],
-        followUps: ['Hotel Smart 24/7', 'Wholesale (40kg Bags)', 'All Products (50+)', 'What is KTA?']
+        followUps: ['Hotel Smart 24/7', 'Wholesale (40kg Bags)', 'All Products (51 Varieties)', 'What is KTA?']
       };
     }
 
-    // ── 14. PAYMENT TERMS & BILLING (NO GST MENTIONS) ──
+    // ── 15. PAYMENT TERMS & BILLING ──
     if (/(payment|credit|credit\s*period|credit\s*terms|terms|billing|invoice|proforma|bank|neft|rtgs|lc|account)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'PAYMENT';
       return {
-        html: '<strong>Commercial Payment Terms & Institutional Billing:</strong><br><br>' +
+        html: '<strong>Commercial Payment Terms &amp; Institutional Billing:</strong><br><br>' +
               '• <strong>Institutional Credit Lines:</strong> 15-day and 30-day revolving credit terms available for verified 5-star hotel chains and contracted institutional partners.<br>' +
               '• <strong>Payment Methods:</strong> Direct corporate bank settlement via NEFT, RTGS, and Irrevocable Letter of Credit (LC) for export/multi-ton contracts.<br>' +
               '• <strong>Transparent Commercial Invoices:</strong> Official B2B billing documentation with complete HSN codes and batch COA.<br><br>' +
@@ -3343,69 +3416,28 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Generate Pro-Forma', href: 'wholesale.html#proforma' },
           { label: 'Wholesale Portal', href: 'wholesale.html' }
         ],
-        followUps: ['Wholesale (40kg Bags)', 'Hotel Smart 24/7', 'All Products (50+)', 'Why choose KTA?']
+        followUps: ['Wholesale (40kg Bags)', 'Hotel Smart 24/7', 'All Products (51 Varieties)', 'Why choose KTA?']
       };
     }
 
-    // ── 15. HOW TO ORDER / PROCUREMENT PROCESS ──
+    // ── 16. HOW TO ORDER / PROCUREMENT PROCESS ──
     if (/(how\s*to\s*order|how\s*to\s*buy|order\s*process|how\s*to\s*purchase|order\s*placement|booking|procurement\s*process|how\s*do\s*i\s*order)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'ORDER_PROCESS';
       return {
         html: '<strong>How to Procure from KTA Spices (3 Simple Steps):</strong><br><br>' +
               '<strong>Step 1: Select Varieties</strong><br>' +
-              'Browse our 50+ single-origin varieties in the catalogue or build a 1kg Sample Tray.<br><br>' +
-              '<strong>Step 2: Instant Quotation & Verification</strong><br>' +
+              'Browse our 51 single-origin varieties in the catalogue or build a 1kg Sample Tray.<br><br>' +
+              '<strong>Step 2: Instant Quotation &amp; Verification</strong><br>' +
               'Submit your required lot sizes via 1-tap Fast RFQ or WhatsApp Trade Desk (+91 85928 32871).<br><br>' +
               '<strong>Step 3: Rapid Dispatch</strong><br>' +
               'Commercial lots dispatched in 2–24h with complete batch COA to your kitchen or receiving dock.<br><br>' +
               '<em>Ready to place an order or sample request?</em>',
         actions: [
-          { label: 'Browse Catalogue (50+)', href: 'catalogue.html', primary: true },
+          { label: 'Browse Catalogue (51 Varieties)', href: 'catalogue.html', primary: true },
           { label: 'WhatsApp Trade Desk', href: 'https://wa.me/918592832871', target: '_blank', whatsapp: true },
           { label: 'Wholesale Portal', href: 'wholesale.html' }
         ],
-        followUps: ['All Products (50+)', 'Chef Welcome Box (Free)', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
-      };
-    }
-
-    // ── 16. DIRECT PRODUCT LOOKUP ACROSS CATALOGUE (STRUCTURED GRID LAYOUT, NO GST) ──
-    var matchedProduct = null;
-    for (var i = 0; i < KTA_KB.products.length; i++) {
-      var prod = KTA_KB.products[i];
-      for (var a = 0; a < prod.aliases.length; a++) {
-        var alias = prod.aliases[a];
-        if (norm.indexOf(alias) !== -1) {
-          matchedProduct = prod;
-          break;
-        }
-      }
-      if (matchedProduct) break;
-    }
-
-    if (matchedProduct) {
-      KTA_AI_SESSION_STATE.lastProduct = matchedProduct;
-      KTA_AI_SESSION_STATE.lastIntent = 'PRODUCT_VIEW';
-      
-      var waProdMsg = encodeURIComponent('Hello KTA Trade Desk, I am inquiring about ' + matchedProduct.name + ' (HSN: ' + matchedProduct.hsn + ') for commercial kitchen supply.');
-      return {
-        html: '<div class="kta-ai-card">' +
-              '  <div class="kta-ai-card-title">' + escapeHtml(matchedProduct.name) + '</div>' +
-              '  <div class="kta-ai-card-origin">HSN: ' + matchedProduct.hsn + ' · Terroir: ' + matchedProduct.origin + '</div>' +
-              '  <div class="kta-ai-card-grid">' +
-              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Purity &amp; Source</span><span class="kta-ai-card-val">Sourced &amp; graded by KTA alone</span></div>' +
-              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Commercial Grade</span><span class="kta-ai-card-val">' + escapeHtml(matchedProduct.grade) + '</span></div>' +
-              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Packaging Standard</span><span class="kta-ai-card-val">' + escapeHtml(matchedProduct.packaging) + '</span></div>' +
-              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Harvest Season</span><span class="kta-ai-card-val">' + escapeHtml(matchedProduct.harvestSeason || 'Peak Harvest Arrivals') + '</span></div>' +
-              '  </div>' +
-              '  <div class="kta-ai-card-desc"><strong>Culinary Note:</strong> ' + escapeHtml(matchedProduct.culinaryPairing) + '</div>' +
-              '</div><br>' +
-              '<em>Would you like to check today\'s commercial lot rate or request a 1kg sample pack?</em>',
-        actions: [
-          { label: 'Inquire on WhatsApp', href: 'https://wa.me/918592832871?text=' + waProdMsg, primary: true, target: '_blank', whatsapp: true },
-          { label: 'Browse Full Catalogue', href: 'catalogue.html#spices' },
-          { label: 'Wholesale Portal', href: 'wholesale.html' }
-        ],
-        followUps: ['Request 1kg Sample of this', 'Wholesale Rate (40kg Bags)', 'Quality & Lab Assay', 'All Products (50+)']
+        followUps: ['All Products (51 Varieties)', 'Chef Welcome Box (Free)', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
       };
     }
 
@@ -3414,11 +3446,12 @@ window.handleFooterSubscribe = function(event) {
     for (var w = 0; w < KTA_KB.wholesaleExtraction.length; w++) {
       var we = KTA_KB.wholesaleExtraction[w];
       var weNameLow = we.name.toLowerCase();
-      if ((norm.indexOf('husk') !== -1 && weNameLow.indexOf('husk') !== -1) ||
-          (norm.indexOf('pinhead') !== -1 && weNameLow.indexOf('pinhead') !== -1) ||
-          (norm.indexOf('lite') !== -1 && weNameLow.indexOf('lite') !== -1) ||
-          (norm.indexOf('spent') !== -1 && weNameLow.indexOf('spent') !== -1) ||
-          (norm.indexOf('byproduct') !== -1 && weNameLow.indexOf('husk') !== -1)) {
+      if ((matchPhrase(norm, 'husk') && weNameLow.indexOf('husk') !== -1) ||
+          (matchPhrase(norm, 'pinhead') && weNameLow.indexOf('pinhead') !== -1) ||
+          (matchPhrase(norm, 'pinheads') && weNameLow.indexOf('pinhead') !== -1) ||
+          (matchPhrase(norm, 'lite berries') && weNameLow.indexOf('lite') !== -1) ||
+          (matchPhrase(norm, 'spent') && weNameLow.indexOf('spent') !== -1) ||
+          (matchPhrase(norm, 'byproduct') && weNameLow.indexOf('husk') !== -1)) {
         matchedExtraction = we;
         break;
       }
@@ -3447,74 +3480,55 @@ window.handleFooterSubscribe = function(event) {
       };
     }
 
-    // ── 18. CUSTOM SOURCING & COMMODITIES OUTSIDE CATALOGUE (NLP Matcher) ──
-    var unlistedKeywords = [
-      'vanilla', 'ajwain', 'asafoetida', 'hing',
-      'tamarind', 'garlic', 'onion powder', 'chilli flakes', 'chili flakes',
-      'paprika', 'white pepper whole', 'green pepper in brine', 'nutmeg oil',
-      'clove oil', 'cardamom oil', 'pepper oil', 'oleoresin', 'curry leaf', 'curry leaves',
-      'dry mango', 'amchur', 'kasuri methi bulk', 'star anise oil', 'cinnamon oil',
-      'turmeric fingers', 'mesh 60', 'mesh 80', 'mesh 100', 'custom mesh',
-      'organic spices', 'export packaging', 'drum pack', 'fibc', 'jumbo bag'
-    ];
+    // ── 18. DIRECT PRODUCT LOOKUP ACROSS CATALOGUE (WORD BOUNDARY MATCHING) ──
+    var matchedProduct = null;
+    var longestMatchLen = 0;
 
-    var isCustomQuery = /(outside\s*catalogue|outside\s*catalog|not\s*in\s*catalogue|not\s*in\s*catalog|unlisted|custom\s*sourcing|custom\s*product|custom\s*spice|custom\s*grade|custom\s*lot|rare\s*spice|specialty\s*spice|custom\s*grind|custom\s*mesh|export\s*packing|commodity\s*outsourcing)/i.test(norm);
-    
-    var detectedItem = '';
-    for (var u = 0; u < unlistedKeywords.length; u++) {
-      if (norm.indexOf(unlistedKeywords[u]) !== -1) {
-        detectedItem = unlistedKeywords[u];
-        isCustomQuery = true;
-        break;
-      }
-    }
-
-    var needMatch = norm.match(/(?:i\s*need|looking\s*for|do\s*you\s*(?:have|sell|supply)|can\s*you\s*source|want\s*to\s*buy|require)\s+([a-z0-9\s]{2,30})/i);
-    if (needMatch && !isCustomQuery) {
-      var cand = needMatch[1].trim();
-      var foundInCat = false;
-      for (var k = 0; k < KTA_KB.products.length; k++) {
-        for (var al = 0; al < KTA_KB.products[k].aliases.length; al++) {
-          if (cand.indexOf(KTA_KB.products[k].aliases[al]) !== -1) {
-            foundInCat = true;
-            break;
+    for (var i = 0; i < KTA_KB.products.length; i++) {
+      var prod = KTA_KB.products[i];
+      for (var a = 0; a < prod.aliases.length; a++) {
+        var alias = prod.aliases[a];
+        if (matchPhrase(norm, alias)) {
+          if (alias.length > longestMatchLen) {
+            matchedProduct = prod;
+            longestMatchLen = alias.length;
           }
         }
-        if (foundInCat) break;
-      }
-      if (!foundInCat && cand.length > 2) {
-        detectedItem = cand;
-        isCustomQuery = true;
       }
     }
 
-    if (isCustomQuery) {
-      var itemLabel = detectedItem ? detectedItem.charAt(0).toUpperCase() + detectedItem.slice(1) : 'Specialty Commodities';
-      var waCustomMsg = encodeURIComponent('Hello KTA Trade Desk, I am looking to custom-source ' + (detectedItem ? '"' + itemLabel + '"' : 'specialty spice commodities outside standard catalogue') + ' for our commercial facility. Please advise on origin lot availability, MOQ, and pricing.');
-
+    if (matchedProduct) {
+      KTA_AI_SESSION_STATE.lastProduct = matchedProduct;
+      KTA_AI_SESSION_STATE.lastIntent = 'PRODUCT_VIEW';
+      
+      var waProdMsg = encodeURIComponent('Hello KTA Trade Desk, I am inquiring about ' + matchedProduct.name + ' (HSN: ' + matchedProduct.hsn + ') for commercial kitchen supply.');
       return {
-        html: '<strong>Custom Sourcing Desk (Outside Standard Catalogue):</strong><br><br>' +
-              (detectedItem ? 'Looking for <strong>' + escapeHtml(itemLabel) + '</strong> or custom grades not listed in our standard catalogue?<br><br>' : 'Need spice varieties, rare botanicals, or custom grades outside our standard catalogue?<br><br>') +
-              'KTA leverages <strong>25+ years of direct grower networks</strong> across South India to source, clean, grade, and supply any unlisted agricultural commodity on demand.<br><br>' +
-              '• <strong>Raw Farm Agricultural Produce:</strong> Green Ginger (Fresh), fresh turmeric rhizomes, raw farm botanicals, and green pepper in brine.<br>' +
-              '• <strong>Rare Botanicals & Spices:</strong> Vanilla beans, Ajwain, Asafoetida (Hing), Tamarind, and specialty culinary herbs.<br>' +
-              '• <strong>Custom Granulation & Milling:</strong> Whole garbled, coarse cracked, crushed cuts, and fine 60–100 mesh powders.<br>' +
-              '• <strong>Export-Ready Packaging:</strong> Multi-layer moisture-sealed master bags, fiber drum packs, or FIBC jumbo bags with complete customs documentation.<br><br>' +
-              '<em>Tap below for direct 1-tap WhatsApp custom sourcing dispatch:</em>',
+        html: '<div class="kta-ai-card">' +
+              '  <div class="kta-ai-card-title">' + escapeHtml(matchedProduct.name) + '</div>' +
+              '  <div class="kta-ai-card-origin">HSN: ' + matchedProduct.hsn + ' · Terroir: ' + matchedProduct.origin + '</div>' +
+              '  <div class="kta-ai-card-grid">' +
+              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Purity &amp; Source</span><span class="kta-ai-card-val">Sourced &amp; graded by KTA alone</span></div>' +
+              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Commercial Grade</span><span class="kta-ai-card-val">' + escapeHtml(matchedProduct.grade) + '</span></div>' +
+              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Packaging Standard</span><span class="kta-ai-card-val">' + escapeHtml(matchedProduct.packaging) + '</span></div>' +
+              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Harvest Season</span><span class="kta-ai-card-val">' + escapeHtml(matchedProduct.harvestSeason || 'Peak Harvest Arrivals') + '</span></div>' +
+              '  </div>' +
+              '  <div class="kta-ai-card-desc"><strong>Culinary Note:</strong> ' + escapeHtml(matchedProduct.culinaryPairing) + '</div>' +
+              '</div><br>' +
+              '<em>Would you like to check today\'s commercial lot rate or request a 1kg sample pack?</em>',
         actions: [
-          { label: 'Request ' + (detectedItem ? itemLabel : 'Custom') + ' Sourcing on WhatsApp', href: 'https://wa.me/916379351632?text=' + waCustomMsg, primary: true, target: '_blank', whatsapp: true },
-          { label: 'Submit Custom Sourcing Brief', href: 'wholesale.html#orderForm' },
-          { label: 'Contact Commercial Desk', href: 'contact.html' }
+          { label: 'Inquire on WhatsApp', href: 'https://wa.me/918592832871?text=' + waProdMsg, primary: true, target: '_blank', whatsapp: true },
+          { label: 'Browse Full Catalogue', href: 'catalogue.html#spices' },
+          { label: 'Wholesale Portal', href: 'wholesale.html' }
         ],
-        followUps: ['All Products (50+)', 'Wholesale (40kg Bags)', 'What is KTA?', 'Hotel Smart 24/7']
+        followUps: ['Request 1kg Sample of this', 'Wholesale Rate (40kg Bags)', 'Quality & Lab Assay', 'All Products (51 Varieties)']
       };
     }
 
     // ── 19. CONTACT, BROKER, WAREHOUSE & 24/7 OPERATING HOURS ──
     if (/(contact|broker|call|phone|whatsapp|address|location|warehouse|office|hours|desk|where|hotline|support)/i.test(norm)) {
       return {
-        html: '<strong>KTA Commercial Trade Desk & Registered Warehouse:</strong><br><br>' +
-              '• <strong>General & Emergency Trade Desk:</strong> +91 85928 32871 (WhatsApp: <a href="https://wa.me/918592832871" target="_blank">wa.me/918592832871</a>)<br>' +
+        html: '<strong>KTA Commercial Trade Desk &amp; Registered Warehouse:</strong><br><br>' +
+              '• <strong>General &amp; Emergency Trade Desk:</strong> +91 85928 32871 (WhatsApp: <a href="https://wa.me/918592832871" target="_blank">wa.me/918592832871</a>)<br>' +
               '• <strong>Dedicated Wholesale Desk:</strong> +91 63793 51632 (WhatsApp: <a href="https://wa.me/916379351632" target="_blank">wa.me/916379351632</a>)<br>' +
               '• <strong>Registered Warehouse:</strong> No. 13/28, Mylai Periyathambi Street, George Town, Mannadi, Chennai, Tamil Nadu – 600001<br>' +
               '• <strong>Operating Hours:</strong> <strong>Monday – Sunday: 24 Hours (24/7)</strong><br><br>' +
@@ -3524,7 +3538,7 @@ window.handleFooterSubscribe = function(event) {
           { label: 'Wholesale WhatsApp (+91 63793 51632)', href: 'https://wa.me/916379351632', target: '_blank', whatsapp: true },
           { label: 'Contact Page', href: 'contact.html' }
         ],
-        followUps: ['All Products (50+)', 'What is KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
+        followUps: ['All Products (51 Varieties)', 'What is KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
       };
     }
 
@@ -3533,43 +3547,43 @@ window.handleFooterSubscribe = function(event) {
       return {
         html: '<strong>Hello! Welcome to KTA Spices Commercial Concierge.</strong><br><br>' +
               'How may I assist your kitchen or procurement desk today?<br>' +
-              '• <strong>All Products</strong> (50+ single-origin spices, dry fruits & seeds)<br>' +
+              '• <strong>Custom Sourcing</strong> (Rare botanicals &amp; unlisted items outside catalogue)<br>' +
+              '• <strong>All Products</strong> (51 single-origin spices, dry fruits &amp; seeds)<br>' +
               '• <strong>What is KTA?</strong> (25+ years single-origin estate heritage)<br>' +
-              '• <strong>Why KTA?</strong> (Sourced & graded by KTA alone, unadulterated purity)<br>' +
+              '• <strong>Why KTA?</strong> (Sourced &amp; graded by KTA alone, unadulterated purity)<br>' +
               '• <strong>Wholesale Supply</strong> (500kg+ MOQ in 40kg master bags)<br>' +
               '• <strong>Hotel Smart 24/7</strong> (2–24h replenishment across South India)<br>' +
-              '• <strong>Green Ginger (Fresh)</strong> (Raw farm rhizomes & extraction grades)<br>' +
-              '• <strong>Chef Welcome Box</strong> (Complimentary discovery kit for chefs)<br>' +
-              '• <strong>Custom Sourcing</strong> (Rare botanicals & commodities outside catalogue)<br><br>' +
+              '• <strong>Green Ginger (Fresh)</strong> (Raw farm rhizomes &amp; extraction grades)<br>' +
+              '• <strong>Chef Welcome Box</strong> (Complimentary discovery kit for chefs)<br><br>' +
               '<em>Tap any topic above or type your specific commercial requirement.</em>',
         actions: [
-          { label: 'All Products (50+)', href: 'catalogue.html', primary: true },
+          { label: 'All Products (51 Varieties)', href: 'catalogue.html', primary: true },
           { label: 'Wholesale Portal', href: 'wholesale.html' },
           { label: 'WhatsApp Trade Desk', href: 'https://wa.me/918592832871', target: '_blank', whatsapp: true }
         ],
-        followUps: ['All Products (50+)', 'What is KTA?', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
+        followUps: ['Custom Sourcing', 'All Products (51 Varieties)', 'What is KTA?', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
       };
     }
 
     // ── 21. INTELLIGENT COMMERCIAL FALLBACK ──
     return {
       html: 'I am here to assist with core commercial procurement questions for KTA Spices:<br><br>' +
-            '• <strong>All Products</strong> (50+ single-origin spices, dry fruits & seeds)<br>' +
+            '• <strong>Custom Sourcing</strong> (Rare botanicals &amp; unlisted items outside catalogue)<br>' +
+            '• <strong>All Products</strong> (51 single-origin spices, dry fruits &amp; seeds)<br>' +
             '• <strong>What is KTA?</strong> (Single-origin estate heritage)<br>' +
-            '• <strong>Why choose KTA?</strong> (Sourced & graded by KTA alone)<br>' +
+            '• <strong>Why choose KTA?</strong> (Sourced &amp; graded by KTA alone)<br>' +
             '• <strong>What is Wholesale?</strong> (500kg+ MOQ in 40kg master bags)<br>' +
             '• <strong>Hotel Smart 24/7</strong> (2–24h emergency replenishment)<br>' +
             '• <strong>Green Ginger (Fresh)</strong> (Raw farm rhizomes)<br>' +
-            '• <strong>Chef Welcome Box</strong> (Free sample kit for executive chefs)<br>' +
-            '• <strong>Custom Sourcing</strong> (Rare botanicals & unlisted items outside catalogue)<br><br>' +
+            '• <strong>Chef Welcome Box</strong> (Free sample kit for executive chefs)<br><br>' +
             '<em>Tap a topic above or ask any commercial requirement.</em>',
       actions: [
-        { label: 'Browse Catalogue (50+)', href: 'catalogue.html', primary: true },
+        { label: 'Browse Catalogue (51 Varieties)', href: 'catalogue.html', primary: true },
         { label: 'Wholesale Portal', href: 'wholesale.html' },
         { label: 'Custom Sourcing Desk', href: 'wholesale.html#orderForm' },
         { label: 'WhatsApp Trade Desk', href: 'https://wa.me/918592832871', target: '_blank', whatsapp: true }
       ],
-      followUps: ['All Products (50+)', 'What is KTA?', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7', 'Custom Sourcing']
+      followUps: ['Custom Sourcing', 'All Products (51 Varieties)', 'What is KTA?', 'Why choose KTA?', 'Wholesale (40kg Bags)', 'Hotel Smart 24/7']
     };
   }
 
