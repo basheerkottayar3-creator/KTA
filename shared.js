@@ -1415,7 +1415,10 @@ window.openFastRfq = function(skuName, hsn, origin) {
     '  <div class="rfq-option-label">2. Master Packaging Unit</div>',
     '  <select id="rfqPkgSelect" class="rfq-pkg-select">',
     '    <option value="40kg Food-Grade Master Consignment Bags (500kg+ MOQ)">40kg Food-Grade Master Consignment Bags (500kg+ MOQ)</option>',
-    '    <option value="1kg Chef Trial Pouches">1kg Chef Trial Pouches</option>',
+    '    <option value="Adaptive Packaging Tailored with Customers (25kg Bags / 1kg Pouches / Drums / FIBC)">Adaptive Packaging Tailored with Customers (25kg / 1kg / Drums / FIBC)</option>',
+    '    <option value="25kg Multi-Layer Moisture-Locked Sacks">25kg Multi-Layer Moisture-Locked Sacks</option>',
+    '    <option value="1kg Chef Trial Pouches &amp; 5kg Foodservice Tins">1kg Chef Trial Pouches &amp; 5kg Foodservice Tins</option>',
+    '    <option value="500kg–1000kg FIBC Bulk Jumbo Sacks">500kg–1000kg FIBC Bulk Jumbo Sacks</option>',
     '    <option value="Export Multi-Layer Moisture-Locked Consignment">Export Multi-Layer Moisture-Locked Consignment</option>',
     '  </select>',
     '  <div class="rfq-option-label">3. Destination Receiving Bay (City)</div>',
@@ -2501,37 +2504,37 @@ window.handleFooterSubscribe = function(event) {
       {
         name: 'Green Ginger (Raw Fresh Farm-Direct Jumbo Rhizomes)',
         hsn: '09101110',
-        moq: '500kg (40kg Master Mesh Bags / Crates)',
+        moq: '500kg (40kg Master Mesh Bags / Adaptive Packaging)',
         desc: 'Sourced and graded by KTA alone. Jumbo washed plump fresh farm ginger rhizomes. High juice density and crisp texture for commercial kitchens, paste processors, and export packing.'
       },
       {
         name: 'Lite Berries (Black Pepper Extraction Grade)',
         hsn: '09041140',
-        moq: '500kg (40kg Master Bags)',
+        moq: '500kg (40kg Master Bags / Adaptive Packaging with Customers)',
         desc: 'Sourced and graded by KTA alone. Low-density green and light whole pepper berries separated during gravity grading. Highly sought after by oleoresin solvent extraction units for volatile oil yield at commercial rates.'
       },
       {
         name: 'Pinheads (High Extraction Density Small Pepper Berries)',
         hsn: '09041110',
-        moq: '500kg (40kg Master Bags)',
+        moq: '500kg (40kg Master Bags / Adaptive Packaging with Customers)',
         desc: 'Sourced and graded by KTA alone. Small immature bold whole peppercorns possessing high concentration of active resin per gram. Prime commodity for pharmaceutical, nutraceutical, and oleoresin extraction.'
       },
       {
         name: 'Pepper Husk & Pepper Husk Selected (S)',
         hsn: '09109939 / 09041110',
-        moq: '500kg (40kg Master Bags)',
+        moq: '500kg (40kg Master Bags / Adaptive Packaging with Customers)',
         desc: 'Sourced and graded by KTA alone. Cleaned outer black pepper pericarp/husk. Ideal for industrial seasoning manufacturers, spice rubs, and resin extractors. Husk (S) is sieved for uniform fine particle mesh.'
       },
       {
         name: 'Dry Ginger Slices (Unbleached Sun-Dried)',
         hsn: '09101110',
-        moq: '500kg (40kg Master Bags)',
+        moq: '500kg (40kg Master Bags / Adaptive Packaging with Customers)',
         desc: 'Sourced and graded by KTA alone. Cleaned, sliced, and unbleached sun-cured ginger rhizomes optimized for extraction units and commercial distillers.'
       },
       {
         name: 'Spent Dry Ginger & All Spices Spent Biomass',
         hsn: 'Industrial Biomass / Agro Byproduct',
-        moq: '500kg to Multi-Ton Tonnage',
+        moq: '500kg to Multi-Ton Tonnage (Adaptive Bulk Packaging)',
         desc: 'Moisture-controlled post-extraction spent residues from pepper, ginger, turmeric, and mixed botanicals after oleoresin and steam extraction. Supplied for industrial re-processing, cattle feed formulations, and biomass applications.'
       }
     ],
@@ -2554,8 +2557,8 @@ window.handleFooterSubscribe = function(event) {
         details: 'Executive Chefs and Hotel Purchase Directors can request discovery sample packs to evaluate aroma and potency directly in their kitchen pass. Sample dispatch will be arranged according to your kitchen location before setting up commercial 2–24h replenishment.'
       },
       wholesaleMoq: {
-        title: 'Wholesale Consignment Structure (500kg+ MOQ)',
-        details: 'Wholesale minimum consignment is 500kg total net weight (combinable across single or multiple varieties). Packed in 40kg heavy-duty master bags. Direct Wholesale WhatsApp desk: +91 63793 51632.'
+        title: 'Wholesale Consignment Structure (500kg+ MOQ · Adaptive Packaging Available)',
+        details: 'Wholesale minimum consignment is 500kg total net weight (combinable across single or multiple varieties). Packed in 40kg heavy-duty master bags or adaptive packaging tailored with customers (1kg chef pouches, 5kg tins, 25kg sacks, fiber drums, FIBC bulk bags). Direct Wholesale WhatsApp desk: +91 63793 51632.'
       },
       outsideCatalogue: {
         title: 'Custom Sourcing & Products Outside Standard Catalogue',
@@ -3212,11 +3215,11 @@ window.handleFooterSubscribe = function(event) {
       };
     }
 
-    // ── 5. WHAT IS WHOLESALE? (500kg+ MOQ, 40kg Master Bags) ──
-    if (/(what\s*is\s*wholesale|wholesale|moq|minimum\s*order|bulk\s*order|commercial\s*order|bag\s*size|master\s*bag|packaging\s*unit|products\s*in\s*wholesale|wholesale\s*items|wholesale\s*range|wholesale\s*portfolio|tonnage|container)/i.test(norm)) {
+    // ── 5. WHAT IS WHOLESALE? (500kg+ MOQ, 40kg Master Bags & Adaptive Packaging) ──
+    if (/(what\s*is\s*wholesale|wholesale|moq|minimum\s*order|bulk\s*order|commercial\s*order|bag\s*size|master\s*bag|adaptive\s*pack|packaging\s*unit|products\s*in\s*wholesale|wholesale\s*items|wholesale\s*range|wholesale\s*portfolio|tonnage|container)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'WHOLESALE';
       return {
-        html: '<strong>Wholesale Consignment Structure (500kg+ MOQ in 40kg Master Bags):</strong><br><br>' +
+        html: '<strong>Wholesale Consignment Structure (500kg+ MOQ · 40kg Master Bags &amp; Adaptive Packaging):</strong><br><br>' +
               '• <strong>Wholesale Range:</strong><br>' +
               '  - <strong>Black Pepper:</strong> Whole Bold Export Grade (HSN 09041140)<br>' +
               '  - <strong>Lite Berries &amp; Pinheads:</strong> High-resin extraction grades<br>' +
@@ -3224,9 +3227,9 @@ window.handleFooterSubscribe = function(event) {
               '  - <strong>Green Ginger (Fresh):</strong> Raw farm-direct jumbo rhizomes (HSN 09101110)<br>' +
               '  - <strong>Dry Ginger:</strong> Unspent sun-dried whole / slices (HSN 09101110)<br>' +
               '  - <strong>Biomass Residues:</strong> Spent Dry Ginger &amp; All Spices Spent<br>' +
-              '• <strong>Packaging Standard:</strong> 40kg heavy-duty food-grade multi-layer master bags on shrink-wrapped pallets.<br>' +
+              '• <strong>Packaging Standards:</strong> Standard 40kg heavy-duty master bags or <strong>Adaptive Packaging Tailored with Customers</strong> (1kg pouches, 5kg tins, 25kg sacks, fiber drums, FIBC bulk bags).<br>' +
               '• <strong>Palletized Logistics:</strong> Rapid dispatch across South India.<br>' +
-              '• <strong>Dedicated Wholesale Desk:</strong> Contact our wholesale team directly at <strong>+91 63793 51632</strong> for bulk container and tonnage quotes.<br><br>' +
+              '• <strong>Dedicated Wholesale Desk:</strong> Contact our wholesale team directly at <strong>+91 63793 51632</strong> for bulk container, tonnage, and adaptive packaging quotes.<br><br>' +
               '<em>Would you like to generate a wholesale pro-forma invoice or inquire about custom sourcing?</em>',
         actions: [
           { label: 'Wholesale WhatsApp (+91 63793 51632)', href: 'https://wa.me/916379351632', primary: true, target: '_blank', whatsapp: true },
@@ -3459,19 +3462,19 @@ window.handleFooterSubscribe = function(event) {
     }
 
     if (matchedExtraction) {
-      KTA_AI_SESSION_STATE.lastProduct = { name: matchedExtraction.name, hsn: matchedExtraction.hsn, grade: 'Wholesale Extraction Grade', origin: 'Highland Specific', packaging: '40kg Master Bags' };
-      var waWeMsg = encodeURIComponent('Hello KTA Trade Desk, I am inquiring about ' + matchedExtraction.name + ' (HSN: ' + matchedExtraction.hsn + ') for wholesale procurement.');
+      KTA_AI_SESSION_STATE.lastProduct = { name: matchedExtraction.name, hsn: matchedExtraction.hsn, grade: 'Wholesale Extraction Grade', origin: 'Highland Specific', packaging: '40kg Master Bags / Adaptive Packaging' };
+      var waWeMsg = encodeURIComponent('Hello KTA Trade Desk, I am inquiring about ' + matchedExtraction.name + ' (HSN: ' + matchedExtraction.hsn + ') with adaptive packaging options.');
       return {
         html: '<div class="kta-ai-card">' +
               '  <div class="kta-ai-card-title">' + escapeHtml(matchedExtraction.name) + '</div>' +
               '  <div class="kta-ai-card-origin">HSN: ' + matchedExtraction.hsn + ' · MOQ: ' + matchedExtraction.moq + '</div>' +
               '  <div class="kta-ai-card-grid">' +
               '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Purity &amp; Source</span><span class="kta-ai-card-val">Sourced &amp; graded by KTA alone</span></div>' +
-              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Packaging Standard</span><span class="kta-ai-card-val">40kg Heavy-Duty Master Bags</span></div>' +
+              '    <div class="kta-ai-card-row"><span class="kta-ai-card-key">Packaging Standard</span><span class="kta-ai-card-val">40kg Master Bags &amp; Adaptive Customer Packaging</span></div>' +
               '  </div>' +
               '  <div class="kta-ai-card-desc"><strong>Specification:</strong> ' + escapeHtml(matchedExtraction.desc) + '</div>' +
               '</div><br>' +
-              '<em>Available in 40kg master bags for industrial extraction units and commercial food processors:</em>',
+              '<em>Available in 40kg master bags and adaptive packaging tailored with customers:</em>',
         actions: [
           { label: 'Wholesale WhatsApp (+91 63793 51632)', href: 'https://wa.me/916379351632?text=' + waWeMsg, primary: true, target: '_blank', whatsapp: true },
           { label: 'Pro-Forma Calculator', href: 'wholesale.html#proforma' },
