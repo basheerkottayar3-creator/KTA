@@ -2539,7 +2539,7 @@ window.handleFooterSubscribe = function(event) {
     services: {
       whatIsKTA: {
         title: 'What is KTA Spices?',
-        details: 'KTA is a premier single-origin spice procurement and processing house with 25+ years of estate operations. We supply over 250+ luxury hotel chains, commercial commissaries, and institutional kitchens across South India with single-origin purity direct from estate auction floors.'
+        details: 'KTA is a premier single-origin spice procurement and processing house with 25+ years of estate operations. We supply over 100+ luxury hotel chains, commercial commissaries, and institutional kitchens across South India with single-origin purity direct from estate auction floors.'
       },
       whyKTA: {
         title: 'Why KTA Spices?',
@@ -3063,7 +3063,7 @@ window.handleFooterSubscribe = function(event) {
       return {
         html: '<strong>What is KTA Spices?</strong><br><br>' +
               'KTA is a premier single-origin spice procurement and processing house with <strong>25+ years of heritage</strong>. ' +
-              'We supply over <strong>250+ elite kitchens</strong>, 5-star hotel chains, banquet operators, and commercial food enterprises across South India.<br><br>' +
+              'We supply over <strong>100+ elite kitchens</strong>, 5-star hotel chains, banquet operators, and commercial food enterprises across South India.<br><br>' +
               '• <strong>Direct Single-Origin Procurement:</strong> Procured directly from verified growers and auction floors across Highland Specific terroirs.<br>' +
               '• <strong>Institutional Reliability:</strong> Consistent culinary grading, rapid replenishment, and transparent commercial contracts.<br>' +
               '• <strong>Zero Middlemen:</strong> Unadulterated purity directly from origin to commercial kitchen.<br><br>' +
