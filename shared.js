@@ -110,6 +110,7 @@
     { title: 'Dry Ginger Powder (Sonth / Chukku Podi)', cat: 'Ground Spices', page: 'catalogue.html?search=dry+ginger+powder', desc: 'ചുക്കുപൊടി Chukku Podi சுக்கு தூள் Sukku Thool ശൊന്തി പുഡി Shonthi Pudi ശൊണ്ടി പൊടി Shonthi Podi सोंठ पाउडर Sonth Powder' },
     { title: 'Guntur S4 Hot Red Chillies', cat: 'Whole Spices', page: 'catalogue.html?search=guntur', desc: 'ഗുണ്ടൂർ മുളക് Guntur Mulaku குண்டூர் மிளகாய் Guntur Milagai ഗുണ്ടൂറു മെണസിനകായി Guntur Menasinakai ഗുണ്ടൂറു മിരപകായ Guntur Mirapakaya गुंटूर मिर्च Guntur Mirch' },
     { title: 'Kashmiri Dried Chillies (High ASTA Color)', cat: 'Whole Spices', page: 'catalogue.html?search=kashmiri', desc: 'കാശ്മീരി മുളക് Kashmiri Mulaku காஷ்மீரி மிளகாய் Kashmiri Milagai കശ്മീരി മെണസിനകായി Kashmiri Menasinakai കാശ്മീരി മിരപകായ Kashmiri Mirapakaya कश्मीरी मिर्च Kashmiri Mirch' },
+        { title: 'Kashmiri Chilli Powder (Cold-Milled High Color)', cat: 'Ground Spices', page: 'catalogue.html?search=kashmiri+chilli+powder', desc: 'കാശ്മീരി മുളകുപൊടി Kashmiri Mulakupodi காஷ்மீரி மிளகாய்த்தூள் Kashmiri Milagai Thool കശ്മീരി മെണസിന പുഡി Kashmiri Menasina Pudi കാശ്മീരി മിരപ പൊടി Kashmiri Mirapa Podi कश्मीरी लाल मिर्च पाउडर Kashmiri Lal Mirch Powder' },
     { title: 'Jaifal (Whole Nutmeg with Kernel)', cat: 'Whole Spices', page: 'catalogue.html?search=jaifal', desc: 'ജാതിക്ക Jathikka ஜாதிக்காய் Jadhikkai ജാജികായി Jajikai ജാജികായ Jajikaya जायफल Jaiphal' },
     { title: 'Javantri (Selected Mace Blades)', cat: 'Whole Spices', page: 'catalogue.html?search=javantri', desc: 'ജാതിപത്രി Jathipathri ஜாதிபத்ரி Jadhipathri ജാതിപത്രി Jathipathri ജാതിപത്രി Jathipathri जावित्री Javitri' },
     { title: 'Jeera (Whole Cumin Seeds)', cat: 'Whole Spices', page: 'catalogue.html?search=jeera+whole', desc: 'ജീരകം Jeerakam சீரகம் Seeragam ജീരിഗെ Jeerige ജീല കർര Jeelakarra जीरा Zeera' },
@@ -738,7 +739,7 @@
       '      </span>',
       '      <div class="more-opt-content">',
       '        <div class="more-opt-title">Browse Full Products &amp; Spices</div>',
-      '        <div class="more-opt-sub">50+ origin-certified varieties &amp; dry fruits</div>',
+      '        <div class="more-opt-sub">51 origin-certified varieties (42 Spices + 9 Dry Fruits)</div>',
       '      </div>',
       '      <span class="more-opt-arrow">→</span>',
       '    </a>',
@@ -1205,6 +1206,18 @@ var QC_SPECS = {
     density: '460 – 500 g/L',
     origin: 'Highland Specific',
     pkg: '25kg & 40kg Moisture-Locked Bags / 1kg Chef Pouches'
+  },
+  'KASHMIRI CHILLI POWDER': {
+    botanical: 'Capsicum annuum L. (Ground Kashmiri)',
+    grade: 'Cold-Milled Vibrant Scarlet Chilli Powder',
+    hsn: '09042211',
+    oil: 'High Natural ASTA Color Units · Zero Added Dye',
+    active: 'Sourced & graded by KTA alone · Mild Warmth (1,500–2,200 SHU)',
+    moisture: 'Tested Safe Low Moisture',
+    extraneous: 'Zero Starch, Zero Sudan Dye, Cleaned Stemless Milling',
+    density: '450 – 480 g/L',
+    origin: 'Highland Specific',
+    pkg: '25kg & 40kg Master Sacks (500kg+ MOQ) / 1kg Barrier Pouches'
   },
   'ROYAL GARAM MASALA': {
     botanical: 'Proprietary Executive Spice Blend',
@@ -1772,7 +1785,7 @@ window.handleFooterSubscribe = function(event) {
   // 4. Offer instant Chef Welcome Discovery Box request if available
   setTimeout(function() {
     if (typeof window.openChefDiscoveryModal === 'function') {
-      var wantKit = confirm('Chef, would you also like to request a Complimentary Chef Welcome Discovery Box (50+ Varieties Roster) delivered to your kitchen pass?');
+      var wantKit = confirm('Chef, would you also like to request a Complimentary Chef Welcome Discovery Box (51 Varieties Roster · 42 Spices + 9 Dry Fruits) delivered to your kitchen pass?');
       if (wantKit) {
         window.openChefDiscoveryModal();
         var modalEmailInput = document.getElementById('cdmEmail');
@@ -1929,8 +1942,8 @@ window.handleFooterSubscribe = function(event) {
       },
       {
         id: 'kashmiri-chilli',
-        name: 'Kashmiri Scarlet Chilli (Deep Natural Red Whole & Powder)',
-        aliases: ['kashmiri chilli', 'kashmiri chilly', 'kashmiri mirch', 'kashmiri powder', 'mild chilli', 'red chilli powder'],
+        name: 'Kashmiri Scarlet Whole Chilli (Deep Natural Red)',
+        aliases: ['kashmiri chilli', 'kashmiri chilly', 'kashmiri mirch', 'whole kashmiri chilly', 'mild chilli', 'piriyan mulaku'],
         category: 'Spices',
         hsn: '09042219',
         rate: 320,
@@ -1939,6 +1952,21 @@ window.handleFooterSubscribe = function(event) {
         chemicalAssay: 'Sourced & graded by KTA alone · Rich Natural Capsanthin · Zero Added Colors · Zero Sudan Red',
         packaging: '1kg Kitchen Pouches & 25kg/40kg Master Sacks',
         culinaryPairing: 'Butter chicken, tandoori marinades, Kashmiri rogan josh, restaurant gravy color passes.',
+        harvestSeason: 'October – February',
+        shelfLife: '18 Months'
+      },
+      {
+        id: 'kashmiri-chilli-powder',
+        name: 'Cold-Milled Kashmiri Chilli Powder',
+        aliases: ['kashmiri chilli powder', 'kashmiri powder', 'kashmiri chilly powder', 'kashmiri mirch powder', 'degi mirch powder', 'red chilli powder'],
+        category: 'Spices',
+        hsn: '09042211',
+        rate: 340,
+        grade: 'High ASTA Natural Crimson Ground Grade',
+        origin: 'Highland Specific',
+        chemicalAssay: 'Sourced & graded by KTA alone · High Natural ASTA Color · Zero Artificial Colors / Zero Sudan Red',
+        packaging: '1kg Kitchen Pouches & 25kg/40kg Master Sacks',
+        culinaryPairing: 'Butter chicken, gravies, tandoori marinades, biryani color, rich red curries.',
         harvestSeason: 'October – February',
         shelfLife: '18 Months'
       },
@@ -3072,12 +3100,13 @@ window.handleFooterSubscribe = function(event) {
     if (/(what\s*all\s*products|list\s*all\s*products|all\s*products|show\s*all\s*products|what\s*products\s*(?:do\s*you\s*have|u\s*got|are\s*there|available)|full\s*catalogue|full\s*catalog|catalogue\s*items|product\s*list|what\s*do\s*you\s*have|what\s*do\s*you\s*sell|what\s*spices\s*do\s*you\s*have|show\s*catalogue|catalog\s*list)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'CATALOGUE';
       return {
-        html: '<strong>KTA Full Commercial Catalogue (50+ Varieties Roster):</strong><br><br>' +
-              '<strong>1. Single-Origin Spices (41 Varieties Whole & Powders):</strong><br>' +
+        html: '<strong>KTA Full Commercial Catalogue (51 Varieties Roster: 42 Spices + 9 Dry Fruits):</strong><br><br>' +
+              '<strong>1. Single-Origin Spices (42 Varieties Whole & Powders):</strong><br>' +
               '• Tellicherry Black Pepper (TGSEB Whole & Powder)<br>' +
               '• White Pepper (Decorticated Whole & Powder)<br>' +
               '• Salem Golden Turmeric Powder<br>' +
-              '• Kashmiri Chilly & Guntur S4 Stemless Chilly<br>' +
+              '• Kashmiri Chilly Whole & Cold-Milled Kashmiri Chilli Powder<br>' +
+              '• Guntur S4 Stemless Hot Red Chilly<br>' +
               '• Alleppey Green Cardamom (8mm+ Extra Bold), Black & White Cardamom<br>' +
               '• Cochin Sun-Cured Dry Ginger (Whole & Powder)<br>' +
               '• Coriander Seeds & Cold-Milled Coriander Powder<br>' +
@@ -3102,7 +3131,7 @@ window.handleFooterSubscribe = function(event) {
               '• Green Ginger (Fresh Jumbo Rhizomes), Lite Berries, Pinheads, Pepper Husk, Spent Biomass.<br><br>' +
               '<em>Tap below to browse the interactive catalogue or build your sample tray:</em>',
         actions: [
-          { label: 'Browse Full Catalogue (50+)', href: 'catalogue.html', primary: true },
+          { label: 'Browse Full Catalogue (51 Varieties)', href: 'catalogue.html', primary: true },
           { label: 'Wholesale Range', href: 'wholesale.html' },
           { label: 'WhatsApp Trade Desk', href: 'https://wa.me/918592832871', target: '_blank', whatsapp: true }
         ],
