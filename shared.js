@@ -3244,7 +3244,7 @@ window.handleFooterSubscribe = function(event) {
         html: '<strong>Hotel Smart 24/7 Rapid Replenishment:</strong><br><br>' +
               'Designed specifically for executive chefs, luxury hotel chains, and high-volume banquet operations:<br><br>' +
               '• <strong>2–24 Hour Guaranteed Dispatch:</strong> Priority emergency and scheduled replenishment directly to your hotel receiving dock.<br>' +
-              '• <strong>Zero Stock-out Assurance:</strong> Dedicated buffer stock reserved for contracted kitchens across Chennai, Bangalore, Hyderabad, Kochi, Coimbatore, and Madurai.<br>' +
+              '• <strong>Zero Stock-out Assurance:</strong> Dedicated buffer stock reserved for contracted kitchens across all active delivery corridors.<br>' +
               '• <strong>Sourced &amp; Graded by KTA Alone:</strong> Uncompromising aroma strength, zero filler, and consistent batch performance.<br><br>' +
               '<em>Would you like to register your kitchen for Hotel Smart priority replenishment?</em>',
         actions: [
@@ -3389,8 +3389,8 @@ window.handleFooterSubscribe = function(event) {
       KTA_AI_SESSION_STATE.lastIntent = 'DELIVERY';
       return {
         html: '<strong>Delivery Logistics &amp; Dispatch Turnaround:</strong><br><br>' +
-              '• <strong>Hotel Smart Priority Corridors:</strong> <strong>2–24 Hour Guaranteed Dispatch</strong> for contracted kitchens across Chennai, Bangalore, Hyderabad, Kochi, Coimbatore, and Madurai.<br>' +
-              '• <strong>Wholesale Consignments (500kg+):</strong> Palletized commercial dispatch within 24 hours ex-warehouse.<br>' +
+              '• <strong>Hotel Smart Priority Replenishment:</strong> <strong>2–24 Hour Guaranteed Dispatch</strong> for contracted hospitality kitchens across operating delivery corridors.<br>' +
+              '• <strong>Wholesale Consignments (500kg+):</strong> Palletized commercial freight dispatch within 24 hours ex-warehouse.<br>' +
               '• <strong>Pan-India &amp; Export Freight:</strong> Moisture-sealed multi-layer packaging dispatched via verified cargo lines with live dispatch tracking.<br><br>' +
               '<em>Need emergency replenishment or have a scheduled delivery requirement?</em>',
         actions: [
@@ -3402,19 +3402,20 @@ window.handleFooterSubscribe = function(event) {
       };
     }
 
-    // ── 15. PAYMENT TERMS & BILLING ──
-    if (/(payment|credit|credit\s*period|credit\s*terms|terms|billing|invoice|proforma|bank|neft|rtgs|lc|account)/i.test(norm)) {
+    // ── 15. PAYMENT TERMS & BILLING (10-DAY CREDIT & 48H INSPECTION) ──
+    if (/(payment|credit|credit\s*period|credit\s*terms|terms|billing|invoice|proforma|bank|neft|rtgs|lc|account|refund|return|claim)/i.test(norm)) {
       KTA_AI_SESSION_STATE.lastIntent = 'PAYMENT';
       return {
-        html: '<strong>Commercial Payment Terms &amp; Institutional Billing:</strong><br><br>' +
-              '• <strong>Institutional Credit Lines:</strong> 15-day and 30-day revolving credit terms available for verified 5-star hotel chains and contracted institutional partners.<br>' +
-              '• <strong>Payment Methods:</strong> Direct corporate bank settlement via NEFT, RTGS, and Irrevocable Letter of Credit (LC) for export/multi-ton contracts.<br>' +
-              '• <strong>Transparent Commercial Invoices:</strong> Official B2B billing documentation with complete HSN codes and batch COA.<br><br>' +
-              '<em>Contact our commercial accounts team for account onboarding:</em>',
+        html: '<strong>Commercial Payment Terms, Credit Protocols &amp; Inspection:</strong><br><br>' +
+              '• <strong>10-Day Initial Credit Facility:</strong> Approved hotel chains, restaurants, and enterprise partners start on a <strong>10-day revolving credit cycle</strong> upon trade verification.<br>' +
+              '• <strong>First-Time Consignments:</strong> Initial trial consignments (500kg MOQ) are cleared against advance commercial pro-forma invoice or digital banking confirmation.<br>' +
+              '• <strong>Settlement Methods:</strong> Direct corporate RTGS, NEFT, and Irrevocable Letter of Credit (LC) for multi-ton/export contracts.<br>' +
+              '• <strong>Strict 48-Hour Inspection &amp; Food Safety Policy:</strong> Buyer receiving teams maintain a 48-hour inspection window upon delivery. Due to food safety standards, <strong>opened or unsealed bags/liners cannot be returned or refunded</strong> under any circumstances.<br><br>' +
+              '<em>Contact our commercial accounts desk for credit onboarding or view full terms of trade:</em>',
         actions: [
-          { label: 'Contact Accounts Desk', href: 'https://wa.me/918592832871?text=Hello%20KTA%20Accounts%20Desk%2C%20I%20am%20inquiring%20about%20commercial%20billing%20and%20credit%20onboarding.', primary: true, target: '_blank', whatsapp: true },
-          { label: 'Generate Pro-Forma', href: 'wholesale.html#proforma' },
-          { label: 'Wholesale Portal', href: 'wholesale.html' }
+          { label: 'View Terms of Trade', href: 'terms.html', primary: true },
+          { label: 'Contact Accounts Desk', href: 'https://wa.me/918592832871?text=Hello%20KTA%20Accounts%20Desk%2C%20I%20am%20inquiring%20about%20commercial%20billing%20and%20credit%20onboarding.', target: '_blank', whatsapp: true },
+          { label: 'Generate Pro-Forma', href: 'wholesale.html#proforma' }
         ],
         followUps: ['Wholesale (40kg Bags)', 'Hotel Smart 24/7', 'All Products (51 Varieties)', 'Why choose KTA?']
       };
