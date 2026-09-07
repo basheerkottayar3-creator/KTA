@@ -1764,7 +1764,7 @@ window.handleFooterSubscribe = function(event) {
       clientName: 'Newsletter Subscriber',
       company: 'Direct Email Subscriber',
       role: 'Subscriber',
-      products: 'Chef Dispatches / Seasonal Harvest Bulletins (All Spices & Updates)',
+      products: 'Not asked yet (Edit as needed)',
       volume: 'Digital Email Dispatches',
       inquiryType: 'Chef Dispatches Newsletter Subscription',
       source: 'Chef Dispatches Newsletter',

@@ -161,15 +161,11 @@ function handleLeadSubmission(data) {
     var location = data.location || data.city || data.destination || (isNewsletter ? "Online / Digital" : "South India");
 
     var products = data.products || data.product || data.spices || data.varieties;
-    if (!products) {
-      if (isNewsletter) {
-        products = "Chef Dispatches / Seasonal Harvest Bulletins (All Spices & Updates)";
-      } else if (isPartnership) {
-        products = "Full Corporate Procurement Suite / All Spices & Dry Fruits";
-      } else if (isSampleBox) {
+    if (!products || products.toString().trim() === "" || products === "General Inquiry") {
+      if (isSampleBox) {
         products = "Chef Discovery Welcome Box (51 Varieties)";
       } else {
-        products = "Full Catalogue / Commercial Spice Inquiry";
+        products = "Not asked yet (Edit as needed)";
       }
     }
 
