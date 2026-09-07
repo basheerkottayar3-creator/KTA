@@ -1350,9 +1350,9 @@ button {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgba(230, 227, 218, 0.35);
-  padding-bottom: 6px;
-  margin-top: 4px;
-  margin-bottom: 18px;
+  padding-bottom: 8px;
+  margin-top: 14px;
+  margin-bottom: 22px;
   transition: border-color 0.2s ease;
   width: 100%;
 }
