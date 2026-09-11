@@ -1507,9 +1507,15 @@ window.submitFlushReservation = function() {
 /* ── Chef Discovery Samples Modal Controller ── */
 (function(){
   function initChefWelcomeModal() {
-    var p = window.location.pathname.toLowerCase();
-    var filename = p.substring(Math.max(p.lastIndexOf('/'), p.lastIndexOf('\\')) + 1);
-    if (filename && filename !== 'index.html' && filename.includes('.html')) {
+    var p = window.location.pathname.toLowerCase().replace(/\/+$/, '');
+    var isHome = p === '' || p === '/' || p.endsWith('/index.html') || p === '/index.html' || p === 'index.html';
+    if (!isHome) {
+      var existingTrigger = document.getElementById('chefFloatTrigger');
+      if (existingTrigger) existingTrigger.remove();
+      var existingModal = document.getElementById('chefWelcomeModal');
+      if (existingModal && !document.querySelector('.wb-section')) {
+        existingModal.remove();
+      }
       return;
     }
 
@@ -2618,7 +2624,7 @@ window.handleFooterSubscribe = function(event) {
       var pathPart = href.substring(0, hashIdx);
       var hashPart = href.substring(hashIdx + 1);
       var curPath = window.location.pathname;
-      var isCurrentPage = !pathPart || curPath.endsWith(pathPart) || (pathPart === 'index.html' && (curPath === '/' || curPath.endsWith('/')));
+      var isCurrentPage = !pathPart || curPath.replace(/\.html$/, '').endsWith(pathPart.replace(/\.html$/, '')) || (pathPart.replace(/\.html$/, '') === 'index' && (curPath === '/' || curPath.endsWith('/')));
       if (isCurrentPage) {
         var el = document.getElementById(hashPart);
         if (el) {
