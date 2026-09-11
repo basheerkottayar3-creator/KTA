@@ -5,7 +5,7 @@
   <!-- 1. Homepage -->
   <url>
     <loc>https://ktaspices.in/</loc>
-    <lastmod>2026-09-10</lastmod>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -17,96 +17,96 @@
 
   <!-- 2. Product Catalogue -->
   <url>
-    <loc>https://ktaspices.in/catalogue.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/catalogue</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- 3. Wholesale & Institutional Supply -->
   <url>
-    <loc>https://ktaspices.in/wholesale.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/wholesale</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- 4. Harvest Seasonality & Potency Guide -->
   <url>
-    <loc>https://ktaspices.in/harvest.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/harvest</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- 5. Hotel Smart 24/7 Logistics -->
   <url>
-    <loc>https://ktaspices.in/hotel-smart.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/hotel-smart</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- 6. Heritage & Sourcing Story -->
   <url>
-    <loc>https://ktaspices.in/heritage.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/heritage</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- 7. Kitchen Partnership & Registration -->
   <url>
-    <loc>https://ktaspices.in/partnership.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/partnership</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- 8. Contact & Central Trade Desk -->
   <url>
-    <loc>https://ktaspices.in/contact.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/contact</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- 9. Commercial Terms of Trade -->
   <url>
-    <loc>https://ktaspices.in/terms.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/terms</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <!-- 10. Privacy Policy & Compliance -->
   <url>
-    <loc>https://ktaspices.in/privacy.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/privacy</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <!-- 11. Accessibility Statement -->
   <url>
-    <loc>https://ktaspices.in/accessibility.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/accessibility</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <!-- 12. Spice Intelligence Journal & Articles -->
   <url>
-    <loc>https://ktaspices.in/blog.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/blog</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- 13. Article: Black Pepper Quality & Adulteration Testing -->
   <url>
-    <loc>https://ktaspices.in/blog-pepper-quality.html</loc>
-    <lastmod>2026-09-10</lastmod>
+    <loc>https://ktaspices.in/blog-pepper-quality</loc>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
