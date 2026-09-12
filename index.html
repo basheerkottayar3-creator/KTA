@@ -15,9 +15,11 @@
   <link rel="canonical" href="https://ktaspices.in/">
 
   <!-- Favicon for Google Search & Browsers -->
-  <link rel="icon" type="image/png" sizes="32x32" href="https://ktaspices.in/images/ktaouterlinelogo.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="https://ktaspices.in/images/ktaouterlinelogo.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="https://ktaspices.in/images/ktaouterlinelogo.png">
+  <link rel="icon" type="image/x-icon" href="https://ktaspices.in/favicon.ico">
+  <link rel="icon" type="image/png" sizes="48x48" href="https://ktaspices.in/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://ktaspices.in/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://ktaspices.in/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ktaspices.in/apple-touch-icon.png">
 
   <!-- Geo & Local Business Meta for India Ranking -->
   <meta name="geo.region" content="IN-TN">
@@ -45,6 +47,17 @@
     content="Direct single-origin spices and dry fruits supplied to commercial kitchens and wholesale partners. Sourced and graded by KTA.">
   <meta name="twitter:image" content="https://ktaspices.in/images/ktaouterlinelogo.png">
 
+  <!-- JSON-LD Structured Data: WebSite (Sets Google Search Site Name to 'KTA Spices') -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "KTA Spices",
+    "alternateName": ["KTA", "Kottayar Trading Agency", "KTA Premium Spices", "ktaspices.in"],
+    "url": "https://ktaspices.in/"
+  }
+  </script>
+
   <!-- JSON-LD Structured Data: LocalBusiness & WholesaleStore -->
   <script type="application/ld+json">
   {
@@ -54,7 +67,12 @@
     "name": "Kottayar Trading Agency (KTA Spices)",
     "alternateName": ["KTA Spices", "Kottayar Spices", "KTA Wholesale Spices"],
     "url": "https://ktaspices.in/",
-    "logo": "https://ktaspices.in/images/ktaouterlinelogo.png",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ktaspices.in/icon-512x512.png",
+      "width": 512,
+      "height": 512
+    },
     "image": "https://ktaspices.in/images/ktaouterlinelogo.png",
     "description": "Direct single-origin spice merchant and institutional supplier in South India. Supplies Tellicherry Black Pepper, Alleppey Green Cardamom, Cochin Dry Ginger, and premium dry fruits to hotels, restaurants, and extraction units.",
     "telephone": "+91-8592832871",
